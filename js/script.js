@@ -77,37 +77,39 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function sendToTai(rawText) {
-    const text = (rawText || '').trim();
-    if (!text || isSending) return;
+  const text = (rawText || "").trim();
+  if (!text || isSending) return;
 
-    addMessage(text, 'user');
-    inputEl.value = '';
-    setLoading(true);
+  addMessage(text, "user");
+  inputEl.value = "";
+  setLoading(true);
 
-    // Show a small typing indicator from Tai
-    const typingMsg = document.createElement('div');
-    typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.textContent = 'Tai is thinking...';
-    typingMsg.appendChild(bubble);
-    chatLog.appendChild(typingMsg);
-    scrollToBottom();
+  // Show typing indicator
+  const typingMsg = document.createElement("div");
+  typingMsg.className = "mascot-msg mascot-msg-tai mascot-msg-small";
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = "Tai is thinking...";
+  typingMsg.appendChild(bubble);
+  chatLog.appendChild(typingMsg);
+  scrollToBottom();
 
-    try {
-  const response = await fetch("/.netlify/functions/tai-ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text }),  // keep "text" since your code already uses this variable
-  });
+  try {
+    const response = await fetch("/.netlify/functions/tai-ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+    });
 
-  const data = await response.json();
-  typingMsg.remove();
-  addMessage(data.reply || "Sorry, I had trouble answering that.", 'tai');
+    const data = await response.json();
+    typingMsg.remove();
 
-} catch (error) {
-  typingMsg.remove();
-  addMessage("Sorry, Tai encountered an error. Please try again.", 'tai');
+    addMessage(data.reply || "Sorry, I had trouble answering that.", "tai");
+  } catch (err) {
+    console.error("Tai error:", err);
+    typingMsg.remove();
+    addMessage("Sorry, Tai had an issue. Please try again.", "tai");
+  }
 }
 
      
