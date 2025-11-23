@@ -1,136 +1,161 @@
-// js/script.js
-// Tai AI Front-end logic – Pack v7
+// Tai front-end logic for Lil RedBack mascot AI
+// This script wires the floating Lil RedBack widget to your Netlify function
+// at /.netlify/functions/tai-ai and provides friendly, family-run answers
+// about RedBack Rubbish Removal only.
 
-// --- DOM ELEMENTS --- //
-const chatLog = document.getElementById("tai-chat-log");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const quickButtons = document.querySelectorAll("[data-text]");
-const mascotWidget = document.querySelector(".mascot-widget");
-const mascotHint = document.querySelector(".mascot-hint");
+document.addEventListener('DOMContentLoaded', function () {
+  const widget = document.querySelector('.mascot-widget');
+  if (!widget) return;
 
-// Store conversation for better answers
-let conversationHistory = [];
+  const chatLog = widget.querySelector('#tai-chat-log');
+  const inputEl = widget.querySelector('#tai-chat-input');
+  const sendBtn = widget.querySelector('#tai-chat-send');
+  const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
 
-// --- HELPERS --- //
-function scrollChatToBottom() {
-  if (chatLog) {
+  if (!chatLog || !inputEl || !sendBtn) return;
+
+  let isSending = false;
+
+  function scrollToBottom() {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
-}
 
-function createBubble(role, text) {
-  const bubble = document.createElement("div");
-  bubble.className = `tai-bubble tai-${role}`;
-  bubble.textContent = text;
-  chatLog.appendChild(bubble);
-  scrollChatToBottom();
-  return bubble;
-}
+  function addMessage(text, who = 'tai', opts = {}) {
+    const msg = document.createElement('div');
+    const role = who === 'user' ? 'user' : 'tai';
+    msg.className = 'mascot-msg mascot-msg-' + role;
+    if (opts.small) {
+      msg.classList.add('mascot-msg-small');
+    }
 
-function setInputDisabled(disabled) {
-  if (!chatInput || !sendBtn) return;
-  chatInput.disabled = disabled;
-  sendBtn.disabled = disabled;
-}
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
 
-// --- MAIN SEND FUNCTION --- //
-async function sendToTai(text) {
-  if (!text.trim()) return;
+    msg.appendChild(bubble);
+    chatLog.appendChild(msg);
+    scrollToBottom();
+    return msg;
+  }
 
-  // Show user message
-  createBubble("user", text);
+  function setLoading(loading) {
+    isSending = loading;
+    sendBtn.disabled = loading;
+    inputEl.disabled = loading;
+  }
 
-  // Lock input
-  setInputDisabled(true);
+  function getFallbackReply(text) {
+    const q = (text || '').toLowerCase();
 
-  // “Thinking…” bubble
-  const thinkingBubble = createBubble("thinking", "Tai is thinking...");
+    // Pricing & costs
+    if (q.includes('price') || q.includes('cost') || q.includes('how much')) {
+      return "For most jobs we price by trailer load. A full load starts from around $550 including GST, half loads from about $330, and smaller jobs can be less. For the most accurate price, send a couple of photos and your suburb to 0459 272 402 and we'll reply with a firm quote.";
+    }
 
-  try {
-    const response = await fetch("/.netlify/functions/tai-chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: text,
-        history: conversationHistory,
-      }),
-    });
+    // Service areas
+    if (q.includes('area') || q.includes('suburb') || q.includes('where') || q.includes('service')) {
+      return "We service Brisbane Southside and Logan, plus nearby surrounding suburbs. If you're unsure whether we come to you, send your suburb with a photo of the load and I'll confirm it for you.";
+    }
 
-    let replyText = "Sorry, I'm having trouble right now. Please try again soon.";
+    // Booking / same-day
+    if (q.includes('book') || q.includes('booking') || q.includes('same-day') || q.includes('same day')) {
+      return "To book, you can text photos of your rubbish and your suburb to 0459 272 402, or use the online Jobber booking form further down this page. We'll reply with a time window and confirmation. Same-day or next-day is often possible depending on our schedule.";
+    }
 
-    if (response.ok) {
-      const data = await response.json();
-      if (data && data.reply) {
-        replyText = data.reply;
+    // What we take
+    if (q.includes('what do you take') || q.includes('what you take') || q.includes('take?') || q.includes('rubbish')) {
+      return "We take general household junk, garage and shed clear-outs, green waste, small furniture moves, gym equipment and more. We can't take asbestos, chemicals or anything hazardous – for those you'll need a licensed specialist.";
+    }
+
+    // A–B delivery
+    if (q.includes('a-b') || q.includes('a to b') || q.includes('a 2 b') || q.includes('delivery')) {
+      return "For simple A to B deliveries of small household loads, pricing starts from around $100 including GST. Send the pickup and drop-off suburbs plus a rough idea of the items and I'll help with an estimate.";
+    }
+
+    // Default safe reply
+    return "I'm here to help with pricing, what we take, our service area and how to book with RedBack Rubbish Removal. For the fastest quote, send a few photos of your load and your suburb to 0459 272 402 and our family-run team will text you back, usually the same day.";
+  }
+
+  async function sendToTai(rawText) {
+    const text = (rawText || '').trim();
+    if (!text || isSending) return;
+
+    addMessage(text, 'user');
+    inputEl.value = '';
+    setLoading(true);
+
+    // Show a small typing indicator from Tai
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = 'Tai is thinking...';
+    typingMsg.appendChild(bubble);
+    chatLog.appendChild(typingMsg);
+    scrollToBottom();
+
+    try {
+      const res = await fetch('/.netlify/functions/tai-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = null;
       }
-    }
 
-    // Remove thinking bubble
-    if (thinkingBubble && thinkingBubble.parentNode) {
-      thinkingBubble.parentNode.removeChild(thinkingBubble);
-    }
+      typingMsg.remove();
 
-    // Show Tai reply
-    createBubble("tai", replyText);
-
-    // Update history (keep last 20 turns)
-    conversationHistory.push({ role: "user", content: text });
-    conversationHistory.push({ role: "assistant", content: replyText });
-    if (conversationHistory.length > 40) {
-      conversationHistory = conversationHistory.slice(-40);
-    }
-  } catch (err) {
-    console.error("Error talking to Tai:", err);
-
-    if (thinkingBubble && thinkingBubble.parentNode) {
-      thinkingBubble.parentNode.removeChild(thinkingBubble);
-    }
-
-    createBubble(
-      "tai",
-      "Something went wrong talking to the AI. Please check your internet and try again."
-    );
-  } finally {
-    setInputDisabled(false);
-    if (chatInput) {
-      chatInput.value = "";
-      chatInput.focus();
+      if (!res.ok || !data || typeof data.reply !== 'string') {
+        const fallback = getFallbackReply(text);
+        addMessage(fallback, 'tai');
+      } else {
+        addMessage(data.reply, 'tai');
+      }
+    } catch (err) {
+      console.error('Network error talking to Tai:', err);
+      typingMsg.remove();
+      const fallback = getFallbackReply(text);
+      addMessage(fallback, 'tai');
+    } finally {
+      setLoading(false);
+      inputEl.focus();
     }
   }
-}
 
-// --- EVENT LISTENERS --- //
-if (sendBtn && chatInput) {
-  sendBtn.addEventListener("click", () => {
-    sendToTai(chatInput.value);
+  // Send via button
+  sendBtn.addEventListener('click', function () {
+    const value = inputEl.value.trim();
+    if (!value) return;
+    sendToTai(value);
   });
 
-  chatInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  // Send on Enter (no Shift)
+  inputEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      sendToTai(chatInput.value);
+      const value = inputEl.value.trim();
+      if (!value) return;
+      sendToTai(value);
     }
   });
-}
 
-// Quick question buttons (data-text)
-if (quickButtons && quickButtons.length) {
-  quickButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const text = btn.getAttribute("data-text") || "";
-      if (text) {
-        sendToTai(text);
-      }
+  // Quick question buttons
+  quickButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const text = btn.getAttribute('data-question') || btn.getAttribute('data-text') || '';
+      if (!text) return;
+      sendToTai(text);
     });
   });
-}
 
-// Show a little “hint” when page first loads
-window.addEventListener("load", () => {
-  if (mascotHint) {
-    mascotHint.textContent = "G'day, I'm Tai 🕷 – ask me anything about your rubbish removal!";
-  }
+  // Initial welcome from Tai – with family-run angle
+  addMessage(
+    "Hi, I'm Tai, the AI helper for RedBack Rubbish Removal. We're a family-run Brisbane Southside & Logan business and we only bring our son along to jobs on the weekends. Ask me about pricing, what we take, our service area, or how to book.",
+    'tai'
+  );
 });
