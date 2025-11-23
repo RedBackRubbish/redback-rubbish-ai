@@ -95,17 +95,22 @@ document.addEventListener('DOMContentLoaded', function () {
     scrollToBottom();
 
     try {
-      const res = await fetch('/.netlify/functions/tai-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
+  const response = await fetch("/.netlify/functions/tai-ai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text }),  // keep "text" since your code already uses this variable
+  });
 
-      let data = null;
-      try {
-        data = await res.json();
-      } catch (e) {
-        data = null;
+  const data = await response.json();
+  typingMsg.remove();
+  addMessage(data.reply || "Sorry, I had trouble answering that.", 'tai');
+
+} catch (error) {
+  typingMsg.remove();
+  addMessage("Sorry, Tai encountered an error. Please try again.", 'tai');
+}
+
+     
       }
 
       typingMsg.remove();
