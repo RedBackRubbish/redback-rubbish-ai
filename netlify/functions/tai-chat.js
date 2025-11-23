@@ -1,20 +1,6 @@
-// netlify/functions/tai-chat.js
+// netlify/functions/tai-ai.js
 
-const apiKey = process.env.OPENAI_API_KEY;
-
-exports.handler = async (event) => {
-  // CORS / preflight
-  if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-      },
-    };
-  }
-
+export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -22,78 +8,61 @@ exports.handler = async (event) => {
     };
   }
 
-  if (!apiKey) {
-    return {
-      statusCode: 500,
-      body: "Server misconfigured: missing OPENAI_API_KEY",
-    };
-  }
-
-  let body;
   try {
-    body = JSON.parse(event.body || "{}");
-  } catch (err) {
-    return {
-      statusCode: 400,
-      body: "Invalid JSON body",
-    };
-  }
+    const { message } = JSON.parse(event.body || "{}");
 
-  const userMessage = (body && body.message) || "";
-  const history = Array.isArray(body.history) ? body.history : [];
-
-  if (!userMessage.trim()) {
-    return {
-      statusCode: 400,
-      body: "Missing 'message' in request body",
-    };
-  }
-
-  // Build chat messages for OpenAI
-  const messages = [
-    {
-      role: "system",
-      content:
-        "You are Tai, the friendly AI mascot for Redback Rubbish Removal in Brisbane Southside & Logan. " +
-        "You help with pricing guidance, what items we take, how bookings work, and general rubbish removal questions. " +
-        "Keep answers short, clear and friendly. Use Aussie tone where natural. " +
-        "Never invent prices; only give rough guidance and always tell them final quote is confirmed by SMS or on-site. " +
-        "If they ask for something we don't do (like asbestos removal), clearly say we don't handle that and recommend they contact a licensed professional.",
-    },
-    ...history.slice(-10), // last 10 messages to keep context small
-    {
-      role: "user",
-      content: userMessage,
-    },
-  ];
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages,
-        temperature: 0.4,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("OpenAI API error:", errorText);
+    if (!message) {
       return {
-        statusCode: 500,
-        body: "Error from AI backend",
+        statusCode: 400,
+        body: JSON.stringify({ error: "Missing message" }),
       };
     }
 
-    const data = await response.json();
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      console.error("Missing OPENAI_API_KEY");
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Server config error" }),
+      };
+    }
+
+    const openaiRes = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are Tai, the friendly AI mascot for RedBack Rubbish Removal. You answer questions about pricing, what items are accepted, service areas around Brisbane Southside & Logan, and how to book a same-day job. Always be clear, helpful, and concise.",
+            },
+            { role: "user", content: message },
+          ],
+          temperature: 0.6,
+        }),
+      }
+    );
+
+    if (!openaiRes.ok) {
+      const errText = await openaiRes.text();
+      console.error("OpenAI error:", openaiRes.status, errText);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "AI request failed" }),
+      };
+    }
+
+    const data = await openaiRes.json();
     const reply =
-      data.choices?.[0]?.message?.content?.trim() ||
-      "Sorry, I'm having trouble answering right now. Please try again in a moment.";
+      data.choices?.[0]?.message?.content ??
+      "Sorry, I had trouble answering that. Please try again.";
 
     return {
       statusCode: 200,
@@ -103,11 +72,15 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({ reply }),
     };
-  } catch (err) {
-    console.error("Function error:", err);
+  } catch (error) {
+    console.error("Tai function error:", error);
     return {
       statusCode: 500,
-      body: "Unexpected server error",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ error: "Server error" }),
     };
   }
-};
+}
