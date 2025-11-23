@@ -1057,6 +1057,21 @@ box-shadow:0 18px 40px rgba(0,0,0,0.35);}
   font-size:0.8rem;
   color:#e5e5e5;
 }
+/* --- Tai Mascot Chat Header --- */
+.mascot-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.mascot-avatar {
+  width: 60px;
+  height: auto;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
 .mascot-faq-list{
   list-style:none;
   padding:0;
