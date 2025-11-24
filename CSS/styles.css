@@ -1395,3 +1395,266 @@ select {
         max-width: 230px;
     }
 }
+/* ============================
+   TAI / LIL REDBACK WIDGET
+   ============================ */
+
+.mascot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+/* Floating button with Tai’s head */
+.mascot-toggle {
+  border: none;
+  border-radius: 999px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mascot-toggle img {
+  height: 80px;
+  width: auto;
+  display: block;
+  transition: transform 0.15s ease-out;
+}
+
+/* subtle “look” effect */
+.mascot-toggle img.mascot-look-left {
+  transform: translateX(-3px) rotate(-4deg);
+}
+
+.mascot-toggle img.mascot-look-right {
+  transform: translateX(3px) rotate(4deg);
+}
+
+/* Hint bubble */
+.mascot-hint {
+  position: absolute;
+  right: 86px;
+  bottom: 32px;
+  background: #111111;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  white-space: nowrap;
+}
+
+.mascot-hint.has-text {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Main chat panel */
+.mascot-panel {
+  position: absolute;
+  bottom: 90px;
+  right: 0;
+  width: 320px;
+  max-width: 90vw;
+  max-height: 70vh;
+  display: none;
+  flex-direction: column;
+  background: #111111;
+  color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+  overflow: hidden;
+}
+
+.mascot-open .mascot-panel { 
+  display: flex;
+}
+
+}
+
+/* Chat log */
+.mascot-chat-log {
+  padding: 10px 12px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 260px;
+}
+
+/* Messages */
+.mascot-msg {
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.mascot-msg .bubble {
+  padding: 7px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.mascot-msg-user {
+  justify-content: flex-end;
+}
+
+.mascot-msg-user .bubble {
+  background: #be1e2d;
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.mascot-msg-tai .bubble {
+  background: #1c1c1e;
+  color: #ffffff;
+  border-bottom-left-radius: 2px;
+}
+
+.mascot-msg-small .bubble {
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+/* Tone / vibe row */
+.mascot-tone-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 4px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: #18181a;
+}
+
+.mascot-tone-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
+}
+
+.mascot-tone-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.mascot-tone-btn.is-active {
+  background: #be1e2d;
+  border-color: #be1e2d;
+}
+
+/* Input row */
+.mascot-chat-form {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: #151517;
+}
+
+.mascot-chat-form input {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #333333;
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.mascot-chat-form button {
+  border-radius: 999px;
+  border: none;
+  padding: 7px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #be1e2d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* Quick buttons */
+.mascot-quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px 4px;
+  background: #111111;
+}
+
+.mascot-quick-buttons button {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+/* Quick quote small button row (created in JS) */
+.mascot-quick-quote-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 10px 10px;
+}
+
+.mascot-quick-quote-options button {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: #1c1c1e;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+/* Footer note + close */
+.mascot-footer-note {
+  margin: 4px 10px 6px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.mascot-footer-note a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.mascot-close {
+  align-self: flex-end;
+  margin: 0 10px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.7rem;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+/* Mobile tweaks */
+@media (max-width: 640px) {
+  .mascot-panel {
+    right: 10px;
+    bottom: 80px;
+    max-width: 92vw;
+  }
+
+  .mascot-toggle img {
+    height: 70px;
+  }
+}
