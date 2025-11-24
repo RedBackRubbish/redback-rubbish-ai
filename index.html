@@ -460,20 +460,191 @@
     });
   </script>
 
-  <!-- Tai AI front-end -->
-  <script>
- <script>
+<!-- Tai AI front-end -->
+<script>
 // Tai front-end logic for Lil RedBack mascot AI
 // - Shows a welcome message
 // - Talks to /.netlify/functions/tai-ai
-// - Has smart rubbish-removal fallbacks if AI is offline
+// - Has smart rubbish-removal fallbacks if AI fails
 
 document.addEventListener('DOMContentLoaded', function () {
   const widget       = document.querySelector('.mascot-widget');
   if (!widget) return;
 
   const toggle       = widget.querySelector('.mascot-toggle');
-  const panel        = widget.querySelector('.
-  </script>
-</body>
-</html>
+  const panel        = widget.querySelector('.mascot-panel');
+  const closeBtn     = widget.querySelector('.mascot-close');
+  const hint         = widget.querySelector('.mascot-hint');
+  const chatLog      = widget.querySelector('#tai-chat-log');
+  const inputEl      = widget.querySelector('#tai-chat-input');
+  const sendBtn      = widget.querySelector('#tai-chat-send');
+  const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
+
+  let isSending = false;
+
+  function isOpen() {
+    return widget.classList.contains('mascot-open');
+  }
+  function openPanel() {
+    widget.classList.add('mascot-open');
+    if (hint) hint.classList.remove('has-text');
+  }
+  function closePanel() {
+    widget.classList.remove('mascot-open');
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      isOpen() ? closePanel() : openPanel();
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closePanel);
+  }
+  if (hint) {
+    hint.addEventListener('click', openPanel);
+  }
+
+  function scrollToBottom() {
+    if (!chatLog) return;
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function addMessage(text, who = 'tai', opts = {}) {
+    if (!chatLog) return;
+    const msg  = document.createElement('div');
+    const role = who === 'user' ? 'user' : 'tai';
+    msg.className = 'mascot-msg mascot-msg-' + role;
+    if (opts.small) msg.classList.add('mascot-msg-small');
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+
+    msg.appendChild(bubble);
+    chatLog.appendChild(msg);
+    scrollToBottom();
+    return msg;
+  }
+
+  function setLoading(loading) {
+    isSending = loading;
+    if (sendBtn) sendBtn.disabled = loading;
+    if (inputEl) inputEl.disabled = loading;
+  }
+
+  function getFallbackReply(text) {
+    const q = (text || '').toLowerCase();
+
+    if (q.includes('price') || q.includes('cost') || q.includes('how much')) {
+      return "For most jobs we price by trailer load. A full load starts from around $550 including GST, half loads from about $330, and smaller jobs can be less. For an accurate price, send photos & your suburb to 0459 272 402 📸.";
+    }
+
+    if (q.includes('area') || q.includes('suburb') || q.includes('where') || q.includes('service')) {
+      return "We service Brisbane Southside & Logan plus surrounds. Send your suburb & a photo and I’ll confirm 🚛.";
+    }
+
+    if (q.includes('book') || q.includes('booking')) {
+      return "To book, just text photos & your suburb to 0459 272 402 — or use the form further down this page. Same-day often possible.";
+    }
+
+    if (q.includes('what do you take') || q.includes('rubbish')) {
+      return "We take general junk, furniture, green waste, small A–B moves, gym equipment and more. No asbestos or chemicals.";
+    }
+
+    return "I'm Tai! I can help with prices, booking, service areas and what we take. Fastest quote? Text photos & suburb to 0459 272 402.";
+  }
+
+  async function sendToTai(rawText) {
+    const text = (rawText || '').trim();
+    if (!text || isSending) return;
+
+    addMessage(text, 'user');
+    if (inputEl) inputEl.value = '';
+    setLoading(true);
+
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = 'Tai is thinking...';
+    typingMsg.appendChild(bubble);
+    chatLog.appendChild(typingMsg);
+    scrollToBottom();
+
+    try {
+      const res = await fetch('/.netlify/functions/tai-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = null;
+      }
+
+      typingMsg.remove();
+      if (!res.ok || !data || typeof data.reply !== 'string') {
+        addMessage(getFallbackReply(text), 'tai');
+      } else {
+        addMessage(data.reply, 'tai');
+      }
+    } catch (err) {
+      typingMsg.remove();
+      addMessage(getFallbackReply(text), 'tai');
+    } finally {
+      setLoading(false);
+      if (inputEl) inputEl.focus();
+    }
+  }
+
+  if (sendBtn && inputEl) {
+    sendBtn.addEventListener('click', () => {
+      const value = inputEl.value.trim();
+      if (value) sendToTai(value);
+    });
+
+    inputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const value = inputEl.value.trim();
+        if (value) sendToTai(value);
+      }
+    });
+  }
+
+  quickButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-question') || '';
+      if (text) sendToTai(text);
+    });
+  });
+
+  // Scroll-based hint text
+  const pricing = document.getElementById('pricing');
+  const booking = document.getElementById('book-quote');
+  function updateContext() {
+    if (!hint) return;
+    let context = '';
+    const mid = window.innerHeight / 2;
+    const areaCheck = el => {
+      const r = el.getBoundingClientRect();
+      return r.top < mid && r.bottom > mid;
+    };
+
+    if (pricing && areaCheck(pricing)) context = 'Not sure on price? Ask me 💰';
+    else if (booking && areaCheck(booking)) context = 'Need help booking? Ask me 📅';
+    else context = '👋 Hey I’m Tai — Tap to chat!';
+
+    hint.textContent = context;
+    hint.classList.toggle('has-text', !isOpen());
+  }
+
+  window.addEventListener('scroll', updateContext);
+  window.addEventListener('resize', updateContext);
+  updateContext();
+});
+</script>
