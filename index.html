@@ -468,336 +468,336 @@
     });
   </script>
 
-  <!-- Tai v9 front-end -->
-  <script>
-  // Tai v9 front-end logic for Lil RedBack mascot AI
-  // - Animated hint bubble
-  // - Personality toggle (friendly / pro / family)
-  // - Quick quote helper
-  // - Sends tone + message to /.netlify/functions/tai-ai
-  document.addEventListener('DOMContentLoaded', function () {
-    const widget       = document.querySelector('.mascot-widget');
-    if (!widget) return;
+ <!-- Tai v9 front-end -->
+<script>
+// Tai v9 front-end logic for Lil RedBack mascot AI
+// - Animated hint bubble
+// - Personality toggle (friendly / pro / family)
+// - Quick quote helper
+// - Sends tone + message to /.netlify/functions/tai-ai
+document.addEventListener('DOMContentLoaded', function () {
+  const widget       = document.querySelector('.mascot-widget');
+  if (!widget) return;
 
-    const toggle       = widget.querySelector('.mascot-toggle');
-    const panel        = widget.querySelector('.mascot-panel');
-    const closeBtn     = widget.querySelector('.mascot-close');
-    const hint         = widget.querySelector('.mascot-hint');
-    const chatLog      = widget.querySelector('#tai-chat-log');
-    const inputEl      = widget.querySelector('#tai-chat-input');
-    const sendBtn      = widget.querySelector('#tai-chat-send');
-    const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
-    const toneButtons  = widget.querySelectorAll('.mascot-tone-btn');
-    const avatarImg    = widget.querySelector('.mascot-toggle img');
+  const toggle       = widget.querySelector('.mascot-toggle');
+  const panel        = widget.querySelector('.mascot-panel');
+  const closeBtn     = widget.querySelector('.mascot-close');
+  const hint         = widget.querySelector('.mascot-hint');
+  const chatLog      = widget.querySelector('#tai-chat-log');
+  const inputEl      = widget.querySelector('#tai-chat-input');
+  const sendBtn      = widget.querySelector('#tai-chat-send');
+  const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
+  const toneButtons  = widget.querySelectorAll('.mascot-tone-btn');
+  const avatarImg    = widget.querySelector('.mascot-toggle img');
 
-    let isSending = false;
-    let tone = 'friendly';
+  let isSending = false;
+  let tone = 'friendly';
 
-    /* ---------- panel open / close ---------- */
-    function isOpen() {
-      return widget.classList.contains('mascot-open');
+  /* ---------- panel open / close ---------- */
+  function isOpen() {
+    return widget.classList.contains('mascot-open');
+  }
+  function openPanel() {
+    widget.classList.add('mascot-open');
+    if (hint) hint.classList.remove('has-text');
+  }
+  function closePanel() {
+    widget.classList.remove('mascot-open');
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      isOpen() ? closePanel() : openPanel();
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closePanel);
+  }
+  if (hint) {
+    hint.addEventListener('click', openPanel);
+  }
+
+  /* ---------- fake eye tracking (head tilt) ---------- */
+  if (avatarImg) {
+    window.addEventListener('mousemove', function (e) {
+      const mid = window.innerWidth / 2;
+      if (e.clientX < mid - 60) {
+        avatarImg.classList.add('mascot-look-left');
+        avatarImg.classList.remove('mascot-look-right');
+      } else if (e.clientX > mid + 60) {
+        avatarImg.classList.add('mascot-look-right');
+        avatarImg.classList.remove('mascot-look-left');
+      } else {
+        avatarImg.classList.remove('mascot-look-left', 'mascot-look-right');
+      }
+    });
+  }
+
+  /* ---------- chat helpers ---------- */
+  function scrollToBottom() {
+    if (!chatLog) return;
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function addMessage(text, who = 'tai', opts = {}) {
+    if (!chatLog) return;
+
+    const msg  = document.createElement('div');
+    const role = who === 'user' ? 'user' : 'tai';
+    msg.className = 'mascot-msg mascot-msg-' + role;
+    if (opts.small) msg.classList.add('mascot-msg-small');
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+
+    msg.appendChild(bubble);
+    chatLog.appendChild(msg);
+    scrollToBottom();
+    return msg;
+  }
+
+  function setLoading(loading) {
+    isSending = loading;
+    if (sendBtn) sendBtn.disabled = loading;
+    if (inputEl) inputEl.disabled = loading;
+  }
+
+  function getFallbackReply(text) {
+    const q = (text || '').toLowerCase();
+
+    function withTone(base) {
+      if (tone === 'pro') {
+        return base.replace("No worries,", "Certainly,")
+                   .replace("no stress", "nice and straightforward");
+      }
+      if (tone === 'family') {
+        return "No worries at all, we’ll look after you. " + base;
+      }
+      return base;
     }
-    function openPanel() {
-      widget.classList.add('mascot-open');
-      if (hint) hint.classList.remove('has-text');
-    }
-    function closePanel() {
-      widget.classList.remove('mascot-open');
+
+    if (q.includes('price') || q.includes('cost') || q.includes('how much')) {
+      return withTone("For most jobs we price by trailer load. A full load starts from around $550 including GST, half loads from about $330, and smaller jobs can be less. The best way is to text a couple of photos and your suburb to 0459 272 402 and we’ll reply with a firm quote.");
     }
 
-    if (toggle) {
-      toggle.addEventListener('click', function () {
-        isOpen() ? closePanel() : openPanel();
+    if (q.includes('area') || q.includes('suburb') || q.includes('where') || q.includes('service')) {
+      return withTone("We service Brisbane Southside and Logan plus nearby suburbs. If you’re unsure whether we come to you, send your suburb with a quick photo of the load and I’ll confirm it for you.");
+    }
+
+    if (q.includes('book') || q.includes('booking') || q.includes('same-day') || q.includes('same day')) {
+      return withTone("To book, you can text photos of your rubbish and your suburb to 0459 272 402, or use the online Jobber booking form further down this page. We’ll reply with a time window and confirmation. Same-day or next-day is often possible depending on the schedule.");
+    }
+
+    if (q.includes('what do you take') || q.includes('what you take') || q.includes('take?') || q.includes('rubbish')) {
+      return withTone("We take general household junk, garage and shed clear-outs, green waste, small furniture moves, gym equipment and more. We can’t take asbestos, chemicals or anything hazardous – for those you’ll need a licensed specialist.");
+    }
+
+    if (q.includes('a-b') || q.includes('a to b') || q.includes('a 2 b') || q.includes('delivery')) {
+      return withTone("For simple A to B deliveries of small household loads, pricing starts from around $100 including GST. Send the pickup and drop-off suburbs plus a rough idea of the items and I’ll help with an estimate.");
+    }
+
+    return withTone("I’m here to help with pricing, what we take, our service area and how to book with RedBack Rubbish Removal. For the fastest quote, send a few photos of your load and your suburb to 0459 272 402 and our family-run team will text you back, usually the same day.");
+  }
+
+  async function sendToTai(rawText, opts = {}) {
+    const text = (rawText || '').trim();
+    if (!text || isSending) return;
+
+    if (!opts.silentUser) {
+      addMessage(text, 'user');
+    }
+    if (!opts.skipInputClear && inputEl) {
+      inputEl.value = '';
+    }
+
+    setLoading(true);
+
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = 'Tai is thinking...';
+    typingMsg.appendChild(bubble);
+    chatLog.appendChild(typingMsg);
+    scrollToBottom();
+
+    try {
+      const res = await fetch('/.netlify/functions/tai-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, tone: tone })
       });
-    }
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closePanel);
-    }
-    if (hint) {
-      hint.addEventListener('click', openPanel);
-    }
 
-    /* ---------- fake eye tracking (head tilt) ---------- */
-    if (avatarImg) {
-      window.addEventListener('mousemove', function (e) {
-        const mid = window.innerWidth / 2;
-        if (e.clientX < mid - 60) {
-          avatarImg.classList.add('mascot-look-left');
-          avatarImg.classList.remove('mascot-look-right');
-        } else if (e.clientX > mid + 60) {
-          avatarImg.classList.add('mascot-look-right');
-          avatarImg.classList.remove('mascot-look-left');
-        } else {
-          avatarImg.classList.remove('mascot-look-left', 'mascot-look-right');
-        }
-      });
-    }
-
-    /* ---------- chat helpers ---------- */
-    function scrollToBottom() {
-      if (!chatLog) return;
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
-
-    function addMessage(text, who = 'tai', opts = {}) {
-      if (!chatLog) return;
-
-      const msg  = document.createElement('div');
-      const role = who === 'user' ? 'user' : 'tai';
-      msg.className = 'mascot-msg mascot-msg-' + role;
-      if (opts.small) msg.classList.add('mascot-msg-small');
-
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      bubble.textContent = text;
-
-      msg.appendChild(bubble);
-      chatLog.appendChild(msg);
-      scrollToBottom();
-      return msg;
-    }
-
-    function setLoading(loading) {
-      isSending = loading;
-      if (sendBtn) sendBtn.disabled = loading;
-      if (inputEl) inputEl.disabled = loading;
-    }
-
-    function getFallbackReply(text) {
-      const q = (text || '').toLowerCase();
-
-      function withTone(base) {
-        if (tone === 'pro') {
-          return base.replace("No worries,", "Certainly,")
-                     .replace("no stress", "nice and straightforward");
-        }
-        if (tone === 'family') {
-          return "No worries at all, we’ll look after you. " + base;
-        }
-        return base;
-      }
-
-      if (q.includes('price') || q.includes('cost') || q.includes('how much')) {
-        return withTone("For most jobs we price by trailer load. A full load starts from around $550 including GST, half loads from about $330, and smaller jobs can be less. The best way is to text a couple of photos and your suburb to 0459 272 402 and we’ll reply with a firm quote.");
-      }
-
-      if (q.includes('area') || q.includes('suburb') || q.includes('where') || q.includes('service')) {
-        return withTone("We service Brisbane Southside and Logan plus nearby suburbs. If you’re unsure whether we come to you, send your suburb with a quick photo of the load and I’ll confirm it for you.");
-      }
-
-      if (q.includes('book') || q.includes('booking') || q.includes('same-day') || q.includes('same day')) {
-        return withTone("To book, you can text photos of your rubbish and your suburb to 0459 272 402, or use the online Jobber booking form further down this page. We’ll reply with a time window and confirmation. Same-day or next-day is often possible depending on the schedule.");
-      }
-
-      if (q.includes('what do you take') || q.includes('what you take') || q.includes('take?') || q.includes('rubbish')) {
-        return withTone("We take general household junk, garage and shed clear-outs, green waste, small furniture moves, gym equipment and more. We can’t take asbestos, chemicals or anything hazardous – for those you’ll need a licensed specialist.");
-      }
-
-      if (q.includes('a-b') || q.includes('a to b') || q.includes('a 2 b') || q.includes('delivery')) {
-        return withTone("For simple A to B deliveries of small household loads, pricing starts from around $100 including GST. Send the pickup and drop-off suburbs plus a rough idea of the items and I’ll help with an estimate.");
-      }
-
-      return withTone("I’m here to help with pricing, what we take, our service area and how to book with RedBack Rubbish Removal. For the fastest quote, send a few photos of your load and your suburb to 0459 272 402 and our family-run team will text you back, usually the same day.");
-    }
-
-    async function sendToTai(rawText, opts = {}) {
-      const text = (rawText || '').trim();
-      if (!text || isSending) return;
-
-      if (!opts.silentUser) {
-        addMessage(text, 'user');
-      }
-      if (!opts.skipInputClear && inputEl) {
-        inputEl.value = '';
-      }
-
-      setLoading(true);
-
-      const typingMsg = document.createElement('div');
-      typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      bubble.textContent = 'Tai is thinking...';
-      typingMsg.appendChild(bubble);
-      chatLog.appendChild(typingMsg);
-      scrollToBottom();
-
+      let data = null;
       try {
-        const res = await fetch('/.netlify/functions/tai-ai', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, tone: tone })
-        });
-
-        let data = null;
-        try {
-          data = await res.json();
-        } catch (e) {
-          data = null;
-        }
-
-        typingMsg.remove();
-
-        if (!res.ok || !data || typeof data.reply !== 'string') {
-          addMessage(getFallbackReply(text), 'tai');
-        } else {
-          addMessage(data.reply, 'tai');
-        }
-      } catch (err) {
-        console.error('Network error talking to Tai:', err);
-        typingMsg.remove();
-        addMessage(getFallbackReply(text), 'tai');
-      } finally {
-        setLoading(false);
-        if (inputEl && !opts.noRefocus) inputEl.focus();
+        data = await res.json();
+      } catch (e) {
+        data = null;
       }
-    }
 
-    /* ---------- send button + Enter key ---------- */
-    if (sendBtn && inputEl) {
-      sendBtn.addEventListener('click', function () {
+      typingMsg.remove();
+
+      if (!res.ok || !data || typeof data.reply !== 'string') {
+        addMessage(getFallbackReply(text), 'tai');
+      } else {
+        addMessage(data.reply, 'tai');
+      }
+    } catch (err) {
+      console.error('Network error talking to Tai:', err);
+      typingMsg.remove();
+      addMessage(getFallbackReply(text), 'tai');
+    } finally {
+      setLoading(false);
+      if (inputEl && !opts.noRefocus) inputEl.focus();
+    }
+  }
+
+  /* ---------- send button + Enter key ---------- */
+  if (sendBtn && inputEl) {
+    sendBtn.addEventListener('click', function () {
+      const value = inputEl.value.trim();
+      if (!value) return;
+      sendToTai(value);
+    });
+
+    inputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
         const value = inputEl.value.trim();
         if (!value) return;
         sendToTai(value);
-      });
-
-      inputEl.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          const value = inputEl.value.trim();
-          if (!value) return;
-          sendToTai(value);
-        }
-      });
-    }
-
-    /* ---------- quick buttons ---------- */
-    quickButtons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const action = btn.getAttribute('data-action') || '';
-        if (action === 'quote-helper') {
-          startQuickQuote();
-          return;
-        }
-        const text = btn.getAttribute('data-question') || btn.textContent || '';
-        if (!text) return;
-        // send as system-style question (don’t echo as user)
-        sendToTai(text, { silentUser: true });
-      });
+      }
     });
+  }
 
-    /* ---------- quick quote helper (front-end only) ---------- */
-    function startQuickQuote() {
-      addMessage("No worries, I can give you a rough idea. What does your load look like?", 'tai');
-      const wrap = document.createElement('div');
-      wrap.className = 'mascot-quick-quote-options';
-
-      const options = [
-        { key: 'small', label: 'Just a few bulky items' },
-        { key: 'half',  label: 'About half a trailer' },
-        { key: 'full',  label: 'Big full load' }
-      ];
-
-      options.forEach(function (opt) {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.textContent = opt.label;
-        b.addEventListener('click', function () {
-          handleQuickQuoteChoice(opt.key);
-          wrap.remove();
-        });
-        wrap.appendChild(b);
-      });
-
-      chatLog.appendChild(wrap);
-      scrollToBottom();
-    }
-
-    function handleQuickQuoteChoice(size) {
-      let reply = '';
-      if (size === 'small') {
-        reply = "For a small load (a few bulky items), you’re often looking from about $150–$220 including GST. Text some photos and your suburb to 0459 272 402 and we’ll pin it down properly.";
-      } else if (size === 'half') {
-        reply = "For around half a trailer load, most jobs land around $330 including GST, depending on the mix of junk. Send a couple of photos and your suburb and I’ll help lock in a firm price.";
-      } else {
-        reply = "For a big full trailer load, you’re usually in the $500–$550 including GST range. If you text photos and your suburb through to 0459 272 402 we can confirm the exact amount before we start.";
+  /* ---------- quick buttons ---------- */
+  quickButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const action = btn.getAttribute('data-action') || '';
+      if (action === 'quote-helper') {
+        startQuickQuote();
+        return;
       }
-      addMessage(reply, 'tai');
-    }
-
-    /* ---------- tone / personality buttons ---------- */
-    toneButtons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const newTone = btn.getAttribute('data-tone') || 'friendly';
-        tone = newTone;
-
-        toneButtons.forEach(function (b) {
-          b.classList.toggle('is-active', b === btn);
-        });
-
-        let msg = '';
-        if (tone === 'friendly') {
-          msg = "Sweet, I’ll keep it casual and friendly.";
-        } else if (tone === 'pro') {
-          msg = "Got it. I’ll keep things short and professional.";
-        } else {
-          msg = "Nice, I’ll lean into the family vibe for you.";
-        }
-        addMessage(msg, 'tai', { small: true });
-      });
+      const text = btn.getAttribute('data-question') || btn.textContent || '';
+      if (!text) return;
+      // send as system-style question (don’t echo as user)
+      sendToTai(text, { silentUser: true });
     });
-
-    /* ---------- scroll-based hint text (pricing / booking) ---------- */
-    const pricing = document.getElementById('pricing');
-    const booking = document.getElementById('book-quote');
-
-    function updateContext() {
-      if (!hint) return;
-      let context = '';
-      const mid = window.innerHeight / 2;
-
-      if (pricing) {
-        const r1 = pricing.getBoundingClientRect();
-        if (r1.top < mid && r1.bottom > mid) {
-          context = 'Not sure on price? Ask me.';
-        }
-      }
-      if (!context && booking) {
-        const r2 = booking.getBoundingClientRect();
-        if (r2.top < mid && r2.bottom > mid) {
-          context = 'Need help booking? Ask me.';
-        }
-      }
-      if (!context) {
-        context = '👋 Hey I’m Tai — Tap to chat!';
-      }
-
-      hint.textContent = context;
-      if (!isOpen()) {
-        hint.classList.add('has-text');
-      } else {
-        hint.classList.remove('has-text');
-      }
-    }
-
-    window.addEventListener('scroll', updateContext);
-    window.addEventListener('resize', updateContext);
-    updateContext();
-
-    /* ---------- one-time auto-greeting in panel ---------- */
-    let greeted = false;
-    try {
-      greeted = window.sessionStorage.getItem('rb_mascot_greeted') === 'yes';
-    } catch (e) {}
-
-    if (!greeted) {
-      addMessage("Boss said I can help you, fire away when you're ready.", 'tai');
-      try {
-        window.sessionStorage.setItem('rb_mascot_greeted', 'yes');
-      } catch (e) {}
-    }
   });
-  </script>
 
-</body>
-</html>
+  /* ---------- quick quote helper (front-end only) ---------- */
+  function startQuickQuote() {
+    addMessage("No worries, I can give you a rough idea. What does your load look like?", 'tai');
+    const wrap = document.createElement('div');
+    wrap.className = 'mascot-quick-quote-options';
+
+    const options = [
+      { key: 'small', label: 'Just a few bulky items' },
+      { key: 'half',  label: 'About half a trailer' },
+      { key: 'full',  label: 'Big full load' }
+    ];
+
+    options.forEach(function (opt) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = opt.label;
+      b.addEventListener('click', function () {
+        handleQuickQuoteChoice(opt.key);
+        wrap.remove();
+      });
+      wrap.appendChild(b);
+    });
+
+    chatLog.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function handleQuickQuoteChoice(size) {
+    let reply = '';
+    if (size === 'small') {
+      reply = "For a small load (a few bulky items), you’re often looking from about $150–$220 including GST. Text some photos and your suburb to 0459 272 402 and we’ll pin it down properly.";
+    } else if (size === 'half') {
+      reply = "For around half a trailer load, most jobs land around $330 including GST, depending on the mix of junk. Send a couple of photos and your suburb and I’ll help lock in a firm price.";
+    } else {
+      reply = "For a big full trailer load, you’re usually in the $500–$550 including GST range. If you text photos and your suburb through to 0459 272 402 we can confirm the exact amount before we start.";
+    }
+    addMessage(reply, 'tai');
+  }
+
+  /* ---------- tone / personality buttons ---------- */
+  toneButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const newTone = btn.getAttribute('data-tone') || 'friendly';
+      tone = newTone;
+
+      toneButtons.forEach(function (b) {
+        b.classList.toggle('is-active', b === btn);
+      });
+
+      let msg = '';
+      if (tone === 'friendly') {
+        msg = "Sweet, I’ll keep it casual and friendly.";
+      } else if (tone === 'pro') {
+        msg = "Got it. I’ll keep things short and professional.";
+      } else {
+        msg = "Nice, I’ll lean into the family vibe for you.";
+      }
+      addMessage(msg, 'tai', { small: true });
+    });
+  });
+
+  /* ---------- scroll-based hint text (pricing / booking) ---------- */
+  const pricing = document.getElementById('pricing');
+  const booking = document.getElementById('book-quote');
+
+  function updateContext() {
+    if (!hint) return;
+    let context = '';
+    const mid = window.innerHeight / 2;
+
+    if (pricing) {
+      const r1 = pricing.getBoundingClientRect();
+      if (r1.top < mid && r1.bottom > mid) {
+        context = 'Not sure on price? Ask me.';
+      }
+    }
+    if (!context && booking) {
+      const r2 = booking.getBoundingClientRect();
+      if (r2.top < mid && r2.bottom > mid) {
+        context = 'Need help booking? Ask me.';
+      }
+    }
+    if (!context) {
+      context = '👋 Hey I’m Tai — Tap to chat!';
+    }
+
+    hint.textContent = context;
+    if (!isOpen()) {
+      hint.classList.add('has-text');
+    } else {
+      hint.classList.remove('has-text');
+    }
+  }
+
+  window.addEventListener('scroll', updateContext);
+  window.addEventListener('resize', updateContext);
+  updateContext();
+
+  /* ---------- one-time auto-greeting in panel ---------- */
+  let greeted = false;
+  try {
+    greeted = window.sessionStorage.getItem('rb_mascot_greeted') === 'yes';
+  } catch (e) {}
+
+  if (!greeted) {
+    addMessage(
+      "Hi, I’m Tai from RedBack. Ask me about prices, what we take, or how booking works – I’ll keep it simple.",
+      'tai'
+    );
+    try {
+      window.sessionStorage.setItem('rb_mascot_greeted', 'yes');
+    } catch (e) {}
+  }
+});
+</script>
