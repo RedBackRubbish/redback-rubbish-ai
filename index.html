@@ -1,56 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>RedBack Rubbish Removal | Brisbane Southside & Logan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Premium rubbish removal in Brisbane Southside & Logan. Family-run, fully insured and no-stress service with upfront prices and all the heavy lifting done for you." />
-  <link rel="icon" type="image/png" href="images/logo.png" />
-  <meta property="og:title" content="RedBack Rubbish Removal" />
-  <meta property="og:description" content="No Mess — No Stress. Text photos for a fast rubbish removal quote." />
-  <meta property="og:image" content="images/storage-unit.jpg" />
-  <link rel="stylesheet" href="CSS/styles.css" />
-</head>
+  <meta charset="utf-8"/>
+  <title>RedBack Rubbish Removal | Brisbane Southside &amp; Logan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Premium rubbish removal in Brisbane Southside & Logan. Family-run, fully insured and no-stress service with upfront prices and all the heavy lifting done for you."/>
+  <link rel="icon" type="image/png" href="images/logo.png"/>
 
+  <meta property="og:title" content="RedBack Rubbish Removal"/>
+  <meta property="og:description" content="No Mess — No Stress. Text photos for a fast rubbish removal quote."/>
+  <meta property="og:image" content="images/storage-unit.jpg"/>
+
+  <link rel="stylesheet" href="CSS/styles.css"/>
+</head>
 <body>
 
-<!-- Mobile bottom bar -->
-<div class="mobile-cta-bar">
-  <a href="sms:0459272402?body=Hi%20RedBack%2C%20I%20like%20a%20rubbish%20removal%20quote%20please."
-     class="mobile-cta-btn mobile-cta-text-only">
-    Text photos for a fast quote
-  </a>
-</div>
-
-<!-- Tai AI widget -->
-<div class="mascot-widget" aria-live="polite">
-  <div class="mascot-hint has-text" aria-hidden="false">
-    👋 Hi, I’m Tai — tap to chat!
+  <!-- Mobile bottom bar -->
+  <div class="mobile-cta-bar">
+    <a
+      href="sms:0459272402?body=Hi%20RedBack%2C%20I%20like%20a%20rubbish%20removal%20quote%20please."
+      class="mobile-cta-btn mobile-cta-text-only">
+      Text photos for a fast quote
+    </a>
   </div>
 
-  <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
-    <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
-
-    <div class="mascot-chat-form" id="tai-chat-form">
-      <input type="text" id="tai-chat-input" placeholder="Type your question here..." autocomplete="off" />
-      <button type="button" id="tai-chat-send">Send</button>
+  <!-- Sticky Tai AI widget -->
+  <div class="mascot-widget" aria-live="polite">
+    <div class="mascot-hint has-text" aria-hidden="false">
+      👋 Hi, I’m Tai — tap to chat!
     </div>
 
-    <div class="mascot-quick-buttons">
-      <button type="button" data-question="How do your prices work?">Pricing</button>
-      <button type="button" data-question="What areas do you service?">Service areas</button>
-      <button type="button" data-question="How do I book a job?">How to book</button>
-      <button type="button" data-question="What kind of rubbish do you take?">What you take</button>
+    <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
+      <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
+
+      <div class="mascot-chat-form" id="tai-chat-form">
+        <input type="text" id="tai-chat-input" placeholder="Type your question here..." autocomplete="off"/>
+        <button type="button" id="tai-chat-send">Send</button>
+      </div>
+
+      <div class="mascot-quick-buttons">
+        <button type="button" data-question="How do your prices work?">Pricing</button>
+        <button type="button" data-question="What areas do you service?">Service areas</button>
+        <button type="button" data-question="How do I book a job?">How to book</button>
+        <button type="button" data-question="What kind of rubbish do you take?">What you take</button>
+      </div>
+
+      <p class="mascot-footer-note">
+        Want a same-day quote? You can also text photos to
+        <a href="sms:0459272402">0459 272 402</a>.
+      </p>
+
+      <button class="mascot-close" type="button">Close</button>
     </div>
 
-    <p class="mascot-footer-note">
-      Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272 402</a>.
-    </p>
-    <button class="mascot-close" type="button">Close</button>
+    <!-- Floating avatar -->
+    <button title="Chat with Tai" class="mascot-toggle" type="button">
+      <img src="images/mascots/mascot-head.png" alt="Lil RedBack"/>
+    </button>
   </div>
 
-  <!-- Floating avatar -->
-  <button title="Chat with Tai" class="mascot-toggle" type="button">
-    <img src="images/mascots/mascot-head.png" alt="Lil RedBack" />
-  </button>
-</div>
+  <!-- Top SMS bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span class="top-tagline">NO MESS — NO STRESS</span>
+      <a class="top-phone" href="tel:0459272402">Call 0459 272 402</a>
+      <a class="top-sms" href="sms:0459272402?&body=Hi%20RedBack%2C%20I%E2%80%99d%20like%20a%20rubbish%20removal%20quote.%20I%20can%20send%20photos.">Text Photos</a>
+      <a class="top-email" href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">Email</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo"/>
+        <div class="brand-text">
+          <span class="brand-name">REDBACK RUBBISH REMOVAL</span>
+          <span class="brand-location">Brisbane Southside &amp; Logan</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#what-we-take">What We Take</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#why-redback">Why Us</a>
+        <a class="btn-pill" href="#book-quote">Book / Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay-angle"></div>
+    <div class="hero-overlay-dark"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <p class="hero-location">Brisbane Southside &amp; Logan</p>
+        <h1 class="hero-title">Rubbish Removal<br/>Made Simple</h1>
+        <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
+
+        <div class="hero-cta-row">
+          <div class="hero-sms-box">
+            <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
+            <div class="hero-sms-input-row">
+              <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
+              <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
+            </div>
+            <p class="hero-note">
+              We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
+            </p>
+          </div>
+        </div>
+
+        <ul class="hero-trust-list">
+          <li>✔ Family owned &amp; operated (we only bring our son along on weekend jobs)</li>
+          <li>✔ Fully insured</li>
+          <li>✔ Friendly, uniformed team</li>
+          <li>✔ We load, sweep &amp; dispose</li>
+        </ul>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-card">
+          <img src="images/hero-trailer.jpg" alt="RedBack Rubbish Removal trailer loaded and ready to go"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section how-section" id="how-it-works">
+    <div class="container how-inner">
+      <h2 class="section-title how-title">How It Works</h2>
+      <p class="section-subtitle how-subtitle">Three quick steps from photos to a clean space.</p>
+
+      <div class="how-visual">
+        <img src="images/mascots/lilredback_howitworks.png"
+             alt="Lil RedBack pointing at how it works board"
+             class="how-it-works-illustration"/>
+      </div>
+
+      <div class="how-steps-simple">
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-red">
+            <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+              <circle cx="20" cy="20" r="20"></circle>
+              <rect x="10" y="14" width="20" height="14" rx="2" ry="2" fill="none" stroke="white" stroke-width="2"></rect>
+              <circle cx="16" cy="21" r="3" fill="none" stroke="white" stroke-width="2"></circle>
+              <polyline points="18,12 22,8 26,12" fill="none" stroke="white" stroke-width="2"></polyline>
+            </svg>
+          </div>
+          <div class="how-text">
+            <div class="how-label">1. Send photos &amp; suburb</div>
+            <p>Text or email photos of the load and your suburb. We’ll give you an upfront quote.</p>
+          </div>
+        </div>
+
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-white">
+            <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+              <circle cx="20" cy="20" r="20"></circle>
+              <polyline points="12,20 17,25 28,14" fill="none" stroke="#be1e2d" stroke-width="3"></polyline>
+            </svg>
+          </div>
+          <div class="how-text">
+            <div class="how-label">2. We confirm &amp; book you in</div>
+            <p>We lock in a time window and send you a confirmation SMS so you know exactly when we’re coming.</p>
+          </div>
+        </div>
+
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-black">
+            <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+              <circle cx="20" cy="20" r="20"></circle>
+              <polyline points="12,24 16,24 18,20 22,20 24,24 28,24" fill="none" stroke="white" stroke-width="2"></polyline>
+              <polyline points="12,18 16,16 18,12 22,12 24,16 28,18" fill="none" stroke="white" stroke-width="2"></polyline>
+            </svg>
+          </div>
+          <div class="how-text">
+            <div class="how-label">3. We load, sweep &amp; dispose</div>
+            <p>We do all the heavy lifting and sweep up before we leave so you get your space back, tidy and ready to use.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we take -->
+  <section class="section section-red" id="what-we-take">
+    <div class="container">
+      <h2 class="section-title section-title-on-dark">What We Take</h2>
+
+      <div class="section-mascot-inline">
+        <img src="images/mascots/lilredback_3.png" alt="Lil RedBack waving next to What We Take">
+      </div>
+
+      <p class="section-subtitle section-subtitle-on-dark">
+        From storage sheds and spare rooms to garages and green waste, we handle the heavy stuff so you don’t have to.
+      </p>
+
+      <div class="cards-grid">
+        <article class="card">
+          <img src="images/storage-unit.jpg" alt="Storage unit with furniture and boxes"/>
+          <div class="card-body">
+            <h3>Household Junk &amp; Storage</h3>
+            <p>Old furniture, mattresses, boxes, tenants’ left-behind items and more.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="images/gym-equipment.jpg" alt="Gym equipment loaded on trailer"/>
+          <div class="card-body">
+            <h3>Garage, Shed &amp; Gym Clean-Outs</h3>
+            <p>Weights, benches, tools and clutter that’s built up over the years.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="images/green-waste.jpg" alt="Green waste and branches"/>
+          <div class="card-body">
+            <h3>Green Waste</h3>
+            <p>Branches, palm fronds, garden clean-ups and storm debris.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="images/boxes-move.jpg" alt="Boxes and flat packs"/>
+          <div class="card-body">
+            <h3>A &gt; B Moves (Small Loads)</h3>
+            <p>Need to shift items from one place to another? We can help with simple A &gt; B moves from $100 (incl. GST).</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section section-cream" id="pricing">
+    <div class="container">
+      <h2 class="section-title">Upfront Pricing</h2>
+      <p class="section-subtitle">We’ll always confirm the price before we start loading.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Small Load</h3>
+          <p class="price">From $150–$220 (incl. GST)</p>
+          <p class="price-note">Good for a few bulky items or a small room’s worth.</p>
+        </div>
+
+        <div class="price-card price-card-featured">
+          <h3>Half Load</h3>
+          <p class="price">From $330 (incl. GST)</p>
+          <p class="price-note">Popular for standard garage or shed clear-outs.</p>
+        </div>
+
+        <div class="price-card">
+          <h3>Full Load</h3>
+          <p class="price">From $550 (incl. GST)</p>
+          <p class="price-note">Great for moves, big clear-outs and deceased estates.</p>
+        </div>
+      </div>
+
+      <h3 class="pricing-subheading">Specialty Service Pricing</h3>
+
+      <div class="pricing-grid pricing-grid-special">
+        <div class="price-card">
+          <h3>A–B Delivery (Small Load)</h3>
+          <p class="price">From $100 (incl. GST)</p>
+          <p class="price-note">Pickup &amp; drop-off of boxes, furniture or household items.</p>
+        </div>
+
+        <div class="price-card">
+          <h3>Green Waste Loads</h3>
+          <p class="price">Quoted Per Job</p>
+          <p class="price-note">Palm fronds, branches, yard clean-ups and storm debris.</p>
+        </div>
+      </div>
+
+      <p class="pricing-footnote">
+        Tip fees for standard household loads are included. Extra-heavy items or special disposal needs may be quoted separately.
+      </p>
+    </div>
+  </section>
+
+  <!-- Why choose us -->
+  <section class="section section-light" id="why-redback">
+    <div class="container why-grid">
+      <div class="why-intro">
+        <h2 class="section-title">Why Choose RedBack</h2>
+        <p class="section-subtitle">
+          We run RedBack like a premium tradie service – sharp communication, sharp presentation and reliable service every time.
+        </p>
+      </div>
+
+      <div class="why-cards">
+        <article class="why-card">
+          <div class="why-icon">⏱️</div>
+          <h3>Fast Responses</h3>
+          <p>We reply quickly to texts and online bookings so you’re never left wondering.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon">🧹</div>
+          <h3>All The Heavy Lifting</h3>
+          <p>We load, lift and sweep – you don’t touch a thing. Perfect for busy families and owners.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon">♻️</div>
+          <h3>Recycle &amp; Donate</h3>
+          <p>Wherever we can, we keep items out of landfill by recycling or donating.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section section-dark">
+    <div class="container reviews-grid">
+      <div class="reviews-intro">
+        <h2 class="section-title section-title-on-dark">Real People. Real Clean-Ups.</h2>
+        <p class="section-subtitle section-subtitle-on-dark">
+          We treat every job like it’s our own home or yard. Friendly, on-time and we leave things tidy.
+        </p>
+      </div>
+
+      <div class="reviews-cards">
+        <article class="review-card">
+          <p class="review-text">
+            “So easy. I sent a couple of photos and had a quote back in minutes. They turned up on time, loaded everything and swept up. Highly recommend.”
+          </p>
+          <p class="review-name">– Local Homeowner</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-text">
+            “Helped us clear out a garage and some green waste. Friendly, professional and very fair pricing.”
+          </p>
+          <p class="review-name">– Property Manager</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-text">
+            “Family-run business that really cares. They kept me updated by SMS the whole way through.”
+          </p>
+          <p class="review-name">– Repeat Client</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Book / Quote -->
+  <section class="section section-cream" id="book-quote">
+    <div class="container book-grid">
+      <div class="book-column">
+        <h2 class="section-title">Book Or Get A Quote</h2>
+        <p class="section-subtitle">Choose the option that’s easiest for you.</p>
+
+        <ul class="book-list">
+          <li>📸 <strong>Text photos &amp; suburb</strong> to <a href="sms:0459272402">0459 272 402</a></li>
+          <li>📝 <strong>Use the online form</strong> below for a detailed booking</li>
+          <li>📞 <strong>Prefer to chat?</strong> Call us to talk it through</li>
+        </ul>
+
+        <ul class="book-list">
+          <li>✔ Family owned &amp; operated (we only bring our son along on weekend jobs)</li>
+          <li>✔ Fully insured</li>
+          <li>✔ Clear communication and reminders</li>
+          <li>✔ We sweep up before we leave</li>
+        </ul>
+
+        <div class="book-quick-cta">
+          <a href="tel:0459272402" class="btn-outline">Call Now</a>
+          <a href="sms:0459272402?&body=Hi%20RedBack%2C%20I%E2%80%99d%20like%20to%20book%20a%20rubbish%20removal.%20I%20can%20send%20photos." class="btn-outline">Text Photos</a>
+        </div>
+      </div>
+
+      <div class="book-column">
+        <div class="booking-card">
+          <p class="form-label">Online booking form — Jobber</p>
+          <div class="jobber-embed" id="jobber-booking-slot">
+            <iframe
+              loading="lazy"
+              src="https://clienthub.getjobber.com/bookings/redback-rubbish-removal/8ab2c477-a1f4-4e36-a6a6-15a7427f134c"
+              title="Book RedBack Rubbish Removal">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="booking-card">
+          <p class="form-label">Prefer email?</p>
+          <p class="form-text">
+            Email us with your suburb, a short description and any photos you can attach. We’ll reply with options.
+          </p>
+          <a class="btn-primary btn-full"
+             href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">
+            Email My Details
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>RedBack Rubbish Removal</strong><br/>
+        ABN 54532714102 · Family owned &amp; operated · Fully insured
+      </div>
+      <div class="footer-contact">
+        <a href="tel:0459272402">0459 272 402</a>
+        <span>·</span>
+        <a href="mailto:info@redbackrubbishremoval.com">info@redbackrubbishremoval.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function openSmsQuote() {
+      var input = document.getElementById('suburb-input');
+      var suburb = input ? input.value.trim() : '';
+      var base = "Hey RedBack, I'm after a rubbish removal quote";
+      if (suburb) {
+        base += " in " + suburb;
+      }
+      base += ". I have some photos to send.";
+      var encoded = encodeURIComponent(base);
+      var smsUrl = "sms:0459272402?&body=" + encoded;
+      window.location.href = smsUrl;
+    }
+
+    // Mobile bottom bar hide near booking section
+    document.addEventListener('scroll', function () {
+      var bar = document.querySelector('.mobile-cta-bar');
+      var book = document.getElementById('book-quote');
+      if (!bar || !book) return;
+      var rect = book.getBoundingClientRect();
+      var inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inView) {
+        bar.classList.add('mobile-cta-hidden');
+      } else {
+        bar.classList.remove('mobile-cta-hidden');
+      }
+    });
+  </script>
+
+  <script>
+    // Simple Lil RedBack toggle
+    document.addEventListener('DOMContentLoaded', function(){
+      var widget = document.querySelector('.mascot-widget');
+      if(!widget) return;
+      var toggle = widget.querySelector('.mascot-toggle');
+      var closeBtn = widget.querySelector('.mascot-close');
+
+      function openPanel(){
+        widget.classList.add('mascot-open');
+      }
+      function closePanel(){
+        widget.classList.remove('mascot-open');
+      }
+
+      if(toggle){
+        toggle.addEventListener('click', function(){
+          if(widget.classList.contains('mascot-open')){
+            closePanel();
+          } else {
+            openPanel();
+          }
+        });
+      }
+
+      if(closeBtn){
+        closeBtn.addEventListener('click', closePanel);
+      }
+    });
+  </script>
+
+  <script>
+    // Lil RedBack behaviour: smart hints & one-time greeting
+    document.addEventListener('DOMContentLoaded', function(){
+      var widget = document.querySelector('.mascot-widget');
+      if(!widget) return;
+
+      var hint   = widget.querySelector('.mascot-hint');
+      var toggle = widget.querySelector('.mascot-toggle');
+
+      function isOpen(){
+        return widget.classList.contains('mascot-open');
+      }
+      function openPanel(){
+        widget.classList.add('mascot-open');
+        if(hint) hint.classList.remove('has-text');
+      }
+      function closePanel(){
+        widget.classList.remove('mascot-open');
+      }
+
+      // Update hint text based on scroll position
+      var pricing = document.getElementById('pricing');
+      var booking = document.getElementById('book-quote');
+
+      function updateContext(){
+        if(!hint) return;
+        var context = '';
+        var mid = window.innerHeight / 2;
+
+        if(pricing){
+          var r1 = pricing.getBoundingClientRect();
+          if(r1.top < mid && r1.bottom > mid){
+            context = 'Not sure on price? Ask me.';
+          }
+        }
+        if(!context && booking){
+          var r2 = booking.getBoundingClientRect();
+          if(r2.top < mid && r2.bottom > mid){
+            context = 'Need help booking? Ask me.';
+          }
+        }
+        if(!context){
+          context = 'Got a question? Tap to chat.';
+        }
+
+        hint.textContent = context;
+        if(!isOpen()){
+          hint.classList.add('has-text');
+        } else {
+          hint.classList.remove('has-text');
+        }
+      }
+
+      window.addEventListener('scroll', updateContext);
+      window.addEventListener('resize', updateContext);
+      updateContext();
+
+      // One-time auto-greeting
+      var greeted = false;
+      try{
+        greeted = window.sessionStorage.getItem('rb_mascot_greeted') === 'yes';
+      }catch(e){}
+
+      if(!greeted){
+        setTimeout(function(){
+          if(isOpen()) return;
+          openPanel();
+          setTimeout(function(){
+            if(isOpen()){
+              closePanel();
+            }
+          }, 9000);
+          try{
+            window.sessionStorage.setItem('rb_mascot_greeted','yes');
+          }catch(e){}
+        }, 4000);
+      }
+
+      // Also open panel if user taps the text hint
+      if(hint){
+        hint.addEventListener('click', function(){
+          openPanel();
+        });
+      }
+    });
+  </script>
+
+  <!-- Your existing JS logic for AI replies etc -->
+  <script src="js/script.js"></script>
+</body>
+</html>
