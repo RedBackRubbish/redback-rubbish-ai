@@ -828,395 +828,48 @@ textarea,
 select {
   font-size: 16px !important;
 }
-/* MASCOT WIDGET (TAI) ---------------------------------- */
-.mascot-widget {
-  position: fixed;
-  right: 16px;
-  bottom: 84px; /* sits ABOVE the CTA bar */
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: none;
-}
+<!-- Tai AI widget -->
+<div class="mascot-widget" aria-live="polite">
+  <!-- Hint bubble -->
+  <div class="mascot-hint has-text" aria-hidden="false">
+    👋 Hey I’m Tai — Tap to chat!
+  </div>
 
-/* Hint bubble above Tai */
-.mascot-hint {
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(5px);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 8px 12px;
-  border-radius: 999px;
-  max-width: 200px;
-  text-align: center;
-  margin-bottom: 8px;
-  pointer-events: auto;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-  transition: opacity 0.3s ease;
-  display: none;
-}
-.mascot-hint.has-text {
-  display: block;
-}
+  <!-- Chat panel -->
+  <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
+    <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
 
-/* Panel */
-.mascot-panel {
-  background: #111;
-  color: #fff;
-  max-width: 300px;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.7);
-  display: none;
-  pointer-events: auto;
-  font-size: 0.9rem;
-}
+    <div class="mascot-chat-form" id="tai-chat-form">
+      <input
+        type="text"
+        id="tai-chat-input"
+        placeholder="Type your question here..."
+        autocomplete="off"
+      />
+      <button type="button" id="tai-chat-send">Send</button>
+    </div>
 
-.mascot-msg {
-  margin-bottom: 10px;
-}
-.mascot-msg-user .bubble {
-  background: #e53935;
-  color: #fff;
-  align-self: flex-end;
-}
-.mascot-msg-tai .bubble {
-  background: #333;
-  color: #fff;
-  align-self: flex-start;
-}
-.bubble {
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 90%;
-  display: inline-block;
-}
+    <div class="mascot-quick-buttons">
+      <button type="button" data-question="How do your prices work?">Pricing</button>
+      <button type="button" data-question="What areas do you service?">Service areas</button>
+      <button type="button" data-question="How do I book a job?">How to book</button>
+      <button type="button" data-question="What kind of rubbish do you take?">What you take</button>
+    </div>
 
-/* Chat input & button */
-.mascot-chat-form {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
-  flex-wrap: wrap;      /* stops button going off-screen */
-}
-.mascot-chat-form button {
-  flex-shrink: 0;     /* prevents squeezing */
-}
-/* --- CLEANER CHAT INPUT + MOBILE FIX --- */
-.mascot-chat-form {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
-  flex-wrap: nowrap;             /* stops wrapping on larger screens */
-}
+    <p class="mascot-footer-note">
+      Want a same-day quote? You can also text photos to
+      <a href="sms:0459272402">0459 272 402</a>.
+    </p>
 
-@media (max-width: 480px) {
-  .mascot-chat-form {
-    flex-wrap: wrap;             /* allow wrapping on small screens */
-  }
-  .mascot-chat-form button {
-    flex: 1 1 100%;              /* make SEND button full-width */
-  }
-}
+    <button class="mascot-close" type="button">Close</button>
+  </div>
 
-.mascot-chat-form input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  background: #222;
-  color: white;
-  border: none;
-}
+  <!-- Floating avatar -->
+  <button title="Chat with Tai" class="mascot-toggle" type="button">
+    <img src="images/mascots/mascot-head.png" alt="Lil RedBack" />
+  </button>
+</div>
 
-.mascot-chat-form button {
-  background: #e53935;          /* RedBack red */
-  color: white;
-  font-weight: bold;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.mascot-chat-form button:hover {
-  opacity: 0.85;
-}
-
-  
-}
-.mascot-chat-form input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: #222;
-  color: white;
-}
-.mascot-chat-form button {
-  background: #e53935;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-/* Floating Head Button */
-.mascot-toggle img {
-  height: 72px;  /* Slightly bigger */
-  width: auto;
-  filter: brightness(1.1) contrast(1.1);
-  pointer-events: auto;
-  cursor: pointer;
-  animation: mascot-bob 2.8s ease-in-out infinite,
-             mascot-blink 6s infinite;
-}
-
-/* Animations */
-@keyframes mascot-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-@keyframes mascot-blink {
-  0%, 96%, 100% { filter: brightness(1) }
-  97%, 99% { filter: brightness(0.4) }
-}
-
-/* MASCOT WIDGET (TAI) ------------------------------------------ */
-
-.mascot-widget {
-  position: fixed;
-  right: 16px;
-  bottom: 90px; /* sits above mobile CTA bar */
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: none;
-}
-
-/* Hint bubble above Tai */
-.mascot-hint {
-  background: #111111;
-  color: #ffffff;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  max-width: 200px;
-  margin-bottom: 6px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.7);
-  display: none;
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.mascot-hint.has-text {
-  display: block;
-}
-.mascot-hint {
-  backdrop-filter: blur(6px);
-  background: rgba(0,0,0,0.7)!important;
-  color: white;
-}
-
-/* Chat panel */
-.mascot-panel {
-  pointer-events: auto;
-  background: #111111;
-  color: #ffffff;
-  padding: 10px 12px;
-  border-radius: 12px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.6);
-  max-width: 280px;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  margin-bottom: 8px;
-  display: none;
-}
-
-.mascot-widget.mascot-open .mascot-panel {
-  display: block;
-}
-
-/* Chat internals */
-.mascot-chat-log {
-  background: #05070b;
-  border-radius: 10px;
-  padding: 8px;
-  margin: 8px 0;
-  max-height: 220px;
-  overflow-y: auto;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.mascot-msg {
-  display: flex;
-  margin-bottom: 6px;
-  font-size: 0.8rem;
-  line-height: 1.4;
-}
-
-.mascot-msg:last-child {
-  margin-bottom: 0;
-}
-
-.mascot-msg .bubble {
-  padding: 6px 9px;
-  border-radius: 12px;
-  max-width: 90%;
-  word-wrap: break-word;
-}
-
-.mascot-msg-tai {
-  justify-content: flex-start;
-}
-
-.mascot-msg-tai .bubble {
-  background: #11131b;
-  color: #f5f5f5;
-  border-radius: 12px 12px 12px 4px;
-}
-
-.mascot-msg-user {
-  justify-content: flex-end;
-}
-
-.mascot-msg-user .bubble {
-  background: #d32f2f;
-  color: #fff;
-  border-radius: 12px 4px 12px 12px;
-}
-
-.mascot-chat-form {
-  display: flex;
-  gap: 6px;
-  margin: 4px 0 8px;
-}
-
-.mascot-chat-form input {
-  flex: 1;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: #05060a;
-  color: #f5f5f5;
-}
-
-.mascot-chat-form input::placeholder {
-  color: rgba(245,245,245,0.5);
-}
-
-.mascot-chat-form button {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: none;
-  background: #ff3737;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.mascot-chat-form button:hover {
-  background: #ff5555;
-}
-
-.mascot-quick-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.mascot-quick-buttons button {
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(5,7,11,0.9);
-  color: #f5f5f5;
-  border-radius: 999px;
-  padding: 4px 9px;
-  font-size: 0.7rem;
-  cursor: pointer;
-}
-
-.mascot-quick-buttons button:hover {
-  background: rgba(211,47,47,0.2);
-  border-color: #d32f2f;
-}
-
-.mascot-footer-note {
-  font-size: 0.7rem;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-
-.mascot-footer-note a {
-  color: #ff7373;
-  text-decoration: underline;
-}
-
-.mascot-close {
-  background: #be1e2d;
-  color: #ffffff;
-  border: none;
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-/* Floating avatar */
-.mascot-toggle {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  pointer-events: auto;
-}
-
-.mascot-toggle img {
-  height: 64px;
-  width: auto;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.7);
-  filter: brightness(1.12) contrast(1.1) saturate(0.95);
-  animation: mascot-bob 2.5s ease-in-out infinite, mascot-blink 6s infinite;
-}
-.mascot-toggle img {
-  background: transparent !important;
-  box-shadow: none !important;
-  outline: none !important;
-  padding: 0 !important;
-}
-.mascot-toggle {
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* Animations */
-@keyframes mascot-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
-}
-
-@keyframes mascot-blink {
-  0%, 97%, 100% { filter: brightness(1); }
-  98%, 99%      { filter: brightness(0); }
-}
-
-.mascot-toggle img:hover {
-  animation: mascot-wave 1s ease-in-out;
-}
-
-@keyframes mascot-wave {
-  0%   { transform: rotate(0deg); }
-  25%  { transform: rotate(-10deg); }
-  50%  { transform: rotate(10deg); }
-  100% { transform: rotate(0deg); }
 }
 
 /* MOBILE & TABLET BREAKPOINTS ---------------------------------- */
