@@ -1226,3 +1226,153 @@ select {
     color: #111111;
   }
 }
+/* ============================
+   FULL PREMIUM DARK MODE SECTIONS
+   (Overrides – keep at very bottom)
+   ============================ */
+
+/* Make general “light/cream” sections dark by default after hero */
+.section-cream,
+.section-light {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* --- HOW IT WORKS --- */
+/* Keep the angled charcoal look but ensure text is bright */
+.how-section,
+#how-it-works.section {
+  background: linear-gradient(135deg, #111111 0%, #111111 52%, #1c1c1e 52%, #1c1c1e 100%);
+  color: #ffffff;
+}
+
+.how-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- WHAT WE TAKE --- */
+/* Keep the strong red but darken the cards for consistency */
+#what-we-take.section-red {
+  background: #be1e2d;
+  color: #ffffff;
+}
+
+#what-we-take .card {
+  background: #2c2c2e;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+#what-we-take .card-body h3,
+#what-we-take .card-body p {
+  color: #ffffff;
+}
+
+/* --- PRICING – DARK MODE --- */
+#pricing.section,
+#pricing.section-cream {
+  background: #1b1b1d;
+  color: #ffffff;
+}
+
+#pricing .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#pricing .price-card {
+  background: #222327;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+#pricing .price-card-featured {
+  border: 2px solid #be1e2d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+#pricing .price-note {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+#pricing .pricing-footnote {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* --- WHY REDBACK – DARK CHARCOAL --- */
+#why-redback {
+  background: #111111;
+  color: #ffffff;
+}
+
+#why-redback .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#why-redback .why-card {
+  background: #1c1c1e;
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6);
+}
+
+#why-redback .why-card p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- REVIEWS – KEEP SUPER DARK --- */
+.section.section-dark {
+  background: #050506;
+  color: #ffffff;
+}
+
+/* --- BOOK / QUOTE – DARK WITH RED ACCENTS --- */
+#book-quote.section,
+#book-quote.section-cream {
+  background: #111111;
+  color: #ffffff;
+}
+
+#book-quote .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#book-quote .booking-card {
+  background: #1c1c1f;
+  border-left: 4px solid #be1e2d;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+#book-quote .book-list li {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Outline buttons on dark background */
+#book-quote .btn-outline {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+#book-quote .btn-outline:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+/* Primary full-width button on dark background */
+#book-quote .btn-primary.btn-full {
+  background: #be1e2d;
+  color: #ffffff;
+}
+
+#book-quote .btn-primary.btn-full:hover {
+  background: #d42a3a;
+}
+
+/* --- FOOTER – TIE INTO DARK THEME --- */
+.site-footer {
+  background: #050506;
+  color: #ffffff;
+  border-top: 1px solid rgba(190, 30, 45, 0.7);
+}
+
+.site-footer a {
+  color: #ffffff;
+}
