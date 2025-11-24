@@ -1184,15 +1184,29 @@ select {
   color: #ffffff;
 }
 
-/* TAI MASCOT WIDGET -------------------------------------------- */
-
+/* TAI MASCOT WIDGET  — IMPROVED POSITIONING */
 .mascot-widget {
-  position: fixed;
-  right: 16px;
-  bottom: 72px; /* above mobile CTA bar */
-  z-index: 60;
-  font-size: 14px;
+    position: fixed;
+    bottom: 22%;          /* higher & more natural */
+    right: 4%;            /* hugs right edge nicely */
+    z-index: 9999;        /* stays above everything */
+    font-size: 14px;
+    transition: all 0.3s ease;
 }
+
+/* Desktop only tweak */
+@media (min-width: 768px) {
+    .mascot-widget {
+        bottom: 18%;
+        right: 3%;
+    }
+}
+
+/* Hover effect */
+.mascot-widget:hover {
+    transform: scale(1.05);
+}
+
 
 .mascot-toggle {
   border: none;
