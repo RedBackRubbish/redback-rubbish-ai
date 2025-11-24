@@ -899,6 +899,52 @@ select {
   display: flex;
   gap: 6px;
   margin-top: 8px;
+  flex-wrap: wrap;      /* stops button going off-screen */
+}
+.mascot-chat-form button {
+  flex-shrink: 0;     /* prevents squeezing */
+}
+/* --- CLEANER CHAT INPUT + MOBILE FIX --- */
+.mascot-chat-form {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: nowrap;             /* stops wrapping on larger screens */
+}
+
+@media (max-width: 480px) {
+  .mascot-chat-form {
+    flex-wrap: wrap;             /* allow wrapping on small screens */
+  }
+  .mascot-chat-form button {
+    flex: 1 1 100%;              /* make SEND button full-width */
+  }
+}
+
+.mascot-chat-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  border: none;
+}
+
+.mascot-chat-form button {
+  background: #e53935;          /* RedBack red */
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mascot-chat-form button:hover {
+  opacity: 0.85;
+}
+
+  
 }
 .mascot-chat-form input {
   flex: 1;
