@@ -131,12 +131,20 @@ a {
   color: #ffffff;
 }
 
-.site-header {
-  background: #f8f1dd;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  position: sticky;
-  top: 0;
-  z-index: 20;
+/* ===== HEADER – DARK MODE ===== */
+header {
+  background: #1d1d1d !important;   /* dark grey like iPhone view */
+  color: #fff;
+}
+
+.navbar a {	
+  color: #ffffff;	
+}
+
+.navbar a:hover {
+  color: #e51b2e; /* optional red hover */
+}
+
 }
 
 .header-inner {
