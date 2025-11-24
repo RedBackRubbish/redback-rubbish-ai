@@ -843,6 +843,11 @@ select {
 .mascot-hint.has-text {
   display: block;
 }
+.mascot-hint {
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.7)!important;
+  color: white;
+}
 
 /* Chat panel */
 .mascot-panel {
@@ -1007,6 +1012,17 @@ select {
   box-shadow: 0 10px 28px rgba(0,0,0,0.7);
   filter: brightness(1.12) contrast(1.1) saturate(0.95);
   animation: mascot-bob 2.5s ease-in-out infinite, mascot-blink 6s infinite;
+}
+.mascot-toggle img {
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+}
+.mascot-toggle {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* Animations */
