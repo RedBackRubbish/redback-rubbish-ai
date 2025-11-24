@@ -828,6 +828,115 @@ textarea,
 select {
   font-size: 16px !important;
 }
+/* MASCOT WIDGET (TAI) ---------------------------------- */
+.mascot-widget {
+  position: fixed;
+  right: 16px;
+  bottom: 84px; /* sits ABOVE the CTA bar */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Hint bubble above Tai */
+.mascot-hint {
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 8px 12px;
+  border-radius: 999px;
+  max-width: 200px;
+  text-align: center;
+  margin-bottom: 8px;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  transition: opacity 0.3s ease;
+  display: none;
+}
+.mascot-hint.has-text {
+  display: block;
+}
+
+/* Panel */
+.mascot-panel {
+  background: #111;
+  color: #fff;
+  max-width: 300px;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.7);
+  display: none;
+  pointer-events: auto;
+  font-size: 0.9rem;
+}
+
+.mascot-msg {
+  margin-bottom: 10px;
+}
+.mascot-msg-user .bubble {
+  background: #e53935;
+  color: #fff;
+  align-self: flex-end;
+}
+.mascot-msg-tai .bubble {
+  background: #333;
+  color: #fff;
+  align-self: flex-start;
+}
+.bubble {
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 90%;
+  display: inline-block;
+}
+
+/* Chat input & button */
+.mascot-chat-form {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+.mascot-chat-form input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: white;
+}
+.mascot-chat-form button {
+  background: #e53935;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Floating Head Button */
+.mascot-toggle img {
+  height: 72px;  /* Slightly bigger */
+  width: auto;
+  filter: brightness(1.1) contrast(1.1);
+  pointer-events: auto;
+  cursor: pointer;
+  animation: mascot-bob 2.8s ease-in-out infinite,
+             mascot-blink 6s infinite;
+}
+
+/* Animations */
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes mascot-blink {
+  0%, 96%, 100% { filter: brightness(1) }
+  97%, 99% { filter: brightness(0.4) }
+}
 
 /* MASCOT WIDGET (TAI) ------------------------------------------ */
 
