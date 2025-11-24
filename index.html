@@ -28,16 +28,11 @@
 <div class="mascot-widget" aria-live="polite">
   <div class="mascot-hint" aria-hidden="true"></div>
 
+  <!-- PANEL - KEEP IT CLEAN -->
   <div class="mascot-panel" aria-label="Chat with Tai, your AI rubbish removal helper">
-    <div class="mascot-header">
-      <img src="images/mascots/mascot-head.png" alt="Lil RedBack Tai" class="mascot-avatar">
-      <div>
-        <h3 class="mascot-title">Got a question? Ask Tai.</h3>
-        <p class="mascot-intro">Pricing, service areas, what we take &amp; how to book.</p>
-      </div>
-    </div>
 
-    <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite" aria-label="Chat with Tai"></div>
+    <!-- 👇 REMOVE the mascot-header entirely – START chat straight away -->
+    <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
 
     <div class="mascot-chat-form" id="tai-chat-form">
       <input type="text" id="tai-chat-input" placeholder="Type your question here..." autocomplete="off"/>
@@ -52,17 +47,15 @@
     </div>
 
     <p class="mascot-footer-note">
-      Want a same-day quote? You can also text photos to
-      <a href="sms:0459272402?&body=Hi%20Tai,%20here%20are%20some%20photos%20for%20a%20rubbish%20removal%20quote.">
-        0459&nbsp;272&nbsp;402
-      </a>.
+      Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272 402</a>.
     </p>
 
     <button class="mascot-close" type="button">Close</button>
   </div>
 
-  <button title="Chat with Tai" class="mascot-toggle" type="button" aria-label="Open Tai AI chat">
-    <img src="images/mascots/mascot-head.png" alt="Lil RedBack mascot">
+  <!-- Floating avatar -->
+  <button title="Chat with Tai" class="mascot-toggle" type="button">
+    <img src="images/mascots/mascot-head.png" alt="Lil RedBack" />
   </button>
 </div>
 
