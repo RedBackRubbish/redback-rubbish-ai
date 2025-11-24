@@ -24,51 +24,53 @@
     </a>
   </div>
 
-  <!-- TAI AI WIDGET -->
-  <div class="mascot-widget" aria-live="polite">
-    <!-- Hint bubble -->
-    <div class="mascot-hint has-text" aria-hidden="false">
-      👋 Hey I’m Tai — Tap to chat!
-    </div>
-
-    <!-- Chat panel -->
-    <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
-      <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
-
-      <div class="mascot-chat-form" id="tai-chat-form">
-        <input type="text" id="tai-chat-input" placeholder="Type your question here..." />
-        <button type="button" id="tai-chat-send">Send</button>
-      </div>
-
-      <div class="mascot-quick-buttons">
-        <button data-question="How do your prices work?">Pricing</button>
-        <button data-question="What areas do you service?">Service areas</button>
-        <button data-question="How do I book a job?">How to book</button>
-        <button data-question="What kind of rubbish do you take?">What you take</button>
-        <!-- New helper: front-end quick quote -->
-        <button data-action="quote-helper">Quick quote helper</button>
-      </div>
-
-      <!-- Personality / tone toggle -->
-      <div class="mascot-tone-row">
-        <span class="mascot-tone-label">Vibe:</span>
-        <button type="button" class="mascot-tone-btn is-active" data-tone="friendly">Friendly</button>
-        <button type="button" class="mascot-tone-btn" data-tone="pro">Pro</button>
-        <button type="button" class="mascot-tone-btn" data-tone="family">Family</button>
-      </div>
-
-      <p class="mascot-footer-note">
-        Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272 402</a>.
-      </p>
-
-      <button class="mascot-close" type="button">Close</button>
-    </div>
-
-    <!-- Floating avatar -->
-    <button title="Chat with Tai" class="mascot-toggle" type="button">
-      <img src="images/mascots/mascot-head.png" alt="Lil RedBack"/>
-    </button>
+ <!-- TAI AI WIDGET -->
+<div class="mascot-widget" aria-live="polite">
+  <!-- Hint bubble -->
+  <div class="mascot-hint has-text" aria-hidden="false">
+    👋 Hey I’m Tai — Tap to chat!
   </div>
+
+  <!-- Chat panel -->
+  <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
+    <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
+
+    <!-- Tone / vibe row -->
+    <div class="mascot-tone-row">
+      <span class="mascot-tone-label">Vibe:</span>
+      <button class="mascot-tone-btn is-active" data-tone="friendly">Friendly</button>
+      <button class="mascot-tone-btn" data-tone="pro">Pro</button>
+      <button class="mascot-tone-btn" data-tone="family">Family</button>
+    </div>
+
+    <!-- Input row -->
+    <div class="mascot-chat-form" id="tai-chat-form">
+      <input type="text" id="tai-chat-input" placeholder="Type your question here..." />
+      <button type="button" id="tai-chat-send">Send</button>
+    </div>
+
+    <!-- Quick buttons -->
+    <div class="mascot-quick-buttons">
+      <button data-question="How do your prices work?">Pricing</button>
+      <button data-question="What areas do you service?">Service areas</button>
+      <button data-question="How do I book a job?">How to book</button>
+      <button data-question="What kind of rubbish do you take?">What you take</button>
+      <button data-action="quote-helper">Quick quote helper</button>
+    </div>
+
+    <p class="mascot-footer-note">
+      Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272 402</a>.
+    </p>
+
+    <button class="mascot-close" type="button">Close</button>
+  </div>
+
+  <!-- Floating avatar -->
+  <button title="Chat with Tai" class="mascot-toggle" type="button">
+    <img src="images/mascots/mascot-head.png" alt="Lil RedBack"/>
+  </button>
+</div>
+
 
   <!-- Top SMS bar -->
   <div class="top-bar">
