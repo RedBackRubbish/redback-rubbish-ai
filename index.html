@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>RedBack Rubbish Removal | Brisbane Southside & Logan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Premium rubbish removal in Brisbane Southside & Logan. Family-run, fully insured and no-stress service with upfront prices and all the heavy lifting done for you." />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+
+  <meta property="og:title" content="RedBack Rubbish Removal" />
+  <meta property="og:description" content="No Mess — No Stress. Text photos for a fast rubbish removal quote." />
+  <meta property="og:image" content="images/storage-unit.jpg" />
+
+  <link rel="stylesheet" href="CSS/styles.css" />
+</head>
+
+<body>
+
+  <!-- Mobile bottom bar -->
+  <div class="mobile-cta-bar">
+    <a href="sms:0459272402?body=Hi%20RedBack%2C%20I%20like%20a%20rubbish%20removal%20quote%20please."
+      class="mobile-cta-btn mobile-cta-text-only">Text photos for a fast quote</a>
+  </div>
+
+  <!-- TAI AI WIDGET -->
+  <div class="mascot-widget" aria-live="polite">
+    <div class="mascot-hint has-text" aria-hidden="false">👋 Hey I’m Tai — Tap to chat!</div>
+    <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
+      <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
+      <div class="mascot-chat-form" id="tai-chat-form">
+        <input type="text" id="tai-chat-input" placeholder="Type your question here..." />
+        <button type="button" id="tai-chat-send">Send</button>
+      </div>
+
+      <div class="mascot-quick-buttons">
+        <button data-question="How do your prices work?">Pricing</button>
+        <button data-question="What areas do you service?">Service areas</button>
+        <button data-question="How do I book a job?">How to book</button>
+        <button data-question="What kind of rubbish do you take?">What you take</button>
+      </div>
+
+      <p class="mascot-footer-note">Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272
+          402</a>.</p>
+      <button class="mascot-close" type="button">Close</button>
+    </div>
+
+    <button title="Chat with Tai" class="mascot-toggle" type="button">
+      <img src="images/mascots/mascot-head.png" alt="Lil RedBack" />
+    </button>
+  </div>
+
+  <!-- Top SMS bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span class="top-tagline">NO MESS — NO STRESS</span>
+      <a class="top-phone" href="tel:0459272402">Call 0459 272 402</a>
+      <a class="top-sms" href="sms:0459272402?&body=Hi%20RedBack%2C%20I%E2%80%99d%20like%20a%20rubbish%20removal%20quote.%20I%20can%20send%20photos.">Text Photos</a>
+      <a class="top-email"
+        href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">Email</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo" />
+        <div class="brand-text">
+          <span class="brand-name">REDBACK RUBBISH REMOVAL</span>
+          <span class="brand-location">Brisbane Southside & Logan</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#what-we-take">What We Take</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#why-redback">Why Us</a>
+        <a class="btn-pill" href="#book-quote">Book / Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay-angle"></div>
+    <div class="hero-overlay-dark"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <p class="hero-location">Brisbane Southside & Logan</p>
+        <h1 class="hero-title">Rubbish Removal<br />Made Simple</h1>
+        <p class="hero-subtitle">You point — we load & clean — easy.</p>
+
+        <div class="hero-cta-row">
+          <div class="hero-sms-box">
+            <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
+            <div class="hero-sms-input-row">
+              <input id="suburb-input" type="text" placeholder="e.g. Rochedale South" />
+              <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
+            </div>
+            <p class="hero-note">We’ll open your SMS app so you can send photos for a same-day quote.</p>
+          </div>
+        </div>
+
+        <ul class="hero-trust-list">
+          <li>✔ Family owned & operated</li>
+          <li>✔ Fully insured</li>
+          <li>✔ Friendly, uniformed team</li>
+          <li>✔ We load, sweep & dispose</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section how-section" id="how-it-works">
+    <div class="container how-inner">
+      <h2 class="section-title how-title">How It Works</h2>
+      <p class="section-subtitle how-subtitle">Three quick steps from photos to a clean space.</p>
+
+      <div class="how-visual">
+        <img src="images/mascots/lilredback_howitworks.png" alt="Lil RedBack" />
+      </div>
+
+      <div class="how-steps-simple">
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-red">1</div>
+          <div class="how-text">
+            <div class="how-label">Send photos</div>
+            <p>Text or email photos of the load and your suburb.</p>
+          </div>
+        </div>
+
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-white">2</div>
+          <div class="how-text">
+            <div class="how-label">We Confirm & Book</div>
+            <p>You get an SMS with your time window.</p>
+          </div>
+        </div>
+
+        <div class="how-step-simple">
+          <div class="how-icon-circle how-icon-black">3</div>
+          <div class="how-text">
+            <div class="how-label">We Remove & Sweep</div>
+            <p>We load everything and leave it clean.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we take -->
+  <section class="section section-red" id="what-we-take">
+    <div class="container">
+      <h2 class="section-title section-title-on-dark">What We Take</h2>
+
+      <div class="section-mascot-inline">
+        <img src="images/mascots/lilredback_3.png" alt="Lil RedBack waving">
+      </div>
+      <div class="cards-grid">
+        <article class="card">
+          <img src="images/storage-unit.jpg" alt="Storage unit" />
+          <div class="card-body">
+            <h3>Household Junk</h3>
+            <p>Furniture, mattresses, boxes & more.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/gym-equipment.jpg" alt="Gym equipment" />
+          <div class="card-body">
+            <h3>Garage & Gym Clear-outs</h3>
+            <p>Weights, benches, tools & clutter.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/green-waste.jpg" alt="Green waste" />
+          <div class="card-body">
+            <h3>Green Waste</h3>
+            <p>Palm fronds, branches & yard clean-ups.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/boxes-delivery.jpg" alt="Boxes" />
+          <div class="card-body">
+            <h3>A-B Moves (From $100)</h3>
+            <p>Small item delivery service available.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section section-cream" id="pricing">
+    <div class="container">
+      <h2 class="section-title">Upfront Pricing</h2>
+      <p class="section-subtitle">We always confirm price before starting.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card"><h3>Small Load</h3><p class="price">From $150–$220</p></div>
+        <div class="price-card price-card-featured"><h3>Half Load</h3><p class="price">From $330</p></div>
+        <div class="price-card"><h3>Full Load</h3><p class="price">From $550</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>RedBack Rubbish Removal</strong><br/> ABN 54532714102 · Family owned & operated · Fully insured</div>
+      <div class="footer-contact"><a href="tel:0459272402">0459 272 402</a> · <a href="mailto:info@redbackrubbishremoval.com">info@redbackrubbishremoval.com</a></div>
+    </div>
+  </footer>
+
+  <script>
+    function openSmsQuote() {
+      var input = document.getElementById('suburb-input');
+      var suburb = input ? input.value.trim() : '';
+      var base = "Hey RedBack, I'm after a rubbish removal quote";
+      if (suburb) base += " in " + suburb;
+      base += ". I have some photos to send.";
+      var smsUrl = "sms:0459272402?&body=" + encodeURIComponent(base);
+      window.location.href = smsUrl;
+    }
+  </script>
+
+</body>
+</html>
