@@ -1384,6 +1384,20 @@ body.scrolling-down .mascot-toggle img{
 @media (max-width: 480px) {
   .mascot-chat-log { max-height: 180px; }
 }
+/* Prevent iPhone zooming on input & buttons */
+input,
+button,
+textarea,
+select {
+    font-size: 16px !important;
+}
+/* Keep chat panel visible when typing */
+.mascot-panel {
+    position: fixed;
+    bottom: 60px; /* above keyboard */
+    max-height: 70vh;
+    overflow-y: auto;
+}
 
 
 /* === Tai AI widget === */
