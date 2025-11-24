@@ -351,8 +351,7 @@ header {
 }
 
 .hero-right {
-  display: flex;
-  justify-content: flex-end;
+  display: none;
 }
 
 .hero-card {
