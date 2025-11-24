@@ -1086,14 +1086,15 @@ box-shadow:0 18px 40px rgba(0,0,0,0.35);}
 }
 
 .mascot-toggle img {
-    content: url('images/mascots/mascot-head.png'); 
-    height:64px;
-    width:auto;
-    border-radius:0;
-    background:transparent !important;
-    box-shadow:none !important;
-    filter:brightness(1.12) contrast(1.1) saturate(0.95) drop-shadow(0 10px 28px rgba(0,0,0,0.7));
-    animation:mascot-bob 2.5s ease-in-out infinite, mascot-blink 6s infinite;
+    height: 64px;
+    width: auto;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: brightness(1.12) contrast(1.1) saturate(0.95) drop-shadow(0 10px 28px rgba(0,0,0,0.7));
+    animation: mascot-bob 2.5s ease-in-out infinite, mascot-blink 6s infinite;
+}
+
 }
 
 
