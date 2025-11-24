@@ -470,15 +470,33 @@ header {
   color: rgba(255,255,255,0.8);
 }
 
-.how-visual {
-  margin: 24px auto 8px;
-  max-width: 420px;
+/* Lil RedBack How It Works visual */
+.how-visual{
+  margin:24px auto 8px;
+  max-width:190px;            /* match What We Take mascot size */
+}
+.how-visual img{
+  width:100%;
+  height:auto;
+  display:block;
+  background:none;
 }
 
-.how-visual img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* Slightly larger on big screens */
+@media (min-width:1024px){
+  .how-visual{
+    max-width:190px;
+  }
+}
+
+/* smaller on narrow screens */
+@media (max-width:600px){
+  .how-visual{
+    max-width:130px;          /* same ballpark as other mascots on mobile */
+    margin-top:16px;
+  }
+}
+
 }
 
 .how-steps-simple {
