@@ -1,32 +1,30 @@
 // Tai front-end logic for Lil RedBack mascot AI
-// Wires the floating Lil RedBack widget to your Netlify function
-// at /.netlify/functions/tai-ai and provides friendly, family-run answers
-// about RedBack Rubbish Removal only.
+// Connects the floating Lil RedBack widget to your Netlify function
+// at /.netlify/functions/tai-ai and gives friendly answers about
+// RedBack Rubbish Removal only.
 
 document.addEventListener('DOMContentLoaded', function () {
-  const widget = document.querySelector('.mascot-widget');
+  const widget       = document.querySelector('.mascot-widget');
   if (!widget) return;
 
-  const chatLog = widget.querySelector('#tai-chat-log');
-  const inputEl = widget.querySelector('#tai-chat-input');
-  const sendBtn = widget.querySelector('#tai-chat-send');
+  const chatLog      = widget.querySelector('#tai-chat-log');
+  const inputEl      = widget.querySelector('#tai-chat-input');
+  const sendBtn      = widget.querySelector('#tai-chat-send');
   const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
 
-  if (!chatLog || !inputEl || !sendBtn) return;
-
   let isSending = false;
+
+  if (!chatLog || !inputEl || !sendBtn) return;
 
   function scrollToBottom() {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
   function addMessage(text, who = 'tai', opts = {}) {
-    const msg = document.createElement('div');
+    const msg  = document.createElement('div');
     const role = who === 'user' ? 'user' : 'tai';
     msg.className = 'mascot-msg mascot-msg-' + role;
-    if (opts.small) {
-      msg.classList.add('mascot-msg-small');
-    }
+    if (opts.small) msg.classList.add('mascot-msg-small');
 
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -84,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     inputEl.value = '';
     setLoading(true);
 
-    // Show a small typing indicator from Tai
+    // Typing indicator
     const typingMsg = document.createElement('div');
     typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
     const bubble = document.createElement('div');
@@ -153,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Initial welcome from Tai – with family-run angle
+  // Initial welcome message in the log
   addMessage(
     "Hi, I’m Tai — your Lil RedBack helper! Got junk? I’ve got muscles! Ask away…",
     'tai'
