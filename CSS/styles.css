@@ -1114,6 +1114,37 @@ box-shadow:0 18px 40px rgba(0,0,0,0.35);}
 }
 
 }
+.mascot-hint {
+  position: absolute;
+  bottom: 90px; 
+  right: 75px;
+  background: #111;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.mascot-hint::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  right: 30px;
+  width: 14px;
+  height: 14px;
+  background: #111;
+  transform: rotate(45deg);
+}
+
+
+/* Fade in/out animation */
+@keyframes mascot-hint-fade {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
 
 
 @keyframes mascot-bob{
