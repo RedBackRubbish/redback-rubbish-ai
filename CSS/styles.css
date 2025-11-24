@@ -1563,3 +1563,58 @@ body.scrolling-down .mascot-toggle img{
   background-color:#ffffff;
   color:#111111;
 }
+/* --------------------- MOBILE FIXES --------------------- */
+@media (max-width: 768px) {
+
+  /* Hero fix - background zoom too close */
+  .hero {
+    background-position: center 30%;
+    background-size: cover;
+  }
+
+  /* Chat panel sizing on mobile */
+  .mascot-panel {
+    max-width: 90vw;
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 20px;
+  }
+
+  /* Make typing input area fit better */
+  .mascot-input-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mascot-input-row input {
+    width: 70%;
+  }
+
+  .mascot-input-row button {
+    width: 28%;
+  }
+
+  /* Question buttons resize */
+  .mascot-quick-questions button {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  /* Reduce opening mascot size */
+  .mascot-header img {
+    max-width: 180px;
+    height: auto;
+  }
+
+  /* Floating toggle icon */
+  .mascot-toggle img {
+    height: 70px !important;
+    width: auto !important;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 99999;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  }
+
+}
