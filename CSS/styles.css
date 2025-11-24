@@ -656,6 +656,24 @@ img {
   font-size: 0.95rem;
   font-weight: 600;
 }
+/* Single mobile CTA: Text photos only */
+.mobile-cta-text-only {
+  display: block;
+  background: #be1e2d;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Show bar only on mobiles */
+@media (max-width: 640px) {
+  .mobile-cta-bar {
+    display: block;
+  }
+  body {
+    padding-bottom: 52px;
+  }
+}
 
 .mobile-cta-call {
   background: #111111;
