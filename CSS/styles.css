@@ -1372,19 +1372,26 @@ select {
   font-size: 0.72rem;
 }
 
-/* Mascot widget: small screens */
+/* Mascot widget: small screens (mobile) */
 @media (max-width: 640px) {
-  .mascot-widget {
-    right: 10px;
-    bottom: 80px;
-  }
+    .mascot-widget {
+        right: 16px;
+        bottom: 70px;      /* where Tai sits on mobile */
+    }
 
-  .mascot-toggle img {
-    height: 72px;
-  }
+    .mascot-toggle img {
+        height: 72px;
+    }
 
-  .mascot-panel {
-    width: 260px;
-    bottom: 100px;
-  }
+    .mascot-panel {
+        width: 280px;
+        bottom: 170px;     /* chat panel above Tai */
+        right: 16px;
+    }
+
+    .mascot-hint {
+        bottom: 150px;     /* speech bubble just above Tai */
+        right: 16px;
+        max-width: 230px;
+    }
 }
