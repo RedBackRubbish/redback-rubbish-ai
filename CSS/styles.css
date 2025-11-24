@@ -1602,10 +1602,15 @@ body.scrolling-down .mascot-toggle img{
   }
 
   /* Reduce opening mascot size */
-  .mascot-header img {
+  /* Reduce opening mascot size */
+/* Reduce opening mascot size */
+.mascot-header img {
     max-width: 180px;
     height: auto;
-  }
+    display: block;  
+    margin: 0 auto;  
+}
+
 
   /* Floating toggle icon */
   .mascot-toggle img {
