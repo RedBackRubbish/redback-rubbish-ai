@@ -235,7 +235,7 @@ header {
 @media (min-width: 768px) {
   .hero-bg {
     background-size: cover;        /* show full image */
-    background-position: center 10%; /* nudge up to show faces */
+    background-position: center; /* nudge up to show faces */
     background-repeat: no-repeat;    /* stop tiling */
     opacity: 0.22;                   /* same gentle fade */
   }
