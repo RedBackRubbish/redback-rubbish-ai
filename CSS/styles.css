@@ -1496,14 +1496,3 @@ select {
   color: #ffffff;
   text-decoration: underline;
 }
-
-/* Subtle family photo layer in hero */
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url("images/family-cab.jpg") center/cover no-repeat;
-  opacity: 0.18;                /* adjust 0.10–0.25 */
-  z-index: -1;
-  mix-blend-mode: multiply;     /* keeps text readable */
-}
