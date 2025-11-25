@@ -211,26 +211,26 @@ header {
 }
 
 /* ============================
-   HERO SECTION
+   HERO SECTION – MOBILE-FIRST
 =============================*/
 
 .hero {
   position: relative;
   color: #ffffff;
   overflow: hidden;
-  min-height: 85vh;              /* good height for all screens */
+  min-height: 80vh;
 }
 
-/* default background (desktop + tablet) */
+/* Background image */
 .hero-bg {
   position: absolute;
   inset: 0;
   background-image: url("../images/family-cab.jpg");
   background-size: cover;
-  background-position: center top;   /* show roof + faces */
+  background-position: center top;
   background-repeat: no-repeat;
-  opacity: 0.28;
-  filter: grayscale(35%) brightness(0.88);
+  opacity: 0.35;                         /* more photo showing */
+  filter: grayscale(10%) brightness(0.98);/* closer to original colour */
   z-index: 0;
 }
 
@@ -240,8 +240,8 @@ header {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.35),
-    rgba(190, 30, 45, 0.95)
+    rgba(0, 0, 0, 0.18),
+    rgba(190, 30, 45, 0.82)
   );
   clip-path: polygon(0 0, 100% 0, 100% 65%, 0 85%);
   z-index: 1;
@@ -250,23 +250,28 @@ header {
 .hero-overlay-dark {
   position: absolute;
   inset: auto 0 0 0;
-  height: 60%;
+  height: 55%;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0),
-    rgba(190, 30, 45, 1)
+    rgba(190, 30, 45, 0.95)
   );
   z-index: 1;
 }
 
+/* Desktop / tablet layout – two columns */
 .hero-inner {
   position: relative;
   z-index: 2;
-  padding: 40px 0 96px;
+  padding: 32px 0 90px;
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   gap: 40px;
   align-items: flex-start;
+}
+
+.hero-left {
+  max-width: 520px;
 }
 
 .hero-location {
@@ -288,14 +293,15 @@ header {
 }
 
 .hero-cta-row {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .hero-sms-box {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
   padding: 12px 14px 14px;
   backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .hero-label {
@@ -342,9 +348,8 @@ header {
   margin-bottom: 4px;
 }
 
-/* hide right-hand card for now */
 .hero-right {
-  display: none;
+  display: none; /* keep hidden for now */
 }
 
 .hero-card {
@@ -356,8 +361,6 @@ header {
 
 .hero-card img {
   border-radius: 14px;
-}
-
 }
 
 /* BUTTONS ------------------------------------------------------- */
@@ -1506,28 +1509,53 @@ select {
   text-decoration: underline;
 }
 
-/* MOBILE HERO – SHOW MORE FAMILY PHOTO & DROP QUOTE BOX DOWN */
+/* MOBILE HERO – HEADING TOP, SMS BOX BOTTOM, PHOTO VISIBLE */
 @media (max-width: 640px) {
   .hero {
-    min-height: 105vh;              /* gives the hero more vertical space */
+    min-height: 92vh;                 /* taller hero on mobile */
   }
 
   .hero-bg {
-    background-size: 110%;          /* slight zoom so the cab fills nicely */
-    background-position: center -10%; /* push image up so faces sit higher */
-    opacity: 0.35;                  /* photo a bit stronger under the overlay */
+    background-size: 115%;            /* tiny zoom in for framing */
+    background-position: center top;  /* faces high in the frame */
+    opacity: 0.40;                    /* more of original photo */
+    filter: grayscale(5%) brightness(1.0);
   }
 
   .hero-inner {
-    padding-top: 180px;             /* 🔽 moves title + quote box down */
-    padding-bottom: 110px;          /* keeps them away from Tai / bottom bar */
+    padding: 32px 0 96px;             /* space above & above Tai */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;   /* spread content vertically */
   }
 
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(92vh - 32px - 96px);
+  }
+
+  /* Heading sits near top naturally */
   .hero-title {
     margin-bottom: 6px;
+    font-size: 2.1rem;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 10px;
+  }
+
+  /* SMS box gets pushed towards the bottom of the hero */
+  .hero-cta-row {
+    margin-top: auto;                 /* 👈 pushes SMS box down */
   }
 
   .hero-sms-box {
-    background: rgba(0, 0, 0, 0.24); /* still glassy, lets the photo show */
+    background: rgba(0, 0, 0, 0.2);   /* clean pill, photo still visible */
+    border-radius: 16px;
+  }
+
+  .hero-trust-list {
+    margin-top: 10px;
   }
 }
