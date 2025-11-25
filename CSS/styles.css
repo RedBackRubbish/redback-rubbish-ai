@@ -1503,3 +1503,29 @@ select {
   color: #ffffff;
   text-decoration: underline;
 }
+
+/* MOBILE HERO ADJUSTMENTS – FAMILY PHOTO VISIBLE & BOX LOWERED */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 92vh;             /* give more vertical space */
+  }
+
+  .hero-bg {
+    background-size: 110%;        /* zoom OUT to show more faces */
+    background-position: center -6%; /* slide image up slightly to reveal faces */
+    opacity: 0.30;                /* ★ make photo more visible */
+  }
+
+  .hero-inner {
+    padding-top: 110px;           /* MOVE QUOTE BOX DOWN */
+    padding-bottom: 85px;         /* keep it away from bottom mascot */
+  }
+
+  .hero-sms-box {
+    background: rgba(0,0,0,0.25); /* lighter so faces still show */
+  }
+
+  .hero-title {
+    margin-bottom: 4px;           /* tighter spacing */
+  }
+}
