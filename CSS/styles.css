@@ -1600,3 +1600,38 @@ select {
     backdrop-filter: blur(3px);
   }
 }
+
+/* MOBILE HERO TUNING – FAMILY PHOTO / TITLE / BOX */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 95vh;              /* a bit taller hero on phones */
+  }
+
+  .hero-bg {
+    /* warmer, closer to original colours */
+    background-position: center top;
+    opacity: 0.34;                 /* show the photo more */
+    filter: grayscale(15%) brightness(1.02) saturate(1.08);
+  }
+
+  .hero-inner {
+    padding-top: 78px;             /* moves title up towards very top */
+    padding-bottom: 100px;         /* keeps quote box clear of Tai + bottom bar */
+  }
+
+  .hero-title {
+    font-size: 2.35rem;            /* slightly larger heading */
+    line-height: 1.16;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-sms-box {
+    margin-top: 22px;              /* pushes quote box further down */
+    background: rgba(0, 0, 0, 0.30);
+  }
+}
