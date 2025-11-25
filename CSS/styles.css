@@ -1707,3 +1707,61 @@ select {
     margin-top: 14px;
   }
 }
+
+
+/* === MOBILE HERO HARD FIX – SMS BOX LOWER, PHOTO VISIBLE === */
+@media (max-width: 640px) {
+  /* keep hero as the positioning parent */
+  .hero {
+    position: relative;
+    min-height: 95vh;
+  }
+
+  /* pull heading up and leave room at bottom for the box */
+  .hero-inner {
+    padding-top: 16px;
+    padding-bottom: 220px; /* extra space for the fixed box */
+  }
+
+  /* FAMILY PHOTO – more natural colour & more visible */
+  .hero-bg {
+    background-position: center top;
+    background-size: cover;
+    opacity: 0.38;
+    filter: grayscale(8%) brightness(1.05) saturate(1.1);
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  /* 👉 SMS BOX: lock it lower in the hero */
+  .hero-cta-row {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 130px;              /* move up/down by changing this */
+    width: calc(100% - 32px);   /* nice side padding */
+    max-width: 540px;
+    margin: 0;
+  }
+
+  .hero-sms-box {
+    background: #ffffff;
+    color: #111111;
+    border-radius: 18px;
+    padding: 16px 16px 20px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero-note {
+    color: #555555;
+  }
+
+  .hero-trust-list {
+    font-size: 0.95rem;
+    margin-top: 14px;
+  }
+}
