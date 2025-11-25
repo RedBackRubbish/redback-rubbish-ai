@@ -1750,3 +1750,57 @@ select {
     font-size: 0.95rem;
   }
 }
+
+/* ============================
+   FINAL MOBILE HERO FIXES —
+   CLEAN / PREMIUM LOOK
+============================ */
+@media (max-width: 640px) {
+
+  /* Show more of image & keep colour natural */
+  .hero-bg {
+    background-size: cover;
+    background-position: center top;
+    opacity: 0.38;                     /* more visible */
+    filter: brightness(1) saturate(1); /* remove washed-out look */
+  }
+
+  /* Move content UP a LOT (title near header) */
+  .hero-inner {
+    padding-top: 40px;   /* was 110px – big change */
+    padding-bottom: 110px;
+  }
+
+  /* Big title — looks confident */
+  .hero-title {
+    font-size: 2.4rem;   /* was 1.9 */
+    line-height: 1.15;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    opacity: 0.92;
+  }
+
+  /* Premium white SMS box, lower on page */
+  .hero-sms-box {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: none;
+    border-radius: 16px;
+    padding: 16px 16px 20px;
+    margin-top: 32px;        /* pushes it further DOWN */
+  }
+
+  /* SMS input & button contrast fix */
+  .hero-sms-input-row input {
+    background: #f2f2f2;
+    color: #222;
+  }
+
+  .hero-btn {
+    background: #be1e2d !important;
+    color: #fff !important;
+  }
+}
