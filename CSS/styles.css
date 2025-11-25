@@ -1449,3 +1449,21 @@ select {
     max-width: 230px;
   }
 }
+
+/* FINAL Tai positioning – mobile breathing space */
+@media (max-width: 640px) {
+  .mascot-widget {
+    bottom: 90px !important;   /* was 76px, now clears nicely */
+    right: 16px;
+  }
+
+  .mascot-panel {
+    bottom: 180px !important;  /* chat sits above him cleanly */
+    max-width: 90vw;
+  }
+
+  .mascot-hint {
+    bottom: 140px !important;
+    right: 85px !important;
+  }
+}
