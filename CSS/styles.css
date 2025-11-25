@@ -212,7 +212,6 @@ header {
 
 /* ============================
    HERO SECTION – SIMPLE VERSION
-   (desktop looks same as mobile)
 =============================*/
 
 .hero {
@@ -229,11 +228,10 @@ header {
   background-size: cover;    /* same behaviour on mobile + desktop */
   background-position: center top; /* show more faces */
   background-repeat: no-repeat;
-  opacity: 0.26;             /* nice soft overlay */
+  opacity: 0.26;             /* base overlay */
   filter: grayscale(35%) brightness(0.85);
   z-index: 0;
 }
-
 
 /* angled overlay and dark layer */
 .hero-overlay-angle {
@@ -946,12 +944,26 @@ select {
     align-items: flex-start;
   }
 
+  /* HERO – mobile focus: more photo, box lower */
+  .hero {
+    min-height: 92vh;
+  }
+
+  .hero-bg {
+    opacity: 0.30;                 /* family photo a bit clearer */
+  }
+
   .hero-inner {
-    padding: 48px 0 72px;
+    padding: 110px 0 88px;         /* move quote box down */
   }
 
   .hero-title {
     font-size: 2.1rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-sms-box {
+    background: rgba(0, 0, 0, 0.25); /* slightly lighter glass */
   }
 
   .cards-grid {
@@ -1460,12 +1472,12 @@ select {
 /* FINAL Tai positioning – mobile breathing space */
 @media (max-width: 640px) {
   .mascot-widget {
-    bottom: 90px !important;   /* was 76px, now clears nicely */
+    bottom: 90px !important;   /* clears mobile CTA bar */
     right: 16px;
   }
 
   .mascot-panel {
-    bottom: 180px !important;  /* chat sits above him cleanly */
+    bottom: 180px !important;
     max-width: 90vw;
   }
 
@@ -1502,30 +1514,4 @@ select {
 .booking-disclaimer a {
   color: #ffffff;
   text-decoration: underline;
-}
-
-/* MOBILE HERO ADJUSTMENTS – FAMILY PHOTO VISIBLE & BOX LOWERED */
-@media (max-width: 640px) {
-  .hero {
-    min-height: 92vh;             /* give more vertical space */
-  }
-
-  .hero-bg {
-    background-size: 110%;        /* zoom OUT to show more faces */
-    background-position: center -6%; /* slide image up slightly to reveal faces */
-    opacity: 0.30;                /* ★ make photo more visible */
-  }
-
-  .hero-inner {
-    padding-top: 110px;           /* MOVE QUOTE BOX DOWN */
-    padding-bottom: 85px;         /* keep it away from bottom mascot */
-  }
-
-  .hero-sms-box {
-    background: rgba(0,0,0,0.25); /* lighter so faces still show */
-  }
-
-  .hero-title {
-    margin-bottom: 4px;           /* tighter spacing */
-  }
 }
