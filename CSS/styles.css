@@ -225,20 +225,21 @@ header {
   background-image: url("../images/family-cab.jpg");
   background-size: cover;
   background-position: center center;
-  opacity: 0.22;                /* adjust 0.15 – 0.30 */
-  filter: grayscale(30%) brightness(0.8); /* softer, warmer */
+  background-repeat: no-repeat;   /* 👈 add this line */
+  opacity: 0.22;                  /* or whatever you had */
+  filter: grayscale(30%) brightness(0.8);
   z-index: 0;
 }
 
 /* Desktop hero background – adjust zoom */
 @media (min-width: 768px) {
   .hero-bg {
-    background-size: contain;        /* was “cover” – now shows more */
-    background-position: center 10%; /* slide up to show faces */
+    background-size: 120%;        /* was contain / cover */
+    background-position: center 20%;
+    background-repeat: no-repeat; /* safe guard */
     opacity: 0.26;                /* keep same softness */
   }
 }
-
 
 /* angled overlay and dark layer */
 .hero-overlay-angle {
