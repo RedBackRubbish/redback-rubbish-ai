@@ -1804,3 +1804,66 @@ select {
     color: #fff !important;
   }
 }
+
+
+/* === FINAL MOBILE HERO TUNING (TAKES PRIORITY) === */
+@media (max-width: 640px) {
+
+  /* Make hero nice and tall */
+  .hero {
+    min-height: 95vh;
+  }
+
+  /* Warmer, more natural family photo */
+  .hero-bg {
+    background-size: cover;
+    background-position: center top;
+    opacity: 0.38; /* more visible */
+    filter: grayscale(8%) brightness(1.03) saturate(1.12);
+  }
+
+  /* Pull heading right up under header */
+  .hero-inner {
+    padding-top: 12px;      /* pulls “Brisbane Southside & Logan” up */
+    padding-bottom: 110px;  /* more space so quote box sits lower */
+  }
+
+  .hero-location {
+    margin-top: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;      /* bigger title */
+    line-height: 1.1;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  /* PUSH QUOTE BOX DOWN & MAKE IT CLEAN WHITE */
+  .hero-sms-box {
+    margin-top: 32px; /* 👈 this is the “move down” */
+    background: #ffffff;
+    color: #111111;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    border-radius: 18px;
+  }
+
+  .hero-sms-box .hero-label {
+    color: #777777;
+  }
+
+  .hero-note {
+    color: #666666;
+  }
+
+  /* Keep checks readable on top of photo */
+  .hero-trust-list {
+    font-size: 0.95rem;
+  }
+}
