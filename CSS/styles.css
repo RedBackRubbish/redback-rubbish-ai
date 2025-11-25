@@ -210,36 +210,42 @@ header {
   text-decoration: none;
 }
 
-/* HERO ---------------------------------------------------------- */
+/* ============================
+   HERO SECTION – FINAL VERSION
+=============================*/
 
 .hero {
   position: relative;
   color: #ffffff;
   overflow: hidden;
+  min-height: 75vh;         /* nice height on desktop */
 }
 
-/* FAMILY HERO BACKGROUND */
+/* Default – Mobile (works perfectly now) */
 .hero-bg {
   position: absolute;
   inset: 0;
   background-image: url("../images/family-cab.jpg");
   background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;   /* 👈 add this line */
-  opacity: 0.22;                  /* or whatever you had */
-  filter: grayscale(30%) brightness(0.8);
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.25;          /* soft & gentle */
+  filter: grayscale(35%) brightness(0.85);
   z-index: 0;
 }
 
-/* Desktop hero background – show more of the image */
+/* DESKTOP — zoom OUT to show more of photo */
 @media (min-width: 768px) {
+  .hero {
+    min-height: 80vh;       /* more room on desktop */
+  }
   .hero-bg {
-    background-size: cover;        /* show full image */
-    background-position: center -8%; /* nudge up to show faces */
-    background-repeat: no-repeat;    /* stop tiling */
-    opacity: 0.22;                   /* same gentle fade */
+    background-size: 85%;   /* 👈 ZOOM OUT more */
+    background-position: center -12%;   /* slide image up */
+    opacity: 0.22;          /* keep same subtle fade */
   }
 }
+
 
 /* angled overlay and dark layer */
 .hero-overlay-angle {
