@@ -211,7 +211,7 @@ header {
 }
 
 /* ============================
-   HERO SECTION – MOBILE-FIRST
+   HERO SECTION – DESKTOP BASE
 =============================*/
 
 .hero {
@@ -229,8 +229,8 @@ header {
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  opacity: 0.35;                         /* more photo showing */
-  filter: grayscale(10%) brightness(0.98);/* closer to original colour */
+  opacity: 0.35;
+  filter: grayscale(10%) brightness(0.98);
   z-index: 0;
 }
 
@@ -1118,7 +1118,6 @@ select {
 
 /* ============================
    FULL PREMIUM DARK MODE SECTIONS
-   (Overrides – keep at very bottom)
    ============================ */
 
 /* Make general “light/cream” sections dark by default after hero */
@@ -1465,12 +1464,12 @@ select {
 /* FINAL Tai positioning – mobile breathing space */
 @media (max-width: 640px) {
   .mascot-widget {
-    bottom: 90px !important;   /* was 76px, now clears nicely */
+    bottom: 90px !important;   /* clears mobile bottom bar */
     right: 16px;
   }
 
   .mascot-panel {
-    bottom: 180px !important;  /* chat sits above him cleanly */
+    bottom: 180px !important;
     max-width: 90vw;
   }
 
@@ -1509,323 +1508,29 @@ select {
   text-decoration: underline;
 }
 
-/* MOBILE HERO – HEADING TOP, SMS BOX BOTTOM, PHOTO VISIBLE */
-@media (max-width: 640px) {
-  .hero {
-    min-height: 92vh;                 /* taller hero on mobile */
-  }
-
-  .hero-bg {
-    background-size: 115%;            /* tiny zoom in for framing */
-    background-position: center top;  /* faces high in the frame */
-    opacity: 0.40;                    /* more of original photo */
-    filter: grayscale(5%) brightness(1.0);
-  }
-
-  .hero-inner {
-    padding: 32px 0 96px;             /* space above & above Tai */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;   /* spread content vertically */
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(92vh - 32px - 96px);
-  }
-
-  /* Heading sits near top naturally */
-  .hero-title {
-    margin-bottom: 6px;
-    font-size: 2.1rem;
-  }
-
-  .hero-subtitle {
-    margin-bottom: 10px;
-  }
-
-  /* SMS box gets pushed towards the bottom of the hero */
-  .hero-cta-row {
-    margin-top: auto;                 /* 👈 pushes SMS box down */
-  }
-
-  .hero-sms-box {
-    background: rgba(0, 0, 0, 0.2);   /* clean pill, photo still visible */
-    border-radius: 16px;
-  }
-
-  .hero-trust-list {
-    margin-top: 10px;
-  }
-}
-
-/* 🔥 FINAL MOBILE HERO — STRONGER VISUAL IMPACT */
-@media (max-width: 640px) {
-  .hero {
-    min-height: 95vh;  /* more space */
-  }
-
-  .hero-bg {
-    background-size: 105%;          /* zoom out a touch */
-    background-position: center -8%; /* keep faces strong */
-    background-repeat: no-repeat;
-    opacity: 0.33;                    /* slightly stronger */
-    filter: grayscale(15%) brightness(0.98) contrast(1.08) saturate(1.05);
-    /* warmer, more real-life colour */
-  }
-
-  .hero-inner {
-    padding-top: 60px !important;   /* moved title HIGHER */
-    padding-bottom: 110px;          /* pushes quote box lower */
-  }
-
-  /* Larger title */
-  .hero-title {
-    font-size: 2.35rem;    /* was 2.1 */
-    line-height: 1.15;
-    margin-bottom: 6px;
-  }
-
-  .hero-subtitle {
-    font-size: 1.02rem;    /* slightly stronger */
-    opacity: 0.95;
-  }
-
-  /* Quote box = more breathing room */
-  .hero-sms-box {
-    background: rgba(0,0,0,0.28);
-    padding: 18px 18px 20px;
-    border-radius: 16px;
-    backdrop-filter: blur(3px);
-  }
-}
-
-/* MOBILE HERO TUNING – FAMILY PHOTO / TITLE / BOX */
-@media (max-width: 640px) {
-  .hero {
-    min-height: 95vh;              /* a bit taller hero on phones */
-  }
-
-  .hero-bg {
-    /* warmer, closer to original colours */
-    background-position: center top;
-    opacity: 0.34;                 /* show the photo more */
-    filter: grayscale(15%) brightness(1.02) saturate(1.08);
-  }
-
-  .hero-inner {
-    padding-top: 78px;             /* moves title up towards very top */
-    padding-bottom: 100px;         /* keeps quote box clear of Tai + bottom bar */
-  }
-
-  .hero-title {
-    font-size: 2.35rem;            /* slightly larger heading */
-    line-height: 1.16;
-    margin-bottom: 6px;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-    margin-bottom: 12px;
-  }
-
-  .hero-sms-box {
-    margin-top: 22px;              /* pushes quote box further down */
-    background: rgba(0, 0, 0, 0.30);
-  }
-}
-
-/* ===== MOBILE HERO FINAL POLISH ===== */
-@media (max-width: 640px) {
-  /* Warm up the family photo */
-  .hero-bg {
-    background-size: 110%;
-    background-position: center -6%;
-    filter: grayscale(10%) brightness(1.05) contrast(1.05) saturate(1.1);
-    opacity: 0.28; /* photo more visible */
-  }
-
-  /* Stronger title */
-  .hero-title {
-    font-size: 2.4rem !important;
-    margin-bottom: 6px;
-  }
-
-  /* tagline more visible */
-  .hero-subtitle {
-    color: rgba(255,255,255,0.92);
-  }
-
-  /* Move quote box down more */
-  .hero-inner {
-    padding-top: 115px;
-    padding-bottom: 110px; /* SMS box sits lower */
-  }
-
-  .hero-sms-box {
-    background: rgba(0,0,0,0.20);
-    backdrop-filter: blur(3px);
-  }
-}
-
-/* === MOBILE HERO OVERRIDES (TJ VERSION) ====================== */
+/* ============================
+   FINAL MOBILE HERO SETTINGS
+   (≤ 640px – THIS TAKES PRIORITY)
+============================ */
 @media (max-width: 640px) {
 
-  /* Hero layout – title up, more breathing room at bottom */
+  /* Taller hero so everything breathes */
   .hero {
     min-height: 95vh;
   }
 
-  .hero-inner {
-    padding-top: 40px;      /* pulls "Brisbane Southside & Logan" up */
-    padding-bottom: 110px;  /* more space before How It Works */
-  }
-
-  .hero-location {
-    font-size: 0.9rem;
-    letter-spacing: 0.22em;
-  }
-
-  .hero-title {
-    font-size: 2.6rem;      /* bigger headline */
-    line-height: 1.08;
-    margin-bottom: 6px;
-  }
-
-  .hero-subtitle {
-    font-size: 1.05rem;
-    margin-bottom: 10px;
-  }
-
-  /* Photo – less grey/red filter, a bit warmer & clearer */
-  .hero-bg {
-    background-position: center top;
-    background-size: cover;
-    opacity: 0.32;                   /* photo more visible */
-    filter: brightness(1) saturate(1.1) contrast(1.05);
-  }
-
-  /* So overlay isn’t as heavy red on mobile */
-  .hero-overlay-angle {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.22),
-      rgba(190, 30, 45, 0.75)
-    );
-  }
-
-  /* SMS quote box – pushed down & full white card */
-  .hero-cta-row {
-    margin-top: 26px;                /* pushes the box further down */
-  }
-
-  .hero-sms-box {
-    background: #ffffff;
-    color: #111111;
-    border-radius: 18px;
-    padding: 16px 16px 18px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
-    backdrop-filter: none;
-  }
-
-  .hero-label {
-    color: #666666;
-    font-size: 0.8rem;
-    letter-spacing: 0.16em;
-  }
-
-  .hero-sms-input-row input {
-    background: #f4f4f4;
-  }
-
-  .hero-note {
-    color: #555555;
-    font-size: 0.82rem;
-  }
-
-  /* Keep bullets readable over photo */
-  .hero-trust-list {
-    margin-top: 14px;
-    font-size: 0.95rem;
-  }
-}
-
-/* ============================
-   FINAL MOBILE HERO FIXES —
-   CLEAN / PREMIUM LOOK
-============================ */
-@media (max-width: 640px) {
-
-  /* Show more of image & keep colour natural */
+  /* Family photo warmer & clearer */
   .hero-bg {
     background-size: cover;
     background-position: center top;
     opacity: 0.38;                     /* more visible */
-    filter: brightness(1) saturate(1); /* remove washed-out look */
+    filter: grayscale(6%) brightness(1.04) saturate(1.12);
   }
 
-  /* Move content UP a LOT (title near header) */
+  /* Heading sits high under header, SMS box lower */
   .hero-inner {
-    padding-top: 40px;   /* was 110px – big change */
-    padding-bottom: 110px;
-  }
-
-  /* Big title — looks confident */
-  .hero-title {
-    font-size: 2.4rem;   /* was 1.9 */
-    line-height: 1.15;
-    margin-bottom: 6px;
-    font-weight: 700;
-  }
-
-  .hero-subtitle {
-    font-size: 1.05rem;
-    opacity: 0.92;
-  }
-
-  /* Premium white SMS box, lower on page */
-  .hero-sms-box {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: none;
-    border-radius: 16px;
-    padding: 16px 16px 20px;
-    margin-top: 32px;        /* pushes it further DOWN */
-  }
-
-  /* SMS input & button contrast fix */
-  .hero-sms-input-row input {
-    background: #f2f2f2;
-    color: #222;
-  }
-
-  .hero-btn {
-    background: #be1e2d !important;
-    color: #fff !important;
-  }
-}
-
-
-/* === FINAL MOBILE HERO TUNING (TAKES PRIORITY) === */
-@media (max-width: 640px) {
-
-  /* Make hero nice and tall */
-  .hero {
-    min-height: 95vh;
-  }
-
-  /* Warmer, more natural family photo */
-  .hero-bg {
-    background-size: cover;
-    background-position: center top;
-    opacity: 0.38; /* more visible */
-    filter: grayscale(8%) brightness(1.03) saturate(1.12);
-  }
-
-  /* Pull heading right up under header */
-  .hero-inner {
-    padding-top: 12px;      /* pulls “Brisbane Southside & Logan” up */
-    padding-bottom: 110px;  /* more space so quote box sits lower */
+    padding-top: 14px;                 /* pulls “Brisbane Southside & Logan” up */
+    padding-bottom: 120px;             /* keeps SMS box away from Tai & bottom bar */
   }
 
   .hero-location {
@@ -1835,35 +1540,60 @@ select {
   }
 
   .hero-title {
-    font-size: 2.4rem;      /* bigger title */
+    font-size: 2.5rem;
     line-height: 1.1;
     margin-top: 6px;
     margin-bottom: 6px;
+    font-weight: 700;
   }
 
   .hero-subtitle {
     font-size: 1.05rem;
+    opacity: 0.95;
   }
 
-  /* PUSH QUOTE BOX DOWN & MAKE IT CLEAN WHITE */
+  /* So red overlay isn’t too heavy on mobile */
+  .hero-overlay-angle {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.20),
+      rgba(190, 30, 45, 0.72)
+    );
+  }
+
+  /* Premium white SMS quote box, pushed down */
+  .hero-cta-row {
+    margin-top: 28px;
+  }
+
   .hero-sms-box {
-    margin-top: 32px; /* 👈 this is the “move down” */
     background: #ffffff;
     color: #111111;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     border-radius: 18px;
+    padding: 16px 16px 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: none;
   }
 
-  .hero-sms-box .hero-label {
+  .hero-label {
     color: #777777;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-sms-input-row input {
+    background: #f3f3f3;
+    color: #222222;
   }
 
   .hero-note {
     color: #666666;
+    font-size: 0.82rem;
   }
 
-  /* Keep checks readable on top of photo */
+  /* Bullets nice & readable on top of photo */
   .hero-trust-list {
+    margin-top: 14px;
     font-size: 0.95rem;
   }
 }
