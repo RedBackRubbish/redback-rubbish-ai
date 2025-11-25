@@ -1559,3 +1559,44 @@ select {
     margin-top: 10px;
   }
 }
+
+/* 🔥 FINAL MOBILE HERO — STRONGER VISUAL IMPACT */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 95vh;  /* more space */
+  }
+
+  .hero-bg {
+    background-size: 105%;          /* zoom out a touch */
+    background-position: center -8%; /* keep faces strong */
+    background-repeat: no-repeat;
+    opacity: 0.33;                    /* slightly stronger */
+    filter: grayscale(15%) brightness(0.98) contrast(1.08) saturate(1.05);
+    /* warmer, more real-life colour */
+  }
+
+  .hero-inner {
+    padding-top: 60px !important;   /* moved title HIGHER */
+    padding-bottom: 110px;          /* pushes quote box lower */
+  }
+
+  /* Larger title */
+  .hero-title {
+    font-size: 2.35rem;    /* was 2.1 */
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.02rem;    /* slightly stronger */
+    opacity: 0.95;
+  }
+
+  /* Quote box = more breathing room */
+  .hero-sms-box {
+    background: rgba(0,0,0,0.28);
+    padding: 18px 18px 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(3px);
+  }
+}
