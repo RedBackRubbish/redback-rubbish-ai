@@ -231,6 +231,16 @@ header {
   z-index: 0;
 }
 
+/* Desktop hero background – show more of the image */
+@media (min-width: 768px) {
+  .hero-bg {
+    background-size: cover;        /* show full image */
+    background-position: center 20%; /* nudge up to show faces */
+    background-repeat: no-repeat;    /* stop tiling */
+    opacity: 0.22;                   /* same gentle fade */
+  }
+}
+
 /* angled overlay and dark layer */
 .hero-overlay-angle {
   position: absolute;
