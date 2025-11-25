@@ -1668,3 +1668,85 @@ select {
     backdrop-filter: blur(3px);
   }
 }
+
+/* === MOBILE HERO OVERRIDES (TJ VERSION) ====================== */
+@media (max-width: 640px) {
+
+  /* Hero layout – title up, more breathing room at bottom */
+  .hero {
+    min-height: 95vh;
+  }
+
+  .hero-inner {
+    padding-top: 40px;      /* pulls "Brisbane Southside & Logan" up */
+    padding-bottom: 110px;  /* more space before How It Works */
+  }
+
+  .hero-location {
+    font-size: 0.9rem;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-title {
+    font-size: 2.6rem;      /* bigger headline */
+    line-height: 1.08;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+
+  /* Photo – less grey/red filter, a bit warmer & clearer */
+  .hero-bg {
+    background-position: center top;
+    background-size: cover;
+    opacity: 0.32;                   /* photo more visible */
+    filter: brightness(1) saturate(1.1) contrast(1.05);
+  }
+
+  /* So overlay isn’t as heavy red on mobile */
+  .hero-overlay-angle {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.22),
+      rgba(190, 30, 45, 0.75)
+    );
+  }
+
+  /* SMS quote box – pushed down & full white card */
+  .hero-cta-row {
+    margin-top: 26px;                /* pushes the box further down */
+  }
+
+  .hero-sms-box {
+    background: #ffffff;
+    color: #111111;
+    border-radius: 18px;
+    padding: 16px 16px 18px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    backdrop-filter: none;
+  }
+
+  .hero-label {
+    color: #666666;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-sms-input-row input {
+    background: #f4f4f4;
+  }
+
+  .hero-note {
+    color: #555555;
+    font-size: 0.82rem;
+  }
+
+  /* Keep bullets readable over photo */
+  .hero-trust-list {
+    margin-top: 14px;
+    font-size: 0.95rem;
+  }
+}
