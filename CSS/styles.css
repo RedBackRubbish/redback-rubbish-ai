@@ -1765,3 +1765,29 @@ select {
     margin-top: 14px;
   }
 }
+
+/* === FINAL MOBILE HERO FIX — FORCE SMS BOX DOWN === */
+@media (max-width: 640px) {
+
+  /* Make hero-left fill the whole hero vertically */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Push SMS box to the VERY BOTTOM */
+  .hero-cta-row {
+    margin-top: auto !important;   /* forces it to bottom */
+    margin-bottom: 10px;           /* final spacing */
+  }
+
+  /* Make white box more premium & float nicely */
+  .hero-sms-box {
+    background: #fff;
+    color: #111;
+    padding: 16px 16px 22px;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+  }
+}
