@@ -1600,3 +1600,21 @@ select {
   }
 }
 
+/* === FINAL OVERRIDE – FORCE SMS BOX LOWER ON MOBILE === */
+@media (max-width: 640px) {
+
+  /* Give hero more height */
+  .hero {
+    min-height: 105vh !important;   /* more room for the photo */
+  }
+
+  /* Push SMS box lower */
+  .hero-cta-row {
+    margin-top: auto !important;    /* sends it to bottom */
+    padding-top: 35px !important;   /* extra breathing room */
+  }
+
+  .hero-sms-box {
+    margin-top: 65px !important;    /* ⬅  try 65 / 80 / 100 to test */
+  }
+}
