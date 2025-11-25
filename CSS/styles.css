@@ -1635,3 +1635,36 @@ select {
     background: rgba(0, 0, 0, 0.30);
   }
 }
+
+/* ===== MOBILE HERO FINAL POLISH ===== */
+@media (max-width: 640px) {
+  /* Warm up the family photo */
+  .hero-bg {
+    background-size: 110%;
+    background-position: center -6%;
+    filter: grayscale(10%) brightness(1.05) contrast(1.05) saturate(1.1);
+    opacity: 0.28; /* photo more visible */
+  }
+
+  /* Stronger title */
+  .hero-title {
+    font-size: 2.4rem !important;
+    margin-bottom: 6px;
+  }
+
+  /* tagline more visible */
+  .hero-subtitle {
+    color: rgba(255,255,255,0.92);
+  }
+
+  /* Move quote box down more */
+  .hero-inner {
+    padding-top: 115px;
+    padding-bottom: 110px; /* SMS box sits lower */
+  }
+
+  .hero-sms-box {
+    background: rgba(0,0,0,0.20);
+    backdrop-filter: blur(3px);
+  }
+}
