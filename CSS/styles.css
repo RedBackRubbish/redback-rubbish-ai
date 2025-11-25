@@ -1467,3 +1467,15 @@ select {
     right: 85px !important;
   }
 }
+
+/* A→B banner polish */
+@media (max-width: 640px) {
+  .ab-banner-image img {
+    display: block;
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    margin-top: 10px;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
+  }
+}
