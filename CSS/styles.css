@@ -1479,3 +1479,20 @@ select {
     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
   }
 }
+
+/* Booking form disclaimer */
+.booking-disclaimer {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.85);
+  background: #1c1c1e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #be1e2d;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.booking-disclaimer a {
+  color: #ffffff;
+  text-decoration: underline;
+}
