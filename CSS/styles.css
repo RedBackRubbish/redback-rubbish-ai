@@ -218,15 +218,18 @@ header {
   overflow: hidden;
 }
 
+/* FAMILY HERO BACKGROUND */
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("../images/storage-unit.jpg");
+  background-image: url("../images/family-cab.jpg");
   background-size: cover;
-  background-position: center;
-  filter: grayscale(100%) brightness(1.05);
+  background-position: center center;
+  opacity: 0.22;                /* adjust 0.15 – 0.30 */
+  filter: grayscale(30%) brightness(0.8); /* softer, warmer */
   z-index: 0;
 }
+
 
 /* angled overlay and dark layer */
 .hero-overlay-angle {
