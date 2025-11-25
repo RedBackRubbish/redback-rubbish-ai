@@ -1508,29 +1508,29 @@ select {
   text-decoration: underline;
 }
 
-/* ============================
-   FINAL MOBILE HERO SETTINGS
-   (≤ 640px – THIS TAKES PRIORITY)
-============================ */
+/* === MOBILE HERO OVERRIDES – CLEAN VERSION === */
+/* Put this at the very bottom of styles.css */
+
 @media (max-width: 640px) {
 
-  /* Taller hero so everything breathes */
+  /* Make hero tall enough to show your family */
   .hero {
-    min-height: 95vh;
+    min-height: 96vh;
   }
 
-  /* Family photo warmer & clearer */
+  /* Warm, more natural family photo */
   .hero-bg {
     background-size: cover;
     background-position: center top;
-    opacity: 0.38;                     /* more visible */
-    filter: grayscale(6%) brightness(1.04) saturate(1.12);
+    opacity: 0.38;                     /* photo more visible */
+    filter: grayscale(8%) brightness(1.05) saturate(1.15) contrast(1.05);
   }
 
-  /* Heading sits high under header, SMS box lower */
+  /* Title pulled right up under header */
   .hero-inner {
-    padding-top: 14px;                 /* pulls “Brisbane Southside & Logan” up */
-    padding-bottom: 120px;             /* keeps SMS box away from Tai & bottom bar */
+    display: block;                    /* simpler layout on mobile */
+    padding-top: 12px;                 /* moves “Brisbane Southside & Logan” up */
+    padding-bottom: 130px;             /* extra room so box can sit lower */
   }
 
   .hero-location {
@@ -1549,29 +1549,30 @@ select {
 
   .hero-subtitle {
     font-size: 1.05rem;
-    opacity: 0.95;
+    margin-bottom: 8px;
+    color: rgba(255,255,255,0.95);
   }
 
-  /* So red overlay isn’t too heavy on mobile */
+  /* Lighten the red overlay a touch so the photo reads nicer */
   .hero-overlay-angle {
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.20),
-      rgba(190, 30, 45, 0.72)
+      rgba(190, 30, 45, 0.70)
     );
   }
 
-  /* Premium white SMS quote box, pushed down */
+  /* PREMIUM WHITE SMS QUOTE BOX – PUSHED DOWN */
   .hero-cta-row {
-    margin-top: 28px;
+    margin-top: 34px;                  /* this is what pushes it DOWN */
   }
 
   .hero-sms-box {
     background: #ffffff;
     color: #111111;
     border-radius: 18px;
-    padding: 16px 16px 20px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    padding: 18px 18px 20px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
     backdrop-filter: none;
   }
 
@@ -1582,7 +1583,7 @@ select {
   }
 
   .hero-sms-input-row input {
-    background: #f3f3f3;
+    background: #f4f4f4;
     color: #222222;
   }
 
@@ -1591,60 +1592,11 @@ select {
     font-size: 0.82rem;
   }
 
-  /* Bullets nice & readable on top of photo */
+  /* Make sure checklist is easy to read over the image */
   .hero-trust-list {
     margin-top: 14px;
     font-size: 0.95rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
 }
 
-/* === FINAL MOBILE HERO – FULL FAMILY PHOTO + QUOTE BOX LOWER === */
-@media (max-width: 640px) {
-
-  /* Make hero VERY tall so photo fits */
-  .hero {
-    min-height: 110vh !important;  /* more height = more photo visible */
-  }
-
-  /* Warmer, natural photo */
-  .hero-bg {
-    background-size: cover !important;
-    background-position: center top !important;
-    opacity: 0.40 !important;  /* photo clearer */
-    filter: grayscale(5%) brightness(1.05) saturate(1.12) !important;
-  }
-
-  /* PULL ALL TEXT RIGHT TO THE TOP */
-  .hero-inner {
-    padding-top: 12px !important;     /* keeps title under header */
-    padding-bottom: 150px !important; /* 👈 MORE space for quote box */
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  /* 📌 QUOTE BOX – FORCE IT DOWN */
-  .hero-cta-row {
-     margin-top: auto !important;     /* push it to the bottom */
-     margin-bottom: 30px !important;  /* optional breathing space */
-  }
-
-  .hero-sms-box {
-    background: #ffffff !important;
-    color: #111111 !important;
-    border-radius: 18px !important;
-    padding: 18px 16px 20px !important;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
-  }
-
-  /* Bigger heading */
-  .hero-title {
-    font-size: 2.6rem !important;
-    line-height: 1.12 !important;
-  }
-
-  /* Trust bullets still readable */
-  .hero-trust-list {
-    font-size: 0.95rem !important;
-  }
-
-}
