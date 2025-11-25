@@ -1597,3 +1597,54 @@ select {
     font-size: 0.95rem;
   }
 }
+
+/* === FINAL MOBILE HERO – FULL FAMILY PHOTO + QUOTE BOX LOWER === */
+@media (max-width: 640px) {
+
+  /* Make hero VERY tall so photo fits */
+  .hero {
+    min-height: 110vh !important;  /* more height = more photo visible */
+  }
+
+  /* Warmer, natural photo */
+  .hero-bg {
+    background-size: cover !important;
+    background-position: center top !important;
+    opacity: 0.40 !important;  /* photo clearer */
+    filter: grayscale(5%) brightness(1.05) saturate(1.12) !important;
+  }
+
+  /* PULL ALL TEXT RIGHT TO THE TOP */
+  .hero-inner {
+    padding-top: 12px !important;     /* keeps title under header */
+    padding-bottom: 150px !important; /* 👈 MORE space for quote box */
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* 📌 QUOTE BOX – FORCE IT DOWN */
+  .hero-cta-row {
+     margin-top: auto !important;     /* push it to the bottom */
+     margin-bottom: 30px !important;  /* optional breathing space */
+  }
+
+  .hero-sms-box {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-radius: 18px !important;
+    padding: 18px 16px 20px !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* Bigger heading */
+  .hero-title {
+    font-size: 2.6rem !important;
+    line-height: 1.12 !important;
+  }
+
+  /* Trust bullets still readable */
+  .hero-trust-list {
+    font-size: 0.95rem !important;
+  }
+
+}
