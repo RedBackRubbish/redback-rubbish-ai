@@ -237,14 +237,15 @@ header {
 /* DESKTOP — zoom OUT to show more of photo */
 @media (min-width: 768px) {
   .hero {
-    min-height: 80vh;       /* more room on desktop */
+    min-height: 82vh;        /* slightly taller on desktop */
   }
   .hero-bg {
-    background-size: 85%;   /* 👈 ZOOM OUT more */
-    background-position: center -12%;   /* slide image up */
-    opacity: 0.22;          /* keep same subtle fade */
+    background-size: 65%;    /* 👈 WAY more zoomed OUT */
+    background-position: center -18%;   /* lift faces into view */
+    opacity: 0.22;
   }
 }
+
 
 
 /* angled overlay and dark layer */
