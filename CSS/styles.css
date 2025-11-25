@@ -1506,28 +1506,28 @@ select {
   text-decoration: underline;
 }
 
-/* MOBILE HERO ADJUSTMENTS – FAMILY PHOTO VISIBLE & BOX LOWERED */
+/* MOBILE HERO – SHOW MORE FAMILY PHOTO & DROP QUOTE BOX DOWN */
 @media (max-width: 640px) {
   .hero {
-    min-height: 92vh;             /* give more vertical space */
+    min-height: 105vh;              /* gives the hero more vertical space */
   }
 
   .hero-bg {
-    background-size: 110%;        /* zoom OUT to show more faces */
-    background-position: center -6%; /* slide image up slightly to reveal faces */
-    opacity: 0.30;                /* ★ make photo more visible */
+    background-size: 110%;          /* slight zoom so the cab fills nicely */
+    background-position: center -10%; /* push image up so faces sit higher */
+    opacity: 0.35;                  /* photo a bit stronger under the overlay */
   }
 
   .hero-inner {
-    padding-top: 110px;           /* MOVE QUOTE BOX DOWN */
-    padding-bottom: 85px;         /* keep it away from bottom mascot */
-  }
-
-  .hero-sms-box {
-    background: rgba(0,0,0,0.25); /* lighter so faces still show */
+    padding-top: 180px;             /* 🔽 moves title + quote box down */
+    padding-bottom: 110px;          /* keeps them away from Tai / bottom bar */
   }
 
   .hero-title {
-    margin-bottom: 4px;           /* tighter spacing */
+    margin-bottom: 6px;
+  }
+
+  .hero-sms-box {
+    background: rgba(0, 0, 0, 0.24); /* still glassy, lets the photo show */
   }
 }
