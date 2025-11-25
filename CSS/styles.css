@@ -233,11 +233,8 @@ header {
 
 /* Desktop hero background – show more of the image */
 @media (min-width: 768px) {
-  .hero {
-    min-height: 80vh;
-  }
   .hero-bg {
-    background-size: 75%;        /* show full image */
+    background-size: cover;        /* show full image */
     background-position: center -8%; /* nudge up to show faces */
     background-repeat: no-repeat;    /* stop tiling */
     opacity: 0.22;                   /* same gentle fade */
