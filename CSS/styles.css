@@ -211,41 +211,28 @@ header {
 }
 
 /* ============================
-   HERO SECTION – FINAL VERSION
+   HERO SECTION – SIMPLE VERSION
+   (desktop looks same as mobile)
 =============================*/
 
 .hero {
   position: relative;
   color: #ffffff;
   overflow: hidden;
-  min-height: 75vh;         /* nice height on desktop */
+  min-height: 80vh;          /* one height for all screens */
 }
 
-/* Default – Mobile (works perfectly now) */
 .hero-bg {
   position: absolute;
   inset: 0;
   background-image: url("../images/family-cab.jpg");
-  background-size: cover;
-  background-position: center;
+  background-size: cover;    /* same behaviour on mobile + desktop */
+  background-position: center top; /* show more faces */
   background-repeat: no-repeat;
-  opacity: 0.25;          /* soft & gentle */
+  opacity: 0.26;             /* nice soft overlay */
   filter: grayscale(35%) brightness(0.85);
   z-index: 0;
 }
-
-/* DESKTOP — zoom OUT to show more of photo */
-@media (min-width: 768px) {
-  .hero {
-    min-height: 82vh;        /* slightly taller on desktop */
-  }
-  .hero-bg {
-    background-size: 65%;    /* 👈 WAY more zoomed OUT */
-    background-position: center -18%;   /* lift faces into view */
-    opacity: 0.22;
-  }
-}
-
 
 
 /* angled overlay and dark layer */
