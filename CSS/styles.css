@@ -233,9 +233,9 @@ header {
 /* Desktop hero background – adjust zoom */
 @media (min-width: 768px) {
   .hero-bg {
-    background-size: 120%;        /* was “cover” – now shows more */
-    background-position: top center; /* slide up to show faces */
-    opacity: 0.22;                /* keep same softness */
+    background-size: contain;        /* was “cover” – now shows more */
+    background-position: center 10%; /* slide up to show faces */
+    opacity: 0.26;                /* keep same softness */
   }
 }
 
