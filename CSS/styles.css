@@ -1508,101 +1508,31 @@ select {
   text-decoration: underline;
 }
 
-/* === MOBILE HERO – SIMPLE CLEAN VERSION === */
-@media (max-width: 640px) {
+/* ============================
+   SIMPLE HEADER + HERO OVERRIDE
+   (junkrelief-style, RedBack colours)
+   ============================ */
 
-  /* Make hero tall enough for the full family photo */
-  .hero {
-    position: relative;
-    min-height: 105vh;
-  }
-
-  /* Pull the heading up so there’s room below */
-  .hero-inner {
-    padding-top: 16px;
-    padding-bottom: 40px;
-  }
-
-  /* FAMILY PHOTO – less filter, warmer + clearer */
-  .hero-bg {
-    background-position: center top;
-    background-size: cover;
-    opacity: 0.45; /* more visible image */
-    filter: brightness(1.08) saturate(1.1) contrast(1.03);
-  }
-
-  /* Let the left column stretch and control vertical layout */
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 160px); /* room for header + bottom bar */
-  }
-
-  /* 👉 This pushes the quote box (and the note + ticks) DOWN */
-  .hero-cta-row {
-    margin-top: auto;       /* sends it to the bottom of hero-left */
-    margin-bottom: 10px;    /* breathing room above Tai / bottom bar */
-  }
-
-  /* Premium white quote box styling */
-  .hero-sms-box {
-    background: #ffffff;
-    color: #111111;
-    padding: 16px 16px 22px;
-    border-radius: 18px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
-    backdrop-filter: none;
-  }
-
-  .hero-label {
-    color: #777777;
-    font-size: 0.8rem;
-    letter-spacing: 0.16em;
-  }
-
-  .hero-sms-input-row input {
-    background: #f4f4f4;
-    color: #222222;
-  }
-
-  .hero-note {
-    color: #555555;
-    font-size: 0.82rem;
-  }
-
-  .hero-trust-list {
-    font-size: 0.95rem;
-    margin-top: 12px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
-}
-
-
-/* ============================================
-   HEADER + HERO CLEAN REFRESH (OVERRIDES)
-   ============================================ */
-
-/* Header – cleaner, JunkRelief style */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: #111111;
+/* HEADER – blend into hero */
+.site-header,
+header {
+  background: transparent !important;
   color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 20;
+  box-shadow: none;
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: 10px;
-  gap: 18px;
+  padding-block: 14px;
 }
 
 .brand-name,
 .brand-location {
-  color: #f5f5f5;
+  color: #ffffff;
 }
 
 .nav a {
@@ -1610,107 +1540,98 @@ select {
   font-weight: 500;
 }
 
+/* Call button on the right */
 .site-header .btn-pill {
   border-color: #ffffff;
-  color: #ffffff;
-  background: transparent;
+  color: #111111;
+  background: #ffffff;
+  font-weight: 600;
 }
 
 .site-header .btn-pill:hover {
-  background: #ffffff;
-  color: #111111;
+  background: #be1e2d;
+  border-color: #be1e2d;
+  color: #ffffff;
 }
 
-/* ==== HERO – DESKTOP / TABLET BASE ================== */
-
+/* HERO – simple gradient + family photo */
 .hero {
   position: relative;
+  min-height: 78vh;
   color: #ffffff;
-  overflow: hidden;
-  min-height: clamp(560px, 90vh, 780px);
   display: flex;
-  align-items: stretch;
+  align-items: center;
 }
 
-/* Family image – less filtered, more natural */
+/* Use only ONE background: gradient + photo */
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("../images/family-cab.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  opacity: 0.55; /* was much lower – this makes you all clearer */
-  filter: grayscale(4%) brightness(1.05) saturate(1.15) contrast(1.03);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0,0,0,0.85), transparent 55%),
+    linear-gradient(135deg, #111111 0%, #be1e2d 65%, #be1e2d 100%),
+    url("../images/family-cab.jpg") center center / cover no-repeat;
+  opacity: 1;
+  filter: brightness(1.02) saturate(1.1) contrast(1.03);
   z-index: 0;
 }
 
-/* Softer angled colour overlay */
-.hero-overlay-angle {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.20),
-    rgba(190, 30, 45, 0.65)
-  );
-  clip-path: polygon(0 0, 100% 0, 100% 62%, 0 86%);
-  z-index: 1;
-}
-
-/* Darken lower half slightly for text */
+/* Kill the old angled overlays so things stay clean */
+.hero-overlay-angle,
 .hero-overlay-dark {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 55%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.0),
-    rgba(0, 0, 0, 0.55)
-  );
-  z-index: 1;
+  display: none !important;
 }
 
+/* Two-column layout on desktop/tablet */
 .hero-inner {
   position: relative;
-  z-index: 2;
-  width: min(1120px, 100% - 32px);
-  margin: 0 auto;
-  padding: 64px 0 140px;
-  display: flex;
+  z-index: 1;
+  padding: 80px 0 90px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: 40px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .hero-left {
   max-width: 540px;
 }
 
-/* Typography a bit closer to JunkRelief style */
 .hero-location {
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.85rem;
-  opacity: 0.95;
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+  opacity: 0.9;
 }
 
 .hero-title {
-  margin: 8px 0 8px;
-  font-size: 2.8rem;
+  margin: 10px 0 8px;
+  font-size: 2.9rem;
   line-height: 1.1;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .hero-subtitle {
-  margin: 0 0 10px;
-  font-size: 1.02rem;
-  color: rgba(255, 255, 255, 0.94);
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
 }
 
-/* Quote box row */
+/* Text bullets like JunkRelief */
+.hero-trust-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 18px;
+  font-size: 0.95rem;
+}
+
+.hero-trust-list li {
+  margin-bottom: 4px;
+}
+
+/* White SMS quote box */
 .hero-cta-row {
-  margin-top: 22px;
-  max-width: 500px;
+  margin-top: 18px;
 }
 
 .hero-sms-box {
@@ -1718,8 +1639,7 @@ select {
   color: #111111;
   border-radius: 18px;
   padding: 16px 18px 20px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
-  backdrop-filter: none;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65);
 }
 
 .hero-label {
@@ -1729,92 +1649,64 @@ select {
 }
 
 .hero-sms-input-row input {
-  background: #f5f5f5;
+  background: #f4f4f4;
   color: #222222;
 }
 
 .hero-note {
   color: #555555;
-  font-size: 0.83rem;
+  font-size: 0.82rem;
 }
 
-/* Checklist over the photo */
-.hero-trust-list {
-  margin-top: 14px;
-  font-size: 0.95rem;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+/* Right side – we’ll keep it simple / mostly empty for now
+   (family photo already in background) */
+.hero-right {
+  display: none; /* hide the old card for now */
 }
 
-/* ==== TABLET TWEAKS ================================= */
-
+/* ===== MOBILE / TABLET TWEAKS ===== */
 @media (max-width: 960px) {
   .hero-inner {
-    padding: 48px 0 150px;
-    flex-direction: column;
-    gap: 24px;
+    grid-template-columns: minmax(0,1fr);
+    padding: 70px 0 70px;
+  }
+
+  .hero-left {
+    max-width: none;
+  }
+
+  .nav {
+    display: none; /* keep mobile header very simple */
   }
 }
 
-/* ==== MOBILE – JUNKRELIEF-STYLE, BOX LOWER =========== */
-
 @media (max-width: 640px) {
-  /* make hero tall enough for family + box */
+
   .hero {
     min-height: 100vh;
-    align-items: stretch;
   }
 
   .hero-inner {
-    padding-top: 18px;
-    padding-bottom: 170px;  /* space for quote box & Tai & red bar */
-  }
-
-  /* turn left column into a flex column so we can push box down */
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 150px); /* estimate header height */
-    gap: 8px;
+    padding-top: 70px;   /* room for top bar + header */
+    padding-bottom: 80px;
   }
 
   .hero-title {
-    font-size: 2.4rem;
-    line-height: 1.08;
-    margin-bottom: 6px;
+    font-size: 2.3rem;
   }
 
-  .hero-subtitle {
-    font-size: 1.02rem;
-  }
-
-  /* family photo: a touch more visible on mobile */
+  /* lighten photo + keep faces visible */
   .hero-bg {
-    opacity: 0.62;
-    filter: grayscale(3%) brightness(1.08) saturate(1.18) contrast(1.04);
+    background-position: center top;
+    filter: brightness(1.06) saturate(1.12) contrast(1.02);
   }
 
-  /* 👉 THIS PUSHES THE QUOTE BOX DOWN */
+  /* nudge the quote box a bit lower, but not crazy */
   .hero-cta-row {
-    margin-top: auto;          /* pushes it to the bottom of hero-left */
-    margin-bottom: 8px;
+    margin-top: 28px;
   }
 
   .hero-sms-box {
-    padding: 16px 16px 22px;
-    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
-  }
-
-  .hero-trust-list {
-    font-size: 0.96rem;
-    margin-top: 14px;
-  }
-}
-
-/* Slightly tighter header on small phones */
-@media (max-width: 640px) {
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    padding: 16px 14px 20px;
   }
 }
