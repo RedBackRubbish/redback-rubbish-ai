@@ -695,14 +695,18 @@ document.addEventListener('DOMContentLoaded', function () {
   function isOpen() {
     return panel && panel.classList.contains('is-open');
   }
-  function openPanel() {
-    if (!panel) return;
-    panel.classList.add('is-open');
-  }
-  function closePanel() {
-    if (!panel) return;
-    panel.classList.remove('is-open');
-  }
+ function openPanel() {
+  if (!panel) return;
+  panel.classList.add('is-open');
+  widget.classList.add('chat-open'); // 🔥 add this
+}
+
+function closePanel() {
+  if (!panel) return;
+  panel.classList.remove('is-open');
+  widget.classList.remove('chat-open'); // 🔥 add this
+}
+
 
   if (toggle) {
     toggle.addEventListener('click', function () {
