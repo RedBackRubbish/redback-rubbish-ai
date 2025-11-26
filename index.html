@@ -56,32 +56,62 @@
     </a>
   </div>
 
-  <!-- Tai AI widget -->
-  <div class="mascot-widget" aria-live="polite">
-    <div class="mascot-hint has-text" aria-hidden="false">
-      👋 Hey I’m Tai — Tap to chat!
-    </div>
+<!-- TAI / LIL REDBACK WIDGET v2 -->
+<div class="mascot-widget" id="tai-widget">
+  <button class="mascot-toggle" id="tai-toggle" aria-label="Open chat with Tai">
+    <span class="mascot-bubble" id="tai-bubble">
+      👋 Hey I’m Tai — tap to chat!
+    </span>
+    <img
+      src="images/tai-head.png"
+      alt="Lil RedBack Tai"
+      class="mascot-avatar"
+    />
+  </button>
 
-    <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
-      <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
-
-      <div class="mascot-chat-form" id="tai-chat-form">
-        <input type="text" id="tai-chat-input" placeholder="Type your question here..." />
-        <button type="button" id="tai-chat-send">Send</button>
+  <div class="mascot-chat" id="tai-chat" aria-hidden="true">
+    <div class="mascot-chat-header">
+      <div class="mascot-chat-header-left">
+        <img
+          src="images/tai-head.png"
+          alt="Lil RedBack Tai"
+          class="mascot-chat-avatar"
+        />
+        <div class="mascot-chat-title">
+          <span class="mascot-chat-name">Lil RedBack Tai</span>
+          <span class="mascot-chat-sub">AI quote helper</span>
+        </div>
       </div>
-
-      <p class="mascot-footer-note">
-        Want a same-day quote? You can also text photos to
-        <a href="sms:0459272402">0459 272 402</a>.
-      </p>
-
-      <button class="mascot-close" type="button">Close</button>
+      <button class="mascot-chat-close" id="tai-close" aria-label="Close chat">
+        ✕
+      </button>
     </div>
 
-    <button title="Chat with Tai" class="mascot-toggle" type="button">
-      <img src="images/mascots/mascot-head.png" alt="Lil RedBack" />
-    </button>
+    <div class="mascot-chat-messages" id="tai-messages">
+      <div class="mascot-msg mascot-msg-tai">
+        <p>G’day! I’m Tai 👋</p>
+      </div>
+      <div class="mascot-msg mascot-msg-tai">
+        <p>Tell me what junk you’ve got & your suburb – I’ll help you with a quote.</p>
+      </div>
+    </div>
+
+    <form class="mascot-chat-input-row" id="tai-form">
+      <input
+        type="text"
+        id="tai-input"
+        class="mascot-chat-input"
+        placeholder="Type here… e.g. old couch in Rochedale South"
+        autocomplete="off"
+      />
+      <button type="submit" class="mascot-chat-send">
+        ➤
+      </button>
+    </form>
   </div>
+</div>
+<!-- /TAI WIDGET v2 -->
+
 
   <!-- HEADER -->
   <header class="site-header">
