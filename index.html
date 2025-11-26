@@ -5,8 +5,10 @@
   <title>RedBack Rubbish Removal | Brisbane Southside & Logan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Premium rubbish removal in Brisbane Southside & Logan. Family-run, fully insured and no-stress service with upfront prices and all the heavy lifting done for you."/>
+
   <link rel="icon" type="image/png" href="images/logo.png"/>
 
+  <!-- Open Graph -->
   <meta property="og:title" content="RedBack Rubbish Removal"/>
   <meta property="og:description" content="No Mess — No Stress. Text photos for a fast rubbish removal quote."/>
   <meta property="og:image" content="images/couch-twins.png"/>
@@ -24,92 +26,65 @@
     </a>
   </div>
 
-  <!-- TAI AI WIDGET -->
+  <!-- Tai AI widget -->
   <div class="mascot-widget" aria-live="polite">
-    <!-- Hint bubble -->
     <div class="mascot-hint has-text" aria-hidden="false">
       👋 Hey I’m Tai — Tap to chat!
     </div>
 
-    <!-- Chat panel -->
     <div class="mascot-panel" aria-label="Chat with Tai, the Lil RedBack">
       <div class="mascot-chat-log" id="tai-chat-log" aria-live="polite"></div>
 
-      <!-- Input row only -->
       <div class="mascot-chat-form" id="tai-chat-form">
         <input type="text" id="tai-chat-input" placeholder="Type your question here..." />
         <button type="button" id="tai-chat-send">Send</button>
       </div>
 
       <p class="mascot-footer-note">
-        Want a same-day quote? You can also text photos to <a href="sms:0459272402">0459 272 402</a>.
+        Want a same-day quote? You can also text photos to
+        <a href="sms:0459272402">0459 272 402</a>.
       </p>
 
       <button class="mascot-close" type="button">Close</button>
     </div>
 
-    <!-- Floating avatar -->
     <button title="Chat with Tai" class="mascot-toggle" type="button">
       <img src="images/mascots/mascot-head.png" alt="Lil RedBack"/>
     </button>
   </div>
 
-  <!-- (Top SMS bar is disabled in CSS, but keeping markup if we ever want it back) -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <span class="top-tagline">NO MESS — NO STRESS</span>
-      <a class="top-phone" href="tel:0459272402">Call 0459 272 402</a>
-      <a class="top-email" href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">Email</a>
-    </div>
-  </div>
-
-  <!-- Header (clean & simple) -->
+  <!-- Header (transparent over hero) -->
   <header class="site-header">
-  <div class="container header-inner">
-    <div class="brand">
-      <img src="images/logo.png" class="brand-logo" alt="RedBack Rubbish Removal logo" />
-      <div class="brand-text">
-        <span class="brand-name">REDBACK RUBBISH REMOVAL</span>
-        <span class="brand-location">Brisbane Southside &amp; Logan</span>
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo"/>
+        <div class="brand-text">
+          <span class="brand-name">REDBACK RUBBISH REMOVAL</span>
+          <span class="brand-location">Brisbane Southside &amp; Logan</span>
+        </div>
       </div>
+
+      <nav class="nav">
+        <a href="#book-quote" class="header-book-link">Book / Quote</a>
+      </nav>
     </div>
-
-    <nav class="nav">
-      <a href="#book-quote" class="header-book-link">Book / Quote</a>
-    </nav>
-  </div>
-</header>
-
+  </header>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
 
-    <div class="container hero-inner">
+    <div class="hero-inner">
       <div class="hero-left">
         <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
         <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
         <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
 
-<p class="hero-rating">
-  <span class="hero-stars">★★★★★</span>
-  <span class="hero-rating-text">Local family-run junk removal</span>
-</p>
-<p class="hero-price">Small loads from $150 (incl. GST).</p>
-
-
-        <div class="hero-cta-row">
-          <div class="hero-sms-box">
-            <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
-            <div class="hero-sms-input-row">
-              <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
-              <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
-            </div>
-            <p class="hero-note">
-              We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
-            </p>
-          </div>
-        </div>
+        <p class="hero-rating">
+          <span class="hero-rating-stars">★★★★★</span>
+          Local family-run rubbish removal
+        </p>
+        <p class="hero-price-line">Small loads from $150 (incl. GST).</p>
 
         <ul class="hero-trust-list">
           <li>✔ Family owned &amp; operated</li>
@@ -119,8 +94,21 @@
         </ul>
       </div>
 
-      <!-- Right column left empty on purpose (background carries the image) -->
-      <div class="hero-right"></div>
+      <div class="hero-right"><!-- reserved for future --></div>
+
+      <!-- Floating quote card bottom centre -->
+      <div class="hero-cta-row">
+        <div class="hero-sms-box">
+          <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
+          <div class="hero-sms-input-row">
+            <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
+            <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
+          </div>
+          <p class="hero-note">
+            We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -219,6 +207,7 @@
             <p>Branches, palm fronds, garden clean-ups and storm debris.</p>
           </div>
         </article>
+
       </div>
     </div>
   </section>
@@ -439,20 +428,7 @@
     </div>
   </footer>
 
-  <!-- Header scroll behaviour -->
-  <script>
-    document.addEventListener('scroll', function () {
-      const header = document.querySelector('.site-header');
-      if (!header) return;
-      if (window.scrollY > 40) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-  </script>
-
-  <!-- SMS helper + mobile bar behaviour -->
+  <!-- SMS helper + mobile bar behaviour + header scroll state -->
   <script>
     function openSmsQuote() {
       var input = document.getElementById('suburb-input');
@@ -467,22 +443,31 @@
       window.location.href = smsUrl;
     }
 
-    // Mobile bottom bar hide near booking section
     document.addEventListener('scroll', function () {
       var bar  = document.querySelector('.mobile-cta-bar');
       var book = document.getElementById('book-quote');
-      if (!bar || !book) return;
-      var rect   = book.getBoundingClientRect();
-      var inView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (inView) {
-        bar.classList.add('mobile-cta-hidden');
-      } else {
-        bar.classList.remove('mobile-cta-hidden');
+      var header = document.querySelector('.site-header');
+      if (book && bar) {
+        var rect   = book.getBoundingClientRect();
+        var inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inView) {
+          bar.classList.add('mobile-cta-hidden');
+        } else {
+          bar.classList.remove('mobile-cta-hidden');
+        }
+      }
+
+      if (header) {
+        if (window.scrollY > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
       }
     });
   </script>
 
-  <!-- Tai v9 front-end (logic unchanged, UI simplified) -->
+  <!-- Tai v9 front-end logic -->
   <script>
   document.addEventListener('DOMContentLoaded', function () {
     const widget       = document.querySelector('.mascot-widget');
