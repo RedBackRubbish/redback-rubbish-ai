@@ -55,19 +55,9 @@
     </button>
   </div>
 
-  <!-- Top SMS bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <span class="top-tagline">NO MESS — NO STRESS</span>
-      <a class="top-phone" href="tel:0459272402">Call 0459 272 402</a>
-      <a class="top-sms" href="sms:0459272402?&body=Hi%20RedBack%2C%20I%E2%80%99d%20like%20a%20rubbish%20removal%20quote.%20I%20can%20send%20photos.">Text Photos</a>
-      <a class="top-email" href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">Email</a>
-    </div>
-  </div>
-
-  <!-- Header -->
+  <!-- Header: clean, simple, logo left + big Book button right -->
   <header class="site-header">
-    <div class="container header-inner">
+    <div class="header-inner">
       <div class="brand">
         <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo"/>
         <div class="brand-text">
@@ -75,48 +65,19 @@
           <span class="brand-location">Brisbane Southside &amp; Logan</span>
         </div>
       </div>
-      <nav class="nav">
-        <a href="#how-it-works">How It Works</a>
-        <a href="#what-we-take">What We Take</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#why-redback">Why Us</a>
-        <a class="btn-pill" href="#book-quote">Book / Quote</a>
-      </nav>
+      <a class="header-book-btn" href="#book-quote">Book / Quote</a>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-overlay-angle"></div>
-    <div class="hero-overlay-dark"></div>
 
-    <div class="container hero-inner">
-     <div class="hero-left">
-
-  <div class="hero-heading">
-    <img src="images/logo.png" alt="RedBack Rubbish Removal" class="hero-logo">
-
-    <div class="hero-title-block">
-      <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
-      <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
-      <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
-    </div>
-  </div>
-
-
-        <div class="hero-cta-row">
-          <div class="hero-sms-box">
-            <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
-            <div class="hero-sms-input-row">
-              <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
-              <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
-            </div>
-            <p class="hero-note">
-              We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
-            </p>
-          </div>
-        </div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
+        <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
+        <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
 
         <ul class="hero-trust-list">
           <li>✔ Family owned &amp; operated</li>
@@ -126,10 +87,21 @@
         </ul>
       </div>
 
-      <div class="hero-right">
-        <div class="hero-card">
-          <img src="images/hero-trailer.jpg" alt="RedBack Rubbish Removal trailer loaded and ready to go"/>
+      <!-- (Right column not used, but kept for future if we want a photo/card) -->
+      <div class="hero-right"></div>
+    </div>
+
+    <!-- Floating quote card bottom centre -->
+    <div class="hero-cta-row">
+      <div class="hero-sms-box">
+        <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
+        <div class="hero-sms-input-row">
+          <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
+          <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
         </div>
+        <p class="hero-note">
+          We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
+        </p>
       </div>
     </div>
   </section>
@@ -229,7 +201,6 @@
             <p>Branches, palm fronds, garden clean-ups and storm debris.</p>
           </div>
         </article>
-
       </div>
     </div>
   </section>
@@ -405,22 +376,21 @@
 
       <div class="book-column">
         <div class="booking-card">
-  <p class="form-label">Online booking form — Jobber</p>
+          <p class="form-label">Online booking form — Jobber</p>
 
-<div class="booking-disclaimer">
-  ⚠️ <strong>Note:</strong> Prices below may not include GST.  
-  Please see the <a href="#pricing">pricing section above</a> for final GST-inclusive rates.
-</div>
+          <div class="booking-disclaimer">
+            ⚠️ <strong>Note:</strong> Prices below may not include GST.  
+            Please see the <a href="#pricing">pricing section above</a> for final GST-inclusive rates.
+          </div>
 
-  <div class="jobber-embed">
-    <iframe
-      loading="lazy"
-      src="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
-      title="Book RedBack Rubbish Removal">
-    </iframe>
-  </div>
-</div>
-
+          <div class="jobber-embed">
+            <iframe
+              loading="lazy"
+              src="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
+              title="Book RedBack Rubbish Removal">
+            </iframe>
+          </div>
+        </div>
 
         <div class="booking-card">
           <p class="form-label">Prefer email?</p>
