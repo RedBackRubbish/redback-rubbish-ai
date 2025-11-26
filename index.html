@@ -743,21 +743,26 @@ function closePanel() {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  function addMessage(text, who = 'tai') {
-    if (!chatLog || !text) return;
+ function addMessage(text, who = 'tai') {
+  if (!chatLog || !text) return;
 
-    const msg = document.createElement('div');
-    const roleClass = who === 'user' ? 'mascot-msg-user' : 'mascot-msg-tai';
-    msg.className = 'mascot-msg ' + roleClass;
+  const msg = document.createElement('div');
+  const roleClass = who === 'user' ? 'mascot-msg-user' : 'mascot-msg-tai';
+  msg.className = 'mascot-msg ' + roleClass;
 
-    const p = document.createElement('p');
-    p.textContent = text;
+  const p = document.createElement('p');
+  p.textContent = text;
 
-    msg.appendChild(p);
-    chatLog.appendChild(msg);
-    scrollToBottom();
-    return msg;
-  }
+  const time = document.createElement('span');
+  time.className = 'msg-time';
+  time.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+  msg.appendChild(p);
+  msg.appendChild(time);
+  chatLog.appendChild(msg);
+  scrollToBottom();
+}
+
 
   function setLoading(loading) {
     isSending = loading;
