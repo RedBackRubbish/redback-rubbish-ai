@@ -1513,31 +1513,45 @@ select {
    (junkrelief-style, RedBack colours)
    ============================ */
 
-/* HEADER – blend into hero */
-.site-header,
-header {
+/* ============= SIMPLE HEADER THAT BLENDS INTO HERO ============= */
+
+/* Transparent header sitting ON TOP of hero */
+header,
+.site-header {
   background: transparent !important;
-  color: #ffffff;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 20;
-  box-shadow: none;
+  color: #ffffff;
+  box-shadow: none; /* remove old shadows */
+  transition: background-color 0.4s ease;
 }
 
+/* Inside layout */
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: 14px;
+  padding: 14px 5%;
 }
 
 .brand-name,
-.brand-location {
-  color: #ffffff;
+.brand-location,
+.nav a {
+  color: #ffffff !important; /* ensure visible over hero */
 }
 
-.nav a {
-  color: #f5f5f5;
-  font-weight: 500;
+/* When scrolling – header becomes solid (JunkRelief style) */
+header.scrolled {
+  background: #0f0f0f !important;   /* dark charcoal */
+}
+
+header.scrolled .nav a,
+header.scrolled .brand-name,
+header.scrolled .brand-location {
+  color: #ffffff !important;        /* stay clear */
 }
 
 /* Call button on the right */
