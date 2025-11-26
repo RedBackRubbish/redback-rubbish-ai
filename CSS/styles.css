@@ -83,77 +83,35 @@ a {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* TOP BAR & HEADER ----------------------------------------------- */
+/* HEADER -------------------------------------------------------- */
 
-.top-bar {
-  background: #111111;
+/* Simple header that floats over hero */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  background: transparent;
   color: #ffffff;
-  font-size: 0.85rem;
-}
-
-.top-bar-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-block: 6px;
-  gap: 8px;
-}
-
-.top-tagline {
-  opacity: 0.9;
-}
-
-.top-phone {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #be1e2d;
-  font-weight: 600;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.top-phone:hover {
-  background: #be1e2d;
-  color: #ffffff;
-}
-
-.top-email {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #be1e2d;
-  color: #be1e2d;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.top-email:hover {
-  background: #be1e2d;
-  color: #ffffff;
-}
-
-/* ===== HEADER – DARK MODE ===== */
-header {
-  background: #1d1d1d !important; /* dark grey like iPhone view */
-  color: #fff;
 }
 
 .header-inner {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  padding-block: 10px;
+  padding: 16px 5%;
   gap: 16px;
 }
 
 .brand {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
 }
 
 .brand-logo {
-  height: 50px;
+  height: 48px;
   width: auto;
 }
 
@@ -164,153 +122,145 @@ header {
 
 .brand-name {
   font-weight: 700;
-  letter-spacing: 0.1em;
-  font-size: 0.86rem;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
 }
 
 .brand-location {
-  font-size: 0.8rem;
-  color: #555555;
+  font-size: 0.78rem;
+  opacity: 0.85;
 }
 
-.nav {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  font-size: 0.9rem;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #333333;
-  position: relative;
-}
-
-/* premium hover underline */
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 0;
-  height: 2px;
-  background: #be1e2d;
-  transition: width 0.2s ease-out;
-}
-
-.nav a:hover::after {
-  width: 100%;
-}
-
-.btn-pill {
-  padding: 7px 16px;
+/* Big Book / Quote button on the right */
+.header-book-btn {
+  padding: 9px 22px;
   border-radius: 999px;
-  border: 1px solid #be1e2d;
-  color: #be1e2d;
+  border: 1px solid #ffffff;
+  background: #ffffff;
+  color: #111111;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   text-decoration: none;
 }
 
-/* ============================
-   HERO SECTION – DESKTOP BASE
-=============================*/
+.header-book-btn:hover {
+  background: #be1e2d;
+  border-color: #be1e2d;
+  color: #ffffff;
+}
+
+/* HERO SECTION -------------------------------------------------- */
 
 .hero {
   position: relative;
+  min-height: 88vh;
   color: #ffffff;
   overflow: hidden;
-  min-height: 80vh;
+  display: flex;
+  align-items: stretch;
 }
 
-/* Background image */
+/* Gradient + family photo background */
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("../images/family-cab.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  opacity: 0.35;
-  filter: grayscale(10%) brightness(0.98);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0, 0, 0, 0.9), transparent 55%),
+    linear-gradient(135deg, #111111 0%, #111111 35%, #be1e2d 70%, #be1e2d 100%),
+    url("../images/family-cab.jpg") right center / cover no-repeat;
+  opacity: 1;
+  filter: brightness(1.02) saturate(1.08);
   z-index: 0;
 }
 
-/* angled overlay and dark layer */
-.hero-overlay-angle {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.18),
-    rgba(190, 30, 45, 0.82)
-  );
-  clip-path: polygon(0 0, 100% 0, 100% 65%, 0 85%);
-  z-index: 1;
-}
-
+/* Old overlays no longer needed */
+.hero-overlay-angle,
 .hero-overlay-dark {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 55%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(190, 30, 45, 0.95)
-  );
-  z-index: 1;
+  display: none !important;
 }
 
-/* Desktop / tablet layout – two columns */
+/* Inner grid */
 .hero-inner {
   position: relative;
-  z-index: 2;
-  padding: 32px 0 90px;
+  z-index: 1;
+  width: 100%;
+  margin: 0;
+  padding: 120px 5% 140px;
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 40px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  column-gap: 40px;
   align-items: flex-start;
 }
 
 .hero-left {
-  max-width: 520px;
+  max-width: 560px;
 }
 
+/* Top-left heading */
 .hero-location {
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   opacity: 0.9;
 }
 
 .hero-title {
-  margin: 8px 0 10px;
-  font-size: 2.6rem;
-  line-height: 1.15;
+  margin: 12px 0 10px;
+  font-size: 3.3rem;
+  line-height: 1.02;
+  font-weight: 800;
 }
 
 .hero-subtitle {
   margin: 0 0 12px;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
+/* Bullet list */
+.hero-trust-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 18px 0 0;
+  font-size: 0.96rem;
+}
+
+.hero-trust-list li {
+  margin-bottom: 4px;
+}
+
+/* Right column reserved for future if needed */
+.hero-right {
+  display: none;
+}
+
+/* Floating quote card bottom centre */
 .hero-cta-row {
-  margin-top: 10px;
+  position: absolute;
+  left: 50%;
+  bottom: 70px;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 460px;
 }
 
 .hero-sms-box {
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 14px;
-  padding: 12px 14px 14px;
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: #ffffff;
+  color: #111111;
+  border-radius: 18px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
 }
 
 .hero-label {
   display: block;
   margin-bottom: 6px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  opacity: 0.9;
+  letter-spacing: 0.16em;
+  color: #777777;
 }
 
 .hero-sms-input-row {
@@ -324,6 +274,8 @@ header {
   border: none;
   padding: 8px 12px;
   font-size: 0.9rem;
+  background: #f4f4f4;
+  color: #222222;
   outline: none;
 }
 
@@ -332,35 +284,9 @@ header {
 }
 
 .hero-note {
-  margin: 8px 0 6px;
-  font-size: 0.78rem;
-  opacity: 0.9;
-}
-
-.hero-trust-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 10px 0 0;
-  font-size: 0.9rem;
-}
-
-.hero-trust-list li {
-  margin-bottom: 4px;
-}
-
-.hero-right {
-  display: none; /* keep hidden for now */
-}
-
-.hero-card {
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 18px;
-  padding: 8px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
-}
-
-.hero-card img {
-  border-radius: 14px;
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: #555555;
 }
 
 /* BUTTONS ------------------------------------------------------- */
@@ -534,7 +460,7 @@ header {
 /* Lil RedBack How It Works visual */
 .how-visual {
   margin: 24px auto 8px;
-  max-width: 190px; /* close to What We Take mascot size */
+  max-width: 190px;
 }
 
 .how-visual img {
@@ -554,7 +480,7 @@ header {
 /* smaller on narrow screens */
 @media (max-width: 600px) {
   .how-visual {
-    max-width: 130px; /* same ballpark as other mascots on mobile */
+    max-width: 130px;
     margin-top: 16px;
   }
 }
@@ -889,259 +815,13 @@ select {
   font-size: 16px !important;
 }
 
-/* MOBILE & TABLET BREAKPOINTS ---------------------------------- */
-
-@media (max-width: 960px) {
-  .nav {
-    display: none;
-  }
-
-  .hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-    padding-top: 60px;
-  }
-
-  .hero-right {
-    justify-content: flex-start;
-  }
-
-  .cards-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .pricing-grid,
-  .reviews-grid,
-  .book-grid,
-  .why-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .why-cards {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .nav {
-    flex-wrap: wrap;
-    row-gap: 6px;
-    font-size: 0.85rem;
-  }
-
-  .ab-banner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .ab-banner-image {
-    justify-self: flex-start;
-    margin-top: 18px;
-    max-width: 260px;
-  }
-}
-
-@media (max-width: 640px) {
-  .top-bar-inner,
-  .header-inner,
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-inner {
-    padding: 48px 0 72px;
-  }
-
-  .hero-title {
-    font-size: 2.1rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-  }
-
-  .mobile-cta-bar {
-    display: flex;
-  }
-
-  body {
-    padding-bottom: 52px;
-  }
-
-  .how-section {
-    background: linear-gradient(
-      150deg,
-      #111111 0%,
-      #111111 60%,
-      #1c1c1e 60%,
-      #1c1c1e 100%
-    );
-    padding: 40px 0 44px;
-  }
-
-  .how-steps-simple {
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .jobber-embed iframe {
-    min-height: 520px;
-  }
-
-  #book-quote.section-cream {
-    padding: 56px 0 64px;
-  }
-
-  /* keep mascot panel nicely sized */
-  .mascot-panel {
-    max-width: 90vw;
-  }
-
-  .section-ab-banner {
-    padding: 46px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-logo {
-    height: 42px;
-  }
-
-  .brand-name {
-    font-size: 0.78rem;
-    line-height: 1.2;
-  }
-
-  .brand-location {
-    font-size: 0.74rem;
-  }
-
-  .hero-title {
-    font-size: 1.9rem;
-  }
-
-  .hero-subtitle {
-    font-size: 0.95rem;
-  }
-
-  .hero-sms-input-row {
-    flex-direction: column;
-  }
-
-  .hero-sms-input-row button {
-    width: 100%;
-  }
-
-  .how-step-simple {
-    align-items: flex-start;
-  }
-
-  .how-label {
-    font-size: 0.9rem;
-    line-height: 1.3;
-  }
-
-  .card img {
-    height: 160px;
-  }
-
-  .pricing-grid {
-    gap: 16px;
-    margin-top: 16px;
-  }
-
-  .price-card {
-    padding: 14px 14px 16px;
-  }
-
-  .price {
-    font-size: 1.3rem;
-  }
-
-  .footer-inner {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .site-footer {
-    font-size: 0.8rem;
-  }
-
-  .section-mascot-inline img {
-    max-width: 130px;
-  }
-
-  .mascot-chat-log {
-    max-height: 180px;
-  }
-
-  .mascot-toggle img {
-    height: 70px;
-  }
-
-  .ab-banner-title {
-    font-size: 1.3rem;
-  }
-}
-
-/* DARK MOBILE HEADER TO MATCH iOS GREY ------------------------- */
-
-@media (max-width: 768px) {
-  .site-header {
-    background: #1c1c1e;
-  }
-
-  .brand-name,
-  .brand-location {
-    color: #f5f5f5;
-  }
-
-  .nav a {
-    color: #f5f5f5;
-  }
-
-  .site-header .btn-pill {
-    background-color: transparent;
-    border-color: #ffffff;
-    color: #ffffff;
-  }
-
-  .site-header .btn-pill:hover {
-    background-color: #ffffff;
-    color: #111111;
-  }
-}
-
-/* ============================
-   FULL PREMIUM DARK MODE SECTIONS
-   ============================ */
+/* DARK THEME SECTIONS (KEEPING YOUR PREMIUM LOOK) -------------- */
 
 /* Make general “light/cream” sections dark by default after hero */
 .section-cream,
 .section-light {
   background: #111111;
   color: #ffffff;
-}
-
-/* --- HOW IT WORKS --- */
-.how-section,
-#how-it-works.section {
-  background: linear-gradient(
-    135deg,
-    #111111 0%,
-    #111111 52%,
-    #1c1c1e 52%,
-    #1c1c1e 100%
-  );
-  color: #ffffff;
-}
-
-.how-subtitle {
-  color: rgba(255, 255, 255, 0.8);
 }
 
 /* --- WHAT WE TAKE --- */
@@ -1270,7 +950,8 @@ select {
   color: #ffffff;
 }
 
-/* TAI MASCOT WIDGET  — IMPROVED POSITIONING -------------------- */
+/* TAI MASCOT WIDGET -------------------------------------------- */
+
 .mascot-widget {
   position: fixed;
   bottom: 22%;
@@ -1464,7 +1145,7 @@ select {
 /* FINAL Tai positioning – mobile breathing space */
 @media (max-width: 640px) {
   .mascot-widget {
-    bottom: 90px !important;   /* clears mobile bottom bar */
+    bottom: 90px !important;
     right: 16px;
   }
 
@@ -1487,14 +1168,14 @@ select {
     max-height: 240px;
     object-fit: contain;
     margin-top: 10px;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
   }
 }
 
 /* Booking form disclaimer */
 .booking-disclaimer {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   background: #1c1c1e;
   padding: 10px 14px;
   border-radius: 8px;
@@ -1508,205 +1189,7 @@ select {
   text-decoration: underline;
 }
 
-/* ============================
-   SIMPLE HEADER + HERO OVERRIDE
-   (junkrelief-style, RedBack colours)
-   ============================ */
-
-/* ============= SIMPLE HEADER THAT BLENDS INTO HERO ============= */
-
-/* Transparent header sitting ON TOP of hero */
-header,
-.site-header {
-  background: transparent !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 20;
-  color: #ffffff;
-  box-shadow: none; /* remove old shadows */
-  transition: background-color 0.4s ease;
-}
-
-/* Inside layout */
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 5%;
-}
-
-.brand-name,
-.brand-location,
-.nav a {
-  color: #ffffff !important; /* ensure visible over hero */
-}
-
-/* When scrolling – header becomes solid (JunkRelief style) */
-header.scrolled {
-  background: #0f0f0f !important;   /* dark charcoal */
-}
-
-header.scrolled .nav a,
-header.scrolled .brand-name,
-header.scrolled .brand-location {
-  color: #ffffff !important;        /* stay clear */
-}
-
-/* Call button on the right */
-.site-header .btn-pill {
-  border-color: #ffffff;
-  color: #111111;
-  background: #ffffff;
-  font-weight: 600;
-}
-
-.site-header .btn-pill:hover {
-  background: #be1e2d;
-  border-color: #be1e2d;
-  color: #ffffff;
-}
-
-/* === HERO LAYOUT: BIG TITLE TOP LEFT + FLOATING QUOTE CARD === */
-
-.hero {
-  position: relative;
-  min-height: 88vh;
-  color: #ffffff;
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-}
-
-/* Gradient + family photo anchored right */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(0,0,0,0.9), transparent 55%),
-    linear-gradient(135deg, #111111 0%, #111111 35%, #be1e2d 70%, #be1e2d 100%),
-    url("../images/family-cab.jpg") right center / cover no-repeat;
-  opacity: 1;
-  filter: brightness(1.02) saturate(1.08);
-  z-index: 0;
-}
-
-/* kill any old overlays */
-.hero-overlay-angle,
-.hero-overlay-dark {
-  display: none !important;
-}
-
-/* Inner grid */
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  width: min(1120px, 100% - 32px);
-  margin: 0 auto;
-  padding: 110px 0 140px;  /* room for header & bottom quote card */
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  column-gap: 40px;
-  align-items: flex-start;
-}
-
-.hero-left {
-  max-width: 540px;
-}
-
-/* Top-left heading */
-.hero-location {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.82rem;
-  opacity: 0.9;
-}
-
-.hero-title {
-  margin: 12px 0 8px;
-  font-size: 3.1rem;
-  line-height: 1.05;
-  font-weight: 800;
-}
-
-.hero-subtitle {
-  margin: 0 0 10px;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* Bullet list under subtitle */
-.hero-trust-list {
-  list-style: none;
-  margin: 14px 0 0;
-  padding: 0;
-  font-size: 0.96rem;
-}
-
-.hero-trust-list li {
-  margin-bottom: 4px;
-}
-
-/* we don't need a separate image card on the right – background does the job */
-.hero-right {
-  display: none;
-}
-
-/* Floating quote card bottom centre (desktop / tablet) */
-.hero-cta-row {
-  position: absolute;
-  left: 50%;
-  bottom: 70px;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 460px;
-}
-
-.hero-sms-box {
-  background: #ffffff;
-  color: #111111;
-  border-radius: 18px;
-  padding: 16px 18px 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
-}
-
-.hero-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #777777;
-}
-
-.hero-sms-input-row {
-  display: flex;
-  gap: 8px;
-}
-
-.hero-sms-input-row input {
-  flex: 1;
-  border-radius: 999px;
-  border: none;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  background: #f4f4f4;
-  color: #222222;
-  outline: none;
-}
-
-.hero-btn {
-  flex-shrink: 0;
-}
-
-.hero-note {
-  margin: 8px 0 0;
-  font-size: 0.82rem;
-  color: #555555;
-}
-
-/* ====== BREAKPOINTS ====== */
+/* RESPONSIVE BREAKPOINTS --------------------------------------- */
 
 @media (max-width: 960px) {
   .hero {
@@ -1715,7 +1198,7 @@ header.scrolled .brand-location {
 
   .hero-inner {
     grid-template-columns: minmax(0, 1fr);
-    padding: 100px 0 120px;
+    padding: 100px 5% 120px;
   }
 
   .hero-cta-row {
@@ -1725,16 +1208,58 @@ header.scrolled .brand-location {
   .hero-title {
     font-size: 2.6rem;
   }
+
+  .book-grid,
+  .why-grid,
+  .pricing-grid,
+  .reviews-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ab-banner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ab-banner-image {
+    justify-self: flex-start;
+    margin-top: 18px;
+    max-width: 260px;
+  }
 }
 
 @media (max-width: 640px) {
+  .header-inner {
+    padding: 12px 5%;
+  }
+
+  .brand-logo {
+    height: 40px;
+  }
+
+  .brand-name {
+    font-size: 0.72rem;
+  }
+
+  .brand-location {
+    font-size: 0.7rem;
+  }
+
+  .header-book-btn {
+    padding: 7px 16px;
+    font-size: 0.78rem;
+  }
+
   .hero-inner {
-    padding: 90px 0 90px;
+    padding: 90px 5% 90px;
   }
 
   .hero-bg {
     background:
-      radial-gradient(circle at 0% 0%, rgba(0,0,0,0.9), transparent 55%),
+      radial-gradient(circle at 0% 0%, rgba(0, 0, 0, 0.9), transparent 55%),
       linear-gradient(135deg, #111111 0%, #111111 45%, #be1e2d 90%, #be1e2d 100%),
       url("../images/family-cab.jpg") center top / cover no-repeat;
   }
@@ -1743,7 +1268,6 @@ header.scrolled .brand-location {
     font-size: 2.2rem;
   }
 
-  /* On mobile, stack quote box under text */
   .hero-cta-row {
     position: static;
     transform: none;
@@ -1763,142 +1287,87 @@ header.scrolled .brand-location {
   .hero-sms-input-row button {
     width: 100%;
   }
-}
 
-/* HERO TITLE + LOGO */
-.hero-heading {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 650px;
-}
-
-.hero-logo {
-  width: 95px;
-  height: auto;
-}
-
-.hero-title-block h1 {
-  font-size: 3.2rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.hero-title-block .hero-location {
-  font-size: 0.9rem;
-  letter-spacing: 2px;
-  opacity: 0.8;
-  margin: 0 0 6px 0;
-  font-weight: 500;
-}
-
-.hero-title-block .hero-subtitle {
-  opacity: 0.8;
-  margin-top: 6px;
-  font-size: 1rem;
-}
-
-/* =========================================
-   CLEAN TOP AREA (HEADER + NAV) OVERRIDE
-   ========================================= */
-
-/* 1. Hide the busy top bar completely */
-.top-bar {
-  display: none;
-}
-
-/* 2. Simple transparent header that sits on the hero */
-header,
-.site-header {
-  background: transparent !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 20;
-  color: #ffffff;
-  box-shadow: none;
-}
-
-/* 3. Slimmer header layout */
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 5%;
-  gap: 16px;
-}
-
-/* Make all header text white so it reads on the hero */
-.brand-name,
-.brand-location,
-.nav a {
-  color: #ffffff !important;
-}
-
-/* 4. Clean nav – simple row of links */
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-size: 0.9rem;
-}
-
-/* Premium underline hover, but nice and subtle */
-.nav a {
-  text-decoration: none;
-  position: relative;
-  font-weight: 500;
-}
-
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 0;
-  height: 2px;
-  background: #be1e2d;
-  transition: width 0.2s ease-out;
-}
-
-.nav a:hover::after {
-  width: 100%;
-}
-
-/* 5. Single strong call-to-action button in header */
-.site-header .btn-pill {
-  border-color: #ffffff;
-  color: #111111;
-  background: #ffffff;
-  font-weight: 600;
-}
-
-.site-header .btn-pill:hover {
-  background: #be1e2d;
-  border-color: #be1e2d;
-  color: #ffffff;
-}
-
-/* 6. On scroll, give header a solid dark background (JunkRelief vibe) */
-header.scrolled {
-  background: #0f0f0f !important;
-}
-
-header.scrolled .nav a,
-header.scrolled .brand-name,
-header.scrolled .brand-location {
-  color: #ffffff !important;
-}
-
-/* 7. Mobile tweaks – keep it simple, nav already hides under 960px */
-@media (max-width: 960px) {
-  .header-inner {
-    padding: 10px 5%;
-    align-items: center;
+  .cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
   }
-}
 
-.hero-inner {
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  .mobile-cta-bar {
+    display: flex;
+  }
+
+  body {
+    padding-bottom: 52px;
+  }
+
+  .how-section {
+    background: linear-gradient(
+      150deg,
+      #111111 0%,
+      #111111 60%,
+      #1c1c1e 60%,
+      #1c1c1e 100%
+    );
+    padding: 40px 0 44px;
+  }
+
+  .how-steps-simple {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .jobber-embed iframe {
+    min-height: 520px;
+  }
+
+  #book-quote.section-cream {
+    padding: 56px 0 64px;
+  }
+
+  .mascot-panel {
+    max-width: 90vw;
+  }
+
+  .section-ab-banner {
+    padding: 46px 0;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-footer {
+    font-size: 0.8rem;
+  }
+
+  .section-mascot-inline img {
+    max-width: 130px;
+  }
+
+  .mascot-chat-log {
+    max-height: 180px;
+  }
+
+  .mascot-toggle img {
+    height: 70px;
+  }
+
+  .card img {
+    height: 160px;
+  }
+
+  .pricing-grid {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .price-card {
+    padding: 14px 14px 16px;
+  }
+
+  .price {
+    font-size: 1.3rem;
+  }
 }
