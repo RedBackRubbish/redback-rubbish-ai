@@ -1797,3 +1797,104 @@ header.scrolled .brand-location {
   margin-top: 6px;
   font-size: 1rem;
 }
+
+/* =========================================
+   CLEAN TOP AREA (HEADER + NAV) OVERRIDE
+   ========================================= */
+
+/* 1. Hide the busy top bar completely */
+.top-bar {
+  display: none;
+}
+
+/* 2. Simple transparent header that sits on the hero */
+header,
+.site-header {
+  background: transparent !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* 3. Slimmer header layout */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 5%;
+  gap: 16px;
+}
+
+/* Make all header text white so it reads on the hero */
+.brand-name,
+.brand-location,
+.nav a {
+  color: #ffffff !important;
+}
+
+/* 4. Clean nav – simple row of links */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.9rem;
+}
+
+/* Premium underline hover, but nice and subtle */
+.nav a {
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: #be1e2d;
+  transition: width 0.2s ease-out;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* 5. Single strong call-to-action button in header */
+.site-header .btn-pill {
+  border-color: #ffffff;
+  color: #111111;
+  background: #ffffff;
+  font-weight: 600;
+}
+
+.site-header .btn-pill:hover {
+  background: #be1e2d;
+  border-color: #be1e2d;
+  color: #ffffff;
+}
+
+/* 6. On scroll, give header a solid dark background (JunkRelief vibe) */
+header.scrolled {
+  background: #0f0f0f !important;
+}
+
+header.scrolled .nav a,
+header.scrolled .brand-name,
+header.scrolled .brand-location {
+  color: #ffffff !important;
+}
+
+/* 7. Mobile tweaks – keep it simple, nav already hides under 960px */
+@media (max-width: 960px) {
+  .header-inner {
+    padding: 10px 5%;
+    align-items: center;
+  }
+}
