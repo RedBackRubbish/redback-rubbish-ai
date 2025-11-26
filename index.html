@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>RedBack Rubbish Removal | Brisbane Southside &amp; Logan</title>
+  <title>RedBack Rubbish Removal | Brisbane Southside & Logan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Premium rubbish removal in Brisbane Southside & Logan. Family-run, fully insured and no-stress service with upfront prices and all the heavy lifting done for you."/>
   <link rel="icon" type="image/png" href="images/logo.png"/>
 
   <meta property="og:title" content="RedBack Rubbish Removal"/>
   <meta property="og:description" content="No Mess — No Stress. Text photos for a fast rubbish removal quote."/>
-  <!-- OG now uses the couch twins graphic -->
   <meta property="og:image" content="images/couch-twins.png"/>
 
   <link rel="stylesheet" href="CSS/styles.css"/>
@@ -25,7 +24,7 @@
     </a>
   </div>
 
-  <!-- TAI AI WIDGET (simplified UI: no vibe buttons, no quick buttons) -->
+  <!-- TAI AI WIDGET -->
   <div class="mascot-widget" aria-live="polite">
     <!-- Hint bubble -->
     <div class="mascot-hint has-text" aria-hidden="false">
@@ -55,9 +54,18 @@
     </button>
   </div>
 
-  <!-- Header: clean, simple, logo left + big Book button right -->
+  <!-- (Top SMS bar is disabled in CSS, but keeping markup if we ever want it back) -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span class="top-tagline">NO MESS — NO STRESS</span>
+      <a class="top-phone" href="tel:0459272402">Call 0459 272 402</a>
+      <a class="top-email" href="mailto:info@redbackrubbishremoval.com?subject=Rubbish%20Removal%20Quote&amp;body=Hi%20RedBack%2C%0D%0A%0D%0AMy%20suburb%20is%20________.%0D%0AWhat%20I%20need%20gone%20is%3A%20________.%0D%0AI%20can%20attach%20photos%20to%20this%20email.%0D%0A">Email</a>
+    </div>
+  </div>
+
+  <!-- Header (clean & simple) -->
   <header class="site-header">
-    <div class="header-inner">
+    <div class="container header-inner">
       <div class="brand">
         <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo"/>
         <div class="brand-text">
@@ -65,7 +73,9 @@
           <span class="brand-location">Brisbane Southside &amp; Logan</span>
         </div>
       </div>
-      <a class="header-book-btn" href="#book-quote">Book / Quote</a>
+      <nav class="nav">
+        <a href="#book-quote" class="header-book-link">Book / Quote</a>
+      </nav>
     </div>
   </header>
 
@@ -73,20 +83,14 @@
   <section class="hero">
     <div class="hero-bg"></div>
 
-    <div class="hero-inner">
-           <div class="hero-left">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
+        <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
+        <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
 
-        <div class="hero-heading">
-          <div class="hero-title-block">
-            <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
-            <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
-            <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
-
-            <!-- ⭐ New tiny trust + price lines -->
-            <p class="hero-rating">⭐⭐⭐⭐⭐ <span>Local family-run rubbish removal</span></p>
-            <p class="hero-price-hint">Small loads from $150 (incl. GST).</p>
-          </div>
-        </div>
+        <p class="hero-rating">★★★★★ <span>Local family-run rubbish removal</span></p>
+        <p class="hero-price-teaser">Small loads from $150 (incl. GST).</p>
 
         <div class="hero-cta-row">
           <div class="hero-sms-box">
@@ -109,6 +113,9 @@
         </ul>
       </div>
 
+      <!-- Right column left empty on purpose (background carries the image) -->
+      <div class="hero-right"></div>
+    </div>
   </section>
 
   <!-- How it works -->
@@ -210,7 +217,7 @@
     </div>
   </section>
 
-  <!-- A–B Moves banner using the couch twins -->
+  <!-- A–B Moves banner -->
   <section class="section section-ab-banner">
     <div class="container ab-banner">
       <div class="ab-banner-text">
@@ -312,7 +319,7 @@
         <article class="why-card">
           <div class="why-icon">👨‍👩‍👦</div>
           <h3>Family Owned &amp; Operated</h3>
-          <p>We’re a local family business – We treat your place like our own and we genuinely care.</p>
+          <p>We’re a local family business – we treat your place like our own and we genuinely care.</p>
         </article>
       </div>
     </div>
@@ -384,7 +391,7 @@
           <p class="form-label">Online booking form — Jobber</p>
 
           <div class="booking-disclaimer">
-            ⚠️ <strong>Note:</strong> Prices below may not include GST.  
+            ⚠️ <strong>Note:</strong> Prices below may not include GST.
             Please see the <a href="#pricing">pricing section above</a> for final GST-inclusive rates.
           </div>
 
@@ -426,6 +433,19 @@
     </div>
   </footer>
 
+  <!-- Header scroll behaviour -->
+  <script>
+    document.addEventListener('scroll', function () {
+      const header = document.querySelector('.site-header');
+      if (!header) return;
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+
   <!-- SMS helper + mobile bar behaviour -->
   <script>
     function openSmsQuote() {
@@ -456,11 +476,8 @@
     });
   </script>
 
-  <!-- Tai v9 front-end (logic unchanged, just no tone/quick buttons in HTML) -->
+  <!-- Tai v9 front-end (logic unchanged, UI simplified) -->
   <script>
-  // Tai v9 front-end logic for Lil RedBack mascot AI
-  // - Animated hint bubble
-  // - Sends message to /.netlify/functions/tai-ai
   document.addEventListener('DOMContentLoaded', function () {
     const widget       = document.querySelector('.mascot-widget');
     if (!widget) return;
@@ -472,14 +489,12 @@
     const chatLog      = widget.querySelector('#tai-chat-log');
     const inputEl      = widget.querySelector('#tai-chat-input');
     const sendBtn      = widget.querySelector('#tai-chat-send');
-    const quickButtons = widget.querySelectorAll('.mascot-quick-buttons button');
     const toneButtons  = widget.querySelectorAll('.mascot-tone-btn');
     const avatarImg    = widget.querySelector('.mascot-toggle img');
 
     let isSending = false;
     let tone = 'friendly';
 
-    /* ---------- panel open / close ---------- */
     function isOpen() {
       return widget.classList.contains('mascot-open');
     }
@@ -503,7 +518,7 @@
       hint.addEventListener('click', openPanel);
     }
 
-    /* ---------- fake eye tracking (head tilt) ---------- */
+    // fake eye tracking
     if (avatarImg) {
       window.addEventListener('mousemove', function (e) {
         const mid = window.innerWidth / 2;
@@ -519,7 +534,6 @@
       });
     }
 
-    /* ---------- chat helpers ---------- */
     function scrollToBottom() {
       if (!chatLog) return;
       chatLog.scrollTop = chatLog.scrollHeight;
@@ -553,7 +567,6 @@
       const q = (text || '').toLowerCase();
 
       function withTone(base) {
-        // Tone is fixed to friendly now, but this keeps responses consistent
         return base;
       }
 
@@ -633,7 +646,6 @@
       }
     }
 
-    /* ---------- send button + Enter key ---------- */
     if (sendBtn && inputEl) {
       sendBtn.addEventListener('click', function () {
         const value = inputEl.value.trim();
@@ -651,7 +663,6 @@
       });
     }
 
-    /* ---------- tone buttons (none in UI now, but keep logic safe) ---------- */
     toneButtons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         const newTone = btn.getAttribute('data-tone') || 'friendly';
@@ -673,7 +684,6 @@
       });
     });
 
-    /* ---------- scroll-based hint text (pricing / booking) ---------- */
     const pricing = document.getElementById('pricing');
     const booking = document.getElementById('book-quote');
 
@@ -710,7 +720,6 @@
     window.addEventListener('resize', updateContext);
     updateContext();
 
-    /* ---------- one-time auto-greeting in panel ---------- */
     let greeted = false;
     try {
       greeted = window.sessionStorage.getItem('rb_mascot_greeted') === 'yes';
