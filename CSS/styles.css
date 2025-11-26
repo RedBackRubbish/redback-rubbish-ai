@@ -1432,3 +1432,17 @@ select {
     font-size: 1.3rem;
   }
 }
+
+/* Desktop-only: push hero block further left */
+@media (min-width: 961px) {
+  .hero-inner {
+    width: 100%;
+    max-width: none;
+    padding: 120px 5% 140px; /* 5% from left instead of centred container */
+    column-gap: 40px;
+  }
+
+  .hero-left {
+    max-width: 460px; /* keeps it nice and tight like mobile */
+  }
+}
