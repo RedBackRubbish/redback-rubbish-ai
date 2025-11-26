@@ -937,13 +937,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setLoading(true);
 
-    const typingMsg = document.createElement('div');
-    typingMsg.className = 'mascot-msg mascot-msg-tai';
-    const bubble = document.createElement('p');
-    bubble.textContent = 'Tai is thinking...';
-    typingMsg.appendChild(bubble);
-    chatLog.appendChild(typingMsg);
-    scrollToBottom();
+   const typingMsg = document.createElement('div');
+typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-typing';
+
+const dots = document.createElement('div');
+dots.className = 'mascot-typing-dots';
+dots.innerHTML = '<span></span><span></span><span></span>';
+
+typingMsg.appendChild(dots);
+chatLog.appendChild(typingMsg);
+scrollToBottom();
+
 
     try {
       let reply = '';
