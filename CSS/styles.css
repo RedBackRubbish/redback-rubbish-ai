@@ -214,21 +214,24 @@ header,
   width: 100%;
 }
 
-/* primary header button style */
+/* UPDATED HEADER BOOK BUTTON – RedBack style */
 .header-book-link {
-  padding: 7px 18px;
-  border-radius: 999px;
-  border: 1px solid #ffffff;
-  background: #ffffff;
+  background: #f7f2e8;       /* soft cream */
   color: #111111;
+  border: none;
   font-weight: 600;
+  padding: 8px 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .header-book-link:hover {
-  background: #be1e2d;
-  border-color: #be1e2d;
+  background: #be1e2d;       /* RedBack red */
   color: #ffffff;
 }
+
 
 /* solid background once scrolling */
 header.scrolled {
