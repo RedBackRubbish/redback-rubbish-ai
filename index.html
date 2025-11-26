@@ -74,10 +74,32 @@
     <div class="hero-bg"></div>
 
     <div class="hero-inner">
-      <div class="hero-left">
-        <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
-        <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
-        <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
+           <div class="hero-left">
+
+        <div class="hero-heading">
+          <div class="hero-title-block">
+            <p class="hero-location">BRISBANE SOUTHSIDE &amp; LOGAN</p>
+            <h1 class="hero-title">Rubbish Removal<br>Made Simple</h1>
+            <p class="hero-subtitle">You point — we load &amp; clean — easy.</p>
+
+            <!-- ⭐ New tiny trust + price lines -->
+            <p class="hero-rating">⭐⭐⭐⭐⭐ <span>Local family-run rubbish removal</span></p>
+            <p class="hero-price-hint">Small loads from $150 (incl. GST).</p>
+          </div>
+        </div>
+
+        <div class="hero-cta-row">
+          <div class="hero-sms-box">
+            <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
+            <div class="hero-sms-input-row">
+              <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
+              <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
+            </div>
+            <p class="hero-note">
+              We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
+            </p>
+          </div>
+        </div>
 
         <ul class="hero-trust-list">
           <li>✔ Family owned &amp; operated</li>
@@ -87,23 +109,6 @@
         </ul>
       </div>
 
-      <!-- (Right column not used, but kept for future if we want a photo/card) -->
-      <div class="hero-right"></div>
-    </div>
-
-    <!-- Floating quote card bottom centre -->
-    <div class="hero-cta-row">
-      <div class="hero-sms-box">
-        <label for="suburb-input" class="hero-label">Text photos for a fast quote</label>
-        <div class="hero-sms-input-row">
-          <input id="suburb-input" type="text" placeholder="e.g. Rochedale South"/>
-          <button type="button" class="btn-primary hero-btn" onclick="openSmsQuote()">Text My Free Quote</button>
-        </div>
-        <p class="hero-note">
-          We’ll open your SMS app with your suburb pre-filled so you can send photos for a same-day quote.
-        </p>
-      </div>
-    </div>
   </section>
 
   <!-- How it works -->
