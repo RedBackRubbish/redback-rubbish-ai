@@ -1508,70 +1508,48 @@ select {
   text-decoration: underline;
 }
 
-/* === MOBILE HERO OVERRIDES – CLEAN VERSION === */
-/* Put this at the very bottom of styles.css */
-
+/* === MOBILE HERO – SIMPLE CLEAN VERSION === */
 @media (max-width: 640px) {
 
-  /* Make hero tall enough to show your family */
+  /* Make hero tall enough for the full family photo */
   .hero {
-    min-height: 96vh;
+    position: relative;
+    min-height: 105vh;
   }
 
-  /* Warm, more natural family photo */
-  .hero-bg {
-    background-size: cover;
-    background-position: center top;
-    opacity: 0.38;                     /* photo more visible */
-    filter: grayscale(8%) brightness(1.05) saturate(1.15) contrast(1.05);
-  }
-
-  /* Title pulled right up under header */
+  /* Pull the heading up so there’s room below */
   .hero-inner {
-    display: block;                    /* simpler layout on mobile */
-    padding-top: 12px;                 /* moves “Brisbane Southside & Logan” up */
-    padding-bottom: 130px;             /* extra room so box can sit lower */
+    padding-top: 16px;
+    padding-bottom: 40px;
   }
 
-  .hero-location {
-    margin-top: 0;
-    font-size: 0.95rem;
-    letter-spacing: 0.22em;
+  /* FAMILY PHOTO – less filter, warmer + clearer */
+  .hero-bg {
+    background-position: center top;
+    background-size: cover;
+    opacity: 0.45; /* more visible image */
+    filter: brightness(1.08) saturate(1.1) contrast(1.03);
   }
 
-  .hero-title {
-    font-size: 2.5rem;
-    line-height: 1.1;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    font-weight: 700;
+  /* Let the left column stretch and control vertical layout */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 160px); /* room for header + bottom bar */
   }
 
-  .hero-subtitle {
-    font-size: 1.05rem;
-    margin-bottom: 8px;
-    color: rgba(255,255,255,0.95);
-  }
-
-  /* Lighten the red overlay a touch so the photo reads nicer */
-  .hero-overlay-angle {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.20),
-      rgba(190, 30, 45, 0.70)
-    );
-  }
-
-  /* PREMIUM WHITE SMS QUOTE BOX – PUSHED DOWN */
+  /* 👉 This pushes the quote box (and the note + ticks) DOWN */
   .hero-cta-row {
-    margin-top: 34px;                  /* this is what pushes it DOWN */
+    margin-top: auto;       /* sends it to the bottom of hero-left */
+    margin-bottom: 10px;    /* breathing room above Tai / bottom bar */
   }
 
+  /* Premium white quote box styling */
   .hero-sms-box {
     background: #ffffff;
     color: #111111;
+    padding: 16px 16px 22px;
     border-radius: 18px;
-    padding: 18px 18px 20px;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
     backdrop-filter: none;
   }
@@ -1588,206 +1566,15 @@ select {
   }
 
   .hero-note {
-    color: #666666;
+    color: #555555;
     font-size: 0.82rem;
   }
 
-  /* Make sure checklist is easy to read over the image */
-  .hero-trust-list {
-    margin-top: 14px;
-    font-size: 0.95rem;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  }
-}
-
-/* === FINAL OVERRIDE – FORCE SMS BOX LOWER ON MOBILE === */
-@media (max-width: 640px) {
-
-  /* Give hero more height */
-  .hero {
-    min-height: 105vh !important;   /* more room for the photo */
-  }
-
-  /* Push SMS box lower */
-  .hero-cta-row {
-    margin-top: auto !important;    /* sends it to bottom */
-    padding-top: 35px !important;   /* extra breathing room */
-  }
-
-  .hero-sms-box {
-    margin-top: 65px !important;    /* ⬅  try 65 / 80 / 100 to test */
-  }
-}
-
-/* === MASTER MOBILE HERO FIX – Overrides everything === */
-@media (max-width: 640px) {
-
-  /* MORE ROOM FOR THE PHOTO */
-  .hero {
-    min-height: 110vh !important; /* make hero taller */
-  }
-
-  /* pull heading right under header */
-  .hero-inner {
-    padding-top: 10px !important;
-    padding-bottom: 130px !important; /* space at bottom */
-  }
-
-  /* FORCE SMS box LOW */
-  .hero-cta-row {
-    margin-top: auto !important;     /* push down */
-  }
-
-  .hero-sms-box {
-    margin-top: 80px !important;     /* adjust this until perfect */
-  }
-
-  /* warmer family photo */
-  .hero-bg {
-    background-position: center top !important;
-    background-size: cover !important;
-    opacity: 0.40 !important;
-    filter: brightness(1.08) saturate(1.1) contrast(1.05) !important;
-  }
-}
-
-/* === MOBILE HERO HARD FIX – SMS BOX LOWER, PHOTO VISIBLE === */
-@media (max-width: 640px) {
-  /* keep hero as the positioning parent */
-  .hero {
-    position: relative;
-    min-height: 95vh;
-  }
-
-  /* pull heading up and leave room at bottom for the box */
-  .hero-inner {
-    padding-top: 16px;
-    padding-bottom: 220px; /* extra space for the fixed box */
-  }
-
-  /* FAMILY PHOTO – more natural colour & more visible */
-  .hero-bg {
-    background-position: center top;
-    background-size: cover;
-    opacity: 0.38;
-    filter: grayscale(8%) brightness(1.05) saturate(1.1);
-  }
-
-  .hero-title {
-    font-size: 2.4rem;
-    line-height: 1.1;
-    margin-bottom: 6px;
-  }
-
-  /* 👉 SMS BOX: lock it lower in the hero */
-  .hero-cta-row {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 130px;              /* move up/down by changing this */
-    width: calc(100% - 32px);   /* nice side padding */
-    max-width: 540px;
-    margin: 0;
-  }
-
-  .hero-sms-box {
-    background: #ffffff;
-    color: #111111;
-    border-radius: 18px;
-    padding: 16px 16px 20px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-  }
-
-  .hero-note {
-    color: #555555;
-  }
-
   .hero-trust-list {
     font-size: 0.95rem;
-    margin-top: 14px;
+    margin-top: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
 }
 
 
-/* === MOBILE HERO HARD FIX – SMS BOX LOWER, PHOTO VISIBLE === */
-@media (max-width: 640px) {
-  /* keep hero as the positioning parent */
-  .hero {
-    position: relative;
-    min-height: 95vh;
-  }
-
-  /* pull heading up and leave room at bottom for the box */
-  .hero-inner {
-    padding-top: 16px;
-    padding-bottom: 220px; /* extra space for the fixed box */
-  }
-
-  /* FAMILY PHOTO – more natural colour & more visible */
-  .hero-bg {
-    background-position: center top;
-    background-size: cover;
-    opacity: 0.38;
-    filter: grayscale(8%) brightness(1.05) saturate(1.1);
-  }
-
-  .hero-title {
-    font-size: 2.4rem;
-    line-height: 1.1;
-    margin-bottom: 6px;
-  }
-
-  /* 👉 SMS BOX: lock it lower in the hero */
-  .hero-cta-row {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 130px;              /* move up/down by changing this */
-    width: calc(100% - 32px);   /* nice side padding */
-    max-width: 540px;
-    margin: 0;
-  }
-
-  .hero-sms-box {
-    background: #ffffff;
-    color: #111111;
-    border-radius: 18px;
-    padding: 16px 16px 20px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-  }
-
-  .hero-note {
-    color: #555555;
-  }
-
-  .hero-trust-list {
-    font-size: 0.95rem;
-    margin-top: 14px;
-  }
-}
-
-/* === FINAL MOBILE HERO FIX — FORCE SMS BOX DOWN === */
-@media (max-width: 640px) {
-
-  /* Make hero-left fill the whole hero vertically */
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  /* Push SMS box to the VERY BOTTOM */
-  .hero-cta-row {
-    margin-top: auto !important;   /* forces it to bottom */
-    margin-bottom: 10px;           /* final spacing */
-  }
-
-  /* Make white box more premium & float nicely */
-  .hero-sms-box {
-    background: #fff;
-    color: #111;
-    padding: 16px 16px 22px;
-    border-radius: 18px;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-  }
-}
