@@ -1764,3 +1764,36 @@ header.scrolled .brand-location {
     width: 100%;
   }
 }
+
+/* HERO TITLE + LOGO */
+.hero-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 650px;
+}
+
+.hero-logo {
+  width: 95px;
+  height: auto;
+}
+
+.hero-title-block h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.hero-title-block .hero-location {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  margin: 0 0 6px 0;
+  font-weight: 500;
+}
+
+.hero-title-block .hero-subtitle {
+  opacity: 0.8;
+  margin-top: 6px;
+  font-size: 1rem;
+}
