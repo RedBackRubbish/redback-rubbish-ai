@@ -892,17 +892,30 @@
 
     /* ---------- send logic (local brain + optional API) ---------- */
 
-    async function sendToTai(rawText, opts = {}) {
+        async function sendToTai(rawText, opts = {}) {
       const text = (rawText || '').trim();
       if (!text || isSending) return;
 
+      // show user message
       if (!opts.silentUser) addMessage(text, 'user');
       if (!opts.skipInputClear && inputEl) inputEl.value = '';
 
       const lower = text.toLowerCase();
-      if (lower.includes('text quote') || lower.includes('text photos') || lower.includes('sms')) openSmsQuoteHelper();
-      if (lower.includes('booking form') || lower.includes('book me in') || lower.includes('scroll to booking')) scrollToBooking();
-      if (lower.includes('call you') || lower.includes('ring you') || lower.includes('phone you')) openPhoneDialler();
+
+      // quick actions
+      if (lower.includes('text quote') || lower.includes('text photos') || lower.includes('sms')) {
+        openSmsQuoteHelper();
+      }
+      if (lower.includes('booking form') || lower.includes('book me in') || lower.includes('scroll to booking')) {
+        scrollToBooking();
+      }
+      if (lower.includes('call you') || lower.includes('ring you') || lower.includes('phone you')) {
+        openPhoneDialler();
+      }
+
+      // local history – just keep last few messages (plain strings is fine)
+      conversationHistory.push(text);
+      if (conversationHistory.length > 8) conversationHistory.shift();
 
       // If no backend configured, answer instantly with local brain only.
       if (!TAI_ENDPOINT) {
@@ -912,6 +925,7 @@
 
       setLoading(true);
 
+      // typing bubble
       const typingMsg = document.createElement('div');
       typingMsg.className = 'mascot-msg mascot-msg-tai mascot-msg-small';
       const bubble = document.createElement('div');
@@ -921,45 +935,39 @@
       chatLog.appendChild(typingMsg);
       scrollToBottom();
 
-      const historySnippet = conversationHistory.join(' | ').slice(0, 600);
-
       try {
-       typingMsg.remove(); // remove typing indicator
+        let reply = '';
 
-let reply = "";
-
-if (TAI_ENDPOINT) {
-    try {
-        const res = await fetch(TAI_ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        // call Cloudflare Worker
+        try {
+          const res = await fetch(TAI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                message: text,
-                history: conversationHistory.slice(-8),  // only send last few msgs
+              message: text,
+              history: conversationHistory.slice(-8) // last few turns only
             }),
-        });
+          });
 
-        const data = await res.json();
-        reply = data.reply?.trim() || ""; // safety fallback
-    } catch (err) {
-        console.error("AI call failed:", err);
-    }
-}
-
-// fallback if AI fails or empty
-if (!reply) {
-    reply = getFallbackReply(text);
-}
-
-addMessage(reply, "tai");
-conversationHistory.push({ role: "user", content: text });
-conversationHistory.push({ role: "ai", content: reply });
-
-        if (!res.ok || !data || typeof data.reply !== 'string' || !data.reply.trim()) {
-          addMessage(getFallbackReply(text), 'tai');
-        } else {
-          addMessage(data.reply, 'tai');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && typeof data.reply === 'string') {
+              reply = data.reply.trim();
+            }
+          } else {
+            console.error('Tai API HTTP error:', res.status);
+          }
+        } catch (err) {
+          console.error('Tai API fetch failed:', err);
         }
+
+        // fallback if AI fails or sends nothing
+        if (!reply) {
+          reply = getFallbackReply(text);
+        }
+
+        typingMsg.remove();
+        addMessage(reply, 'tai');
       } catch (err) {
         console.error('Tai API error:', err);
         typingMsg.remove();
@@ -969,6 +977,7 @@ conversationHistory.push({ role: "ai", content: reply });
         if (inputEl && !opts.noRefocus) inputEl.focus();
       }
     }
+
 
     /* ---------- send button + Enter key ---------- */
 
