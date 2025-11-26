@@ -645,7 +645,7 @@
 
     // 👉 If you ever add a Cloudflare Worker/API, put the URL here.
     // For example: const TAI_ENDPOINT = '/api/tai-ai';
-    const TAI_ENDPOINT = null; // null = no backend, use local brain only.
+    + const TAI_ENDPOINT = '/api/tai-ai'; // null = no backend, use local brain only.
 
     let isSending = false;
     let tone = 'friendly';
@@ -924,16 +924,36 @@
       const historySnippet = conversationHistory.join(' | ').slice(0, 600);
 
       try {
+       typingMsg.remove(); // remove typing indicator
+
+let reply = "";
+
+if (TAI_ENDPOINT) {
+    try {
         const res = await fetch(TAI_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, tone, history: historySnippet })
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: text,
+                history: conversationHistory.slice(-8),  // only send last few msgs
+            }),
         });
 
-        let data = null;
-        try { data = await res.json(); } catch (e) { data = null; }
+        const data = await res.json();
+        reply = data.reply?.trim() || ""; // safety fallback
+    } catch (err) {
+        console.error("AI call failed:", err);
+    }
+}
 
-        typingMsg.remove();
+// fallback if AI fails or empty
+if (!reply) {
+    reply = getFallbackReply(text);
+}
+
+addMessage(reply, "tai");
+conversationHistory.push({ role: "user", content: text });
+conversationHistory.push({ role: "ai", content: reply });
 
         if (!res.ok || !data || typeof data.reply !== 'string' || !data.reply.trim()) {
           addMessage(getFallbackReply(text), 'tai');
