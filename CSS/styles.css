@@ -214,22 +214,25 @@ header,
   width: 100%;
 }
 
-/* UPDATED HEADER BOOK BUTTON – RedBack style */
+/* primary header button style */
 .header-book-link {
-  background: #f7f2e8;       /* soft cream */
-  color: #111111;
-  border: none;
-  font-weight: 600;
   padding: 8px 20px;
-  letter-spacing: 0.06em;
+  border-radius: 999px;
+  border: 1px solid #ffffff;
+  background: #f0e8d6;        /* slightly darker cream */
+  color: #111111;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .header-book-link:hover {
-  background: #be1e2d;       /* RedBack red */
+  background: #be1e2d;
+  border-color: #be1e2d;
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 
@@ -419,10 +422,12 @@ header.scrolled {
 }
 
 .hero-stars {
-  color: #ffd866;            /* gold */
-  letter-spacing: 0.08em;
+  color: #ffcc33;        /* gold */
   font-size: 1.05rem;
+  letter-spacing: 2px;
+  margin: 6px 0 4px;
 }
+
 
 .hero-rating-text {
   color: rgba(255, 255, 255, 0.92);
@@ -1472,5 +1477,28 @@ select {
 
   .hero-left {
     max-width: 460px; /* keeps it nice and tight like mobile */
+  }
+}
+
+/* Center header brand on desktop only */
+@media (min-width: 961px) {
+  .site-header .header-inner {
+    position: relative;
+    justify-content: center;
+  }
+
+  .site-header .brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .site-header .brand-text {
+    text-align: left; /* or center if you prefer both lines centred */
+  }
+
+  .site-header .nav {
+    margin-left: auto;   /* keeps Book / Quote on the right */
   }
 }
