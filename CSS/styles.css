@@ -1726,13 +1726,14 @@ header {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 0% 0%, rgba(0,0,0,0.85), transparent 55%),
-    linear-gradient(135deg, #111111 0%, #be1e2d 65%, #be1e2d 100%),
-    url("../images/family-cab.jpg") right center / cover no-repeat;
+    radial-gradient(circle at 0% 0%, rgba(0,0,0,0.92), transparent 55%),
+    linear-gradient(135deg, #050506 0%, #be1e2d 60%, #be1e2d 100%),
+    url("../images/family-cab.jpg") center center / cover no-repeat;
   opacity: 1;
-  filter: brightness(1.05) saturate(1.08) contrast(1.03);
+  filter: brightness(0.98) saturate(1.05) contrast(1.08);
   z-index: 0;
 }
+
 
 .hero-overlay-angle,
 .hero-overlay-dark {
