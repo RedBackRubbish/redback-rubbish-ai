@@ -207,11 +207,26 @@ a {
 }
 
 .hero-title {
-  margin: 12px 0 10px;
-  font-size: 3.3rem;
+  margin: 12px 0 6px;
+  font-size: 3.4rem;
   line-height: 1.02;
   font-weight: 800;
+  position: relative;
 }
+
+/* subtle underline behind “Made Simple” */
+.hero-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 62%;
+  height: 4px;
+  background: #be1e2d;
+  border-radius: 999px;
+  opacity: 0.85;
+}
+
 
 .hero-subtitle {
   margin: 0 0 12px;
