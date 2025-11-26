@@ -407,6 +407,31 @@ header.scrolled {
   display: none;
 }
 
+.hero-rating {
+  margin: 10px 0 2px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-stars {
+  color: #ffd866;            /* gold */
+  letter-spacing: 0.08em;
+  font-size: 1.05rem;
+}
+
+.hero-rating-text {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-price {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
 /* BUTTONS ------------------------------------------------------- */
 
 .btn-primary {
