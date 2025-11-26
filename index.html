@@ -56,33 +56,49 @@
     </a>
   </div>
 
-<!-- Tai – Lil RedBack widget -->
+<!-- Tai – Lil RedBack widget v2 -->
 <div class="mascot-widget">
-  <!-- The round button you tap -->
+  <!-- Toggle button: avatar + little speech bubble -->
   <button class="mascot-toggle" type="button" aria-label="Chat with Tai">
-    <!-- You can swap this image later, just keep an <img> here -->
-    <img src="images/tai-head.png" alt="Lil RedBack Tai">
+    <img
+      src="images/tai-head.png"
+      alt="Lil RedBack Tai"
+      class="mascot-avatar"
+    />
+    <div class="mascot-bubble">
+      👋 Hey I’m Tai — tap to chat!
+    </div>
   </button>
 
-  <!-- Little helper hint above the dock -->
-  <div class="mascot-hint has-text">
-    👋 Hey I’m Tai — tap to chat!
-  </div>
-
-  <!-- Slide-up chat panel -->
-  <div class="mascot-panel">
-    <div id="tai-chat-log" class="mascot-chat-log"></div>
-
-    <div class="mascot-input-row">
-      <textarea
-        id="tai-chat-input"
-        rows="1"
-        placeholder="Type your question here..."
-      ></textarea>
-      <button id="tai-chat-send" type="button">SEND</button>
+  <!-- Chat window -->
+  <div class="mascot-chat" id="tai-chat">
+    <div class="mascot-chat-header">
+      <div class="mascot-chat-header-left">
+        <img
+          src="images/tai-head.png"
+          alt="Lil RedBack Tai"
+          class="mascot-chat-avatar"
+        />
+        <div class="mascot-chat-title">
+          <span class="mascot-chat-name">Lil RedBack Tai</span>
+          <span class="mascot-chat-sub">RedBack Rubbish helper</span>
+        </div>
+      </div>
+      <button class="mascot-chat-close" type="button">✕</button>
     </div>
 
-    <button class="mascot-close" type="button">Close</button>
+    <div class="mascot-chat-messages" id="tai-chat-log"></div>
+
+    <div class="mascot-chat-input-row">
+      <input
+        id="tai-chat-input"
+        class="mascot-chat-input"
+        placeholder="Type your question here..."
+      />
+      <button id="tai-chat-send" class="mascot-chat-send" type="button">
+        SEND
+      </button>
+    </div>
   </div>
 </div>
 
