@@ -1898,3 +1898,7 @@ header.scrolled .brand-location {
     align-items: center;
   }
 }
+
+.hero-inner {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+}
