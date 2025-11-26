@@ -624,22 +624,56 @@
     });
   </script>
 
-  <!-- Tai front-end logic -->
+    <!-- Tai v10.1 – Lil RedBack brain (Cloudflare / no-backend friendly) -->
   <script>
+  // Tai v10.1
+  // - Works fully with NO backend (local smart replies)
+  // - Optional API endpoint if you later add a Cloudflare Worker, etc.
+
   document.addEventListener('DOMContentLoaded', function () {
-    const widget   = document.querySelector('.mascot-widget');
+    const widget       = document.querySelector('.mascot-widget');
     if (!widget) return;
 
-    const toggle   = widget.querySelector('.mascot-toggle');
-    const panel    = widget.querySelector('.mascot-panel');
-    const closeBtn = widget.querySelector('.mascot-close');
-    const hint     = widget.querySelector('.mascot-hint');
-    const chatLog  = widget.querySelector('#tai-chat-log');
-    const inputEl  = widget.querySelector('#tai-chat-input');
-    const sendBtn  = widget.querySelector('#tai-chat-send');
-    const avatarImg = widget.querySelector('.mascot-toggle img');
+    const toggle       = widget.querySelector('.mascot-toggle');
+    const panel        = widget.querySelector('.mascot-panel');
+    const closeBtn     = widget.querySelector('.mascot-close');
+    const hint         = widget.querySelector('.mascot-hint');
+    const chatLog      = widget.querySelector('#tai-chat-log');
+    const inputEl      = widget.querySelector('#tai-chat-input');
+    const sendBtn      = widget.querySelector('#tai-chat-send');
+    const avatarImg    = widget.querySelector('.mascot-toggle img');
+
+    // 👉 If you ever add a Cloudflare Worker/API, put the URL here.
+    // For example: const TAI_ENDPOINT = '/api/tai-ai';
+    const TAI_ENDPOINT = null; // null = no backend, use local brain only.
 
     let isSending = false;
+    let tone = 'friendly';
+    const conversationHistory = [];
+
+    /* ---------- helpers for actions ---------- */
+
+    function openSmsQuoteHelper() {
+      const input = document.getElementById('suburb-input');
+      const suburb = input ? input.value.trim() : '';
+      let base = "Hey RedBack, I'm after a rubbish removal quote";
+      if (suburb) base += " in " + suburb;
+      base += ". I have some photos to send.";
+      const encoded = encodeURIComponent(base);
+      window.location.href = "sms:0459272402?&body=" + encoded;
+    }
+
+    function scrollToBooking() {
+      const book = document.getElementById('book-quote');
+      if (!book) return;
+      book.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function openPhoneDialler() {
+      window.location.href = 'tel:0459272402';
+    }
+
+    /* ---------- panel open / close ---------- */
 
     function isOpen() {
       return widget.classList.contains('mascot-open');
@@ -664,6 +698,7 @@
       hint.addEventListener('click', openPanel);
     }
 
+    /* ---------- fake eye tracking ---------- */
     if (avatarImg) {
       window.addEventListener('mousemove', function (e) {
         const mid = window.innerWidth / 2;
@@ -679,13 +714,16 @@
       });
     }
 
+    /* ---------- chat DOM helpers ---------- */
+
     function scrollToBottom() {
       if (!chatLog) return;
       chatLog.scrollTop = chatLog.scrollHeight;
     }
 
     function addMessage(text, who = 'tai', opts = {}) {
-      if (!chatLog) return;
+      if (!chatLog || !text) return;
+
       const msg  = document.createElement('div');
       const role = who === 'user' ? 'user' : 'tai';
       msg.className = 'mascot-msg mascot-msg-' + role;
@@ -707,33 +745,170 @@
       if (inputEl) inputEl.disabled = loading;
     }
 
-    function getFallbackReply(text) {
-      const q = (text || '').toLowerCase();
+    /* ---------- intent / fallback brain ---------- */
 
-      if (q.includes('price') || q.includes('cost') || q.includes('how much')) {
-        return "For most jobs we price by trailer load. A full load starts from around $550 including GST, half loads from about $330, and smaller jobs can be less. The best way is to text a couple of photos and your suburb to 0459 272 402 and we’ll reply with a firm quote.";
-      }
-      if (q.includes('area') || q.includes('suburb') || q.includes('where') || q.includes('service')) {
-        return "We service Brisbane Southside and Logan plus nearby suburbs. If you’re unsure whether we come to you, send your suburb with a quick photo of the load and I’ll confirm it for you.";
-      }
-      if (q.includes('book') || q.includes('booking') || q.includes('same-day') || q.includes('same day')) {
-        return "To book, you can text photos of your rubbish and your suburb to 0459 272 402, or use the online Jobber booking form further down this page. We’ll reply with a time window and confirmation.";
-      }
-      if (q.includes('what do you take') || q.includes('what you take') || q.includes('take?') || q.includes('rubbish')) {
-        return "We take general household junk, garage and shed clear-outs, green waste, small furniture moves, gym equipment and more. We can’t take asbestos, chemicals or anything hazardous – for those you’ll need a licensed specialist.";
-      }
-      if (q.includes('a-b') || q.includes('a to b') || q.includes('a 2 b') || q.includes('delivery')) {
-        return "For simple A to B deliveries of small household loads, pricing starts from around $100 including GST. Send the pickup and drop-off suburbs plus a rough idea of the items and I’ll help with an estimate.";
-      }
-      return "I’m here to help with pricing, what we take, our service area and how to book with RedBack Rubbish Removal. For the fastest quote, send a few photos of your load and your suburb to 0459 272 402 and our family-run team will text you back.";
+    function getIntent(textLower) {
+      const t = textLower;
+      const hasAny = (...words) => words.some(w => t.includes(w));
+
+      if (hasAny('price', 'cost', 'how much', 'pricing', 'quote')) return 'pricing';
+      if (hasAny('a to b', 'a→b', 'a-b', 'delivery', 'pick up', 'pickup', 'drop off')) return 'ab_move';
+      if (hasAny('area', 'suburb', 'where do you go', 'service area', 'service areas', 'do you come')) return 'areas';
+      if (hasAny('what do you take', 'what you take', 'do you take', 'rubbish', 'junk', 'furniture', 'green waste')) return 'what_we_take';
+      if (hasAny('can you take', 'can u take', "don't take", 'cant take', 'asbestos', 'chemicals', 'paint', 'tyre', 'mattress recycling')) return 'what_we_dont_take';
+      if (hasAny('book', 'booking', 'reserve', 'schedule', 'appointment', 'online form', 'quote form')) return 'booking';
+      if (hasAny('call', 'ring', 'phone', 'talk to someone')) return 'call';
+      if (hasAny('text', 'sms', 'message', 'photo', 'photos')) return 'sms';
+      if (hasAny('time', 'when are you open', 'opening hours', 'what time', 'same day', 'today')) return 'timing';
+      if (hasAny('abn', 'business number', 'registered', 'legit', 'legitimate')) return 'abn';
+      if (hasAny('pay', 'payment', 'cash', 'card', 'eftpos', 'bank transfer', 'how do i pay', 'invoice')) return 'payment';
+      if (hasAny('tip fees', 'tipping fees', 'dump fees', 'dump fees included', 'council fees')) return 'tip_fees';
+      if (hasAny('who are you', 'about you', 'about us', 'family', 'who runs', 'who owns')) return 'about';
+      if (hasAny('reviews', 'google review', 'rating', 'testimonials')) return 'reviews';
+
+      return 'general';
     }
 
-    async function sendToTai(rawText) {
+    function getFallbackReply(text) {
+      const q = (text || '').toLowerCase();
+      const intent = getIntent(q);
+
+      conversationHistory.push(text);
+      if (conversationHistory.length > 5) conversationHistory.shift();
+
+      switch (intent) {
+        case 'pricing':
+          return (
+            "For most jobs we price by trailer load, and we always confirm the price before we start loading.\n\n" +
+            "• Small loads from about $150 (incl. GST)\n" +
+            "• Half loads from around $330 (incl. GST)\n" +
+            "• Full trailer loads from about $550 (incl. GST)\n\n" +
+            "If you text a couple of photos and your suburb to 0459 272 402 I can give you a firm quote for your exact job."
+          );
+        case 'areas':
+          return (
+            "We’re based on the Brisbane Southside & Logan.\n\n" +
+            "Most of our work is around places like Rochedale South, Springwood, Underwood, Slacks Creek, Daisy Hill and surrounding suburbs.\n\n" +
+            "If you’re a bit outside that, send your suburb with a photo of the load and I’ll let you know if we can do it or recommend another option."
+          );
+        case 'what_we_take':
+          return (
+            "We take most general household and light commercial junk, including:\n\n" +
+            "• Old furniture, mattresses, lounges and whitegoods\n" +
+            "• Garage, shed and gym clean-outs (boxes, tools, weights, equipment)\n" +
+            "• Green waste – branches, palm fronds, yard clean-ups\n" +
+            "• Small A→B moves for couches, bulky items and boxes\n\n" +
+            "If you’re unsure about a specific item, describe it or send a photo and I’ll tell you straight away."
+          );
+        case 'what_we_dont_take':
+          return (
+            "There are a few things we can’t take for safety and licensing reasons:\n\n" +
+            "• Asbestos or anything that might contain asbestos\n" +
+            "• Loose chemicals, paints, fuels, oils or gas bottles\n" +
+            "• Hazardous or medical waste\n\n" +
+            "For those you’ll usually need a specialist hazardous-waste service or council drop-off. For normal household and yard junk though, we’ve got you covered."
+          );
+        case 'ab_move':
+          return (
+            "Our A→B moves are for small household loads where you don’t need a full-scale removalist.\n\n" +
+            "Typical jobs:\n" +
+            "• Marketplace / Gumtree / Facebook pickups\n" +
+            "• Couches, fridges, beds and a few boxes\n" +
+            "• Short moves between local suburbs\n\n" +
+            "Pricing for small A→B moves starts from around $100 (incl. GST) depending on distance and how many items. " +
+            "Send the pickup + drop-off suburbs and a rough list or photos and I can help estimate it."
+          );
+        case 'booking':
+          return (
+            "You’ve got a few easy ways to book:\n\n" +
+            "1) Text photos and your suburb to 0459 272 402 for a fast quote.\n" +
+            "2) Use the online booking / quote form further down this page (I can scroll you there).\n" +
+            "3) Call 0459 272 402 if you’d rather talk it through.\n\n" +
+            "If you like, say “take me to the booking form” and I’ll scroll there for you."
+          );
+        case 'call':
+          return (
+            "No worries – you can call the team on 0459 272 402.\n\n" +
+            "If you tap this on your phone, it should open your dialler. I’ll still be here if you come back with more questions."
+          );
+        case 'sms':
+          return (
+            "Best way to get a solid price is to text a couple of photos and your suburb to 0459 272 402.\n\n" +
+            "If you’re on your phone, type something like “text quote” or tap the big red button under the hero and I’ll help open your SMS app with a message pre-filled."
+          );
+        case 'timing':
+          return (
+            "We work normal tradie-style hours and try to be flexible for families:\n\n" +
+            "• Weekdays during the day\n" +
+            "• Some Saturdays depending on the schedule\n\n" +
+            "Same-day or next-day jobs are often possible if you get in touch early and we’re nearby. " +
+            "Send your suburb, photos and any timing restrictions and I’ll let you know what we can do."
+          );
+        case 'abn':
+          return (
+            "RedBack Rubbish Removal is a legit registered Australian business.\n\n" +
+            "• ABN: 54532714102\n" +
+            "• Family owned & operated on the Brisbane Southside\n" +
+            "• Fully insured for rubbish removal work\n\n" +
+            "We treat your place like our own and keep communication clear the whole way through."
+          );
+        case 'payment':
+          return (
+            "Most jobs are paid on completion once you’re happy.\n\n" +
+            "We can usually take:\n" +
+            "• Cash\n" +
+            "• Bank transfer\n" +
+            "• Card via invoice / app (where available)\n\n" +
+            "For bigger or specialised jobs we might ask for a deposit, but we’ll always tell you upfront before locking anything in."
+          );
+        case 'tip_fees':
+          return (
+            "For standard household loads, normal tip fees are already built into the price we quote you.\n\n" +
+            "If there’s anything unusually heavy or specialised (for example big loads of concrete or tiles) we’ll explain any extra disposal costs before we start so there are no surprises."
+          );
+        case 'about':
+          return (
+            "RedBack is a local family-run rubbish removal business on the Brisbane Southside & Logan.\n\n" +
+            "You’re dealing directly with the owners – not a giant franchise. We show up on time, in uniform, load everything, sweep up and keep you updated by SMS so you’re never guessing where we’re at."
+          );
+        case 'reviews':
+          return (
+            "We’re focused on building long-term local relationships, so we work hard for every 5★ review.\n\n" +
+            "Right now a lot of our feedback comes through direct messages, repeat clients and referrals. " +
+            "As we grow, we’ll keep adding more public reviews and before/after examples so you can see the work for yourself."
+          );
+        case 'general':
+        default:
+          return (
+            "I’m Tai, the Lil RedBack on this page. I can help you with:\n\n" +
+            "• Rough pricing and what’s included\n" +
+            "• What we can and can’t take\n" +
+            "• Whether we come to your suburb\n" +
+            "• How booking works (text, form or call)\n\n" +
+            "If you want a quick quote, tell me what you’re trying to get rid of and what suburb you’re in, or just text photos to 0459 272 402."
+          );
+      }
+    }
+
+    /* ---------- send logic (local brain + optional API) ---------- */
+
+    async function sendToTai(rawText, opts = {}) {
       const text = (rawText || '').trim();
       if (!text || isSending) return;
 
-      addMessage(text, 'user');
-      if (inputEl) inputEl.value = '';
+      if (!opts.silentUser) addMessage(text, 'user');
+      if (!opts.skipInputClear && inputEl) inputEl.value = '';
+
+      const lower = text.toLowerCase();
+      if (lower.includes('text quote') || lower.includes('text photos') || lower.includes('sms')) openSmsQuoteHelper();
+      if (lower.includes('booking form') || lower.includes('book me in') || lower.includes('scroll to booking')) scrollToBooking();
+      if (lower.includes('call you') || lower.includes('ring you') || lower.includes('phone you')) openPhoneDialler();
+
+      // If no backend configured, answer instantly with local brain only.
+      if (!TAI_ENDPOINT) {
+        addMessage(getFallbackReply(text), 'tai');
+        return;
+      }
 
       setLoading(true);
 
@@ -746,36 +921,36 @@
       chatLog.appendChild(typingMsg);
       scrollToBottom();
 
+      const historySnippet = conversationHistory.join(' | ').slice(0, 600);
+
       try {
-        const res = await fetch('/.netlify/functions/tai-ai', {
+        const res = await fetch(TAI_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
+          body: JSON.stringify({ message: text, tone, history: historySnippet })
         });
 
         let data = null;
-        try {
-          data = await res.json();
-        } catch (e) {
-          data = null;
-        }
+        try { data = await res.json(); } catch (e) { data = null; }
 
         typingMsg.remove();
 
-        if (!res.ok || !data || typeof data.reply !== 'string') {
+        if (!res.ok || !data || typeof data.reply !== 'string' || !data.reply.trim()) {
           addMessage(getFallbackReply(text), 'tai');
         } else {
           addMessage(data.reply, 'tai');
         }
       } catch (err) {
-        console.error('Network error talking to Tai:', err);
+        console.error('Tai API error:', err);
         typingMsg.remove();
         addMessage(getFallbackReply(text), 'tai');
       } finally {
         setLoading(false);
-        if (inputEl) inputEl.focus();
+        if (inputEl && !opts.noRefocus) inputEl.focus();
       }
     }
+
+    /* ---------- send button + Enter key ---------- */
 
     if (sendBtn && inputEl) {
       sendBtn.addEventListener('click', function () {
@@ -794,6 +969,36 @@
       });
     }
 
+    /* ---------- scroll-based hint text ---------- */
+
+    const pricing = document.getElementById('pricing');
+    const booking = document.getElementById('book-quote');
+
+    function updateContext() {
+      if (!hint) return;
+      let context = '';
+      const mid = window.innerHeight / 2;
+
+      if (pricing) {
+        const r1 = pricing.getBoundingClientRect();
+        if (r1.top < mid && r1.bottom > mid) context = 'Not sure on price? Ask me.';
+      }
+      if (!context && booking) {
+        const r2 = booking.getBoundingClientRect();
+        if (r2.top < mid && r2.bottom > mid) context = 'Need help booking? Ask me.';
+      }
+      if (!context) context = '👋 Hey I’m Tai — Tap to chat!';
+
+      hint.textContent = context;
+      if (!isOpen()) hint.classList.add('has-text');
+      else hint.classList.remove('has-text');
+    }
+
+    window.addEventListener('scroll', updateContext);
+    window.addEventListener('resize', updateContext);
+    updateContext();
+
+    /* ---------- one-time auto-greeting ---------- */
     let greeted = false;
     try {
       greeted = window.sessionStorage.getItem('rb_mascot_greeted') === 'yes';
@@ -801,14 +1006,10 @@
 
     if (!greeted) {
       addMessage(
-        "Hi, I’m Tai from RedBack. Ask me about prices, what we take, or how booking works – I’ll keep it simple.",
+        "Hi, I’m Tai from RedBack. Ask me about prices, what we take or how booking works and I’ll keep it simple.",
         'tai'
       );
-      try {
-        window.sessionStorage.setItem('rb_mascot_greeted', 'yes');
-      } catch (e) {}
+      try { window.sessionStorage.setItem('rb_mascot_greeted', 'yes'); } catch (e) {}
     }
   });
   </script>
-</body>
-</html>
