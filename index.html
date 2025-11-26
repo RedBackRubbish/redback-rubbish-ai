@@ -56,61 +56,36 @@
     </a>
   </div>
 
-<!-- TAI / LIL REDBACK WIDGET v2 -->
-<div class="mascot-widget" id="tai-widget">
-  <button class="mascot-toggle" id="tai-toggle" aria-label="Open chat with Tai">
-    <span class="mascot-bubble" id="tai-bubble">
-      👋 Hey I’m Tai — tap to chat!
-    </span>
-    <img
-      src="images/tai-head.png"
-      alt="Lil RedBack Tai"
-      class="mascot-avatar"
-    />
+<!-- Tai – Lil RedBack widget -->
+<div class="mascot-widget">
+  <!-- The round button you tap -->
+  <button class="mascot-toggle" type="button" aria-label="Chat with Tai">
+    <!-- You can swap this image later, just keep an <img> here -->
+    <img src="images/tai-head.png" alt="Lil RedBack Tai">
   </button>
 
-  <div class="mascot-chat" id="tai-chat" aria-hidden="true">
-    <div class="mascot-chat-header">
-      <div class="mascot-chat-header-left">
-        <img
-          src="images/tai-head.png"
-          alt="Lil RedBack Tai"
-          class="mascot-chat-avatar"
-        />
-        <div class="mascot-chat-title">
-          <span class="mascot-chat-name">Lil RedBack Tai</span>
-          <span class="mascot-chat-sub">AI quote helper</span>
-        </div>
-      </div>
-      <button class="mascot-chat-close" id="tai-close" aria-label="Close chat">
-        ✕
-      </button>
+  <!-- Little helper hint above the dock -->
+  <div class="mascot-hint has-text">
+    👋 Hey I’m Tai — tap to chat!
+  </div>
+
+  <!-- Slide-up chat panel -->
+  <div class="mascot-panel">
+    <div id="tai-chat-log" class="mascot-chat-log"></div>
+
+    <div class="mascot-input-row">
+      <textarea
+        id="tai-chat-input"
+        rows="1"
+        placeholder="Type your question here..."
+      ></textarea>
+      <button id="tai-chat-send" type="button">SEND</button>
     </div>
 
-    <div class="mascot-chat-messages" id="tai-messages">
-      <div class="mascot-msg mascot-msg-tai">
-        <p>G’day! I’m Tai 👋</p>
-      </div>
-      <div class="mascot-msg mascot-msg-tai">
-        <p>Tell me what junk you’ve got & your suburb – I’ll help you with a quote.</p>
-      </div>
-    </div>
-
-    <form class="mascot-chat-input-row" id="tai-form">
-      <input
-        type="text"
-        id="tai-input"
-        class="mascot-chat-input"
-        placeholder="Type here… e.g. old couch in Rochedale South"
-        autocomplete="off"
-      />
-      <button type="submit" class="mascot-chat-send">
-        ➤
-      </button>
-    </form>
+    <button class="mascot-close" type="button">Close</button>
   </div>
 </div>
-<!-- /TAI WIDGET v2 -->
+
 
 
   <!-- HEADER -->
