@@ -651,22 +651,21 @@
   // - Works fully with NO backend (local smart replies)
   // - Optional API endpoint if you later add a Cloudflare Worker, etc.
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const widget       = document.querySelector('.mascot-widget');
-    if (!widget) return;
+ document.addEventListener('DOMContentLoaded', function () {
+  const widget   = document.querySelector('.mascot-widget');
+  if (!widget) return;
 
-    const toggle       = widget.querySelector('.mascot-toggle');
-    const panel        = widget.querySelector('.mascot-panel');
-    const closeBtn     = widget.querySelector('.mascot-close');
-    const hint         = widget.querySelector('.mascot-hint');
-    const chatLog      = widget.querySelector('#tai-chat-log');
-    const inputEl      = widget.querySelector('#tai-chat-input');
-    const sendBtn      = widget.querySelector('#tai-chat-send');
-    const avatarImg    = widget.querySelector('.mascot-toggle img');
+  const toggle   = widget.querySelector('.mascot-toggle');
+  const panel    = widget.querySelector('.mascot-chat');
+  const closeBtn = widget.querySelector('.mascot-chat-close');
+  const chatLog  = widget.querySelector('#tai-chat-log');
+  const inputEl  = widget.querySelector('#tai-chat-input');
+  const sendBtn  = widget.querySelector('#tai-chat-send');
 
-    // 👉 If you ever add a Cloudflare Worker/API, put the URL here.
-    // For example: const TAI_ENDPOINT = '/api/tai-ai';
-    const TAI_ENDPOINT = 'https://tai-ai.crimson-meadow-d5c5.workers.dev'; // null = no backend, use local brain only.
+  const hint     = widget.querySelector('.mascot-bubble'); // optional, used like the old hint
+
+  const TAI_ENDPOINT = 'https://tai-ai.crimson-meadow-d5c5.workers.dev'; // your working endpoint
+
 
     let isSending = false;
     let tone = 'friendly';
@@ -696,28 +695,30 @@
 
     /* ---------- panel open / close ---------- */
 
-    function isOpen() {
-      return widget.classList.contains('mascot-open');
-    }
-    function openPanel() {
-      widget.classList.add('mascot-open');
-      if (hint) hint.classList.remove('has-text');
-    }
-    function closePanel() {
-      widget.classList.remove('mascot-open');
-    }
+     function isOpen() {
+    return panel && panel.classList.contains('is-open');
+  }
+  function openPanel() {
+    if (!panel) return;
+    panel.classList.add('is-open');
+  }
+  function closePanel() {
+    if (!panel) return;
+    panel.classList.remove('is-open');
+  }
 
-    if (toggle) {
-      toggle.addEventListener('click', function () {
-        isOpen() ? closePanel() : openPanel();
-      });
-    }
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closePanel);
-    }
-    if (hint) {
-      hint.addEventListener('click', openPanel);
-    }
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      isOpen() ? closePanel() : openPanel();
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closePanel);
+  }
+  if (hint) {
+    hint.addEventListener('click', openPanel);
+  }
+
 
     /* ---------- fake eye tracking ---------- */
     if (avatarImg) {
@@ -737,27 +738,23 @@
 
     /* ---------- chat DOM helpers ---------- */
 
-    function scrollToBottom() {
-      if (!chatLog) return;
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
+  function addMessage(text, who = 'tai') {
+  if (!chatLog || !text) return;
 
-    function addMessage(text, who = 'tai', opts = {}) {
-      if (!chatLog || !text) return;
+  const msg = document.createElement('div');
+  const roleClass = who === 'user' ? 'mascot-msg-user' : 'mascot-msg-tai';
+  msg.className = 'mascot-msg ' + roleClass;
 
-      const msg  = document.createElement('div');
-      const role = who === 'user' ? 'user' : 'tai';
-      msg.className = 'mascot-msg mascot-msg-' + role;
-      if (opts.small) msg.classList.add('mascot-msg-small');
+  const p = document.createElement('p');
+  p.textContent = text;
 
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      bubble.textContent = text;
+  msg.appendChild(p);
+  chatLog.appendChild(msg);
+  scrollToBottom();
+  return msg;
+}
 
-      msg.appendChild(bubble);
-      chatLog.appendChild(msg);
-      scrollToBottom();
-      return msg;
+
     }
 
     function setLoading(loading) {
