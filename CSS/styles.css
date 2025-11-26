@@ -1578,3 +1578,243 @@ select {
 }
 
 
+/* ============================================
+   HEADER + HERO CLEAN REFRESH (OVERRIDES)
+   ============================================ */
+
+/* Header – cleaner, JunkRelief style */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #111111;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 10px;
+  gap: 18px;
+}
+
+.brand-name,
+.brand-location {
+  color: #f5f5f5;
+}
+
+.nav a {
+  color: #f5f5f5;
+  font-weight: 500;
+}
+
+.site-header .btn-pill {
+  border-color: #ffffff;
+  color: #ffffff;
+  background: transparent;
+}
+
+.site-header .btn-pill:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+/* ==== HERO – DESKTOP / TABLET BASE ================== */
+
+.hero {
+  position: relative;
+  color: #ffffff;
+  overflow: hidden;
+  min-height: clamp(560px, 90vh, 780px);
+  display: flex;
+  align-items: stretch;
+}
+
+/* Family image – less filtered, more natural */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/family-cab.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.55; /* was much lower – this makes you all clearer */
+  filter: grayscale(4%) brightness(1.05) saturate(1.15) contrast(1.03);
+  z-index: 0;
+}
+
+/* Softer angled colour overlay */
+.hero-overlay-angle {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.20),
+    rgba(190, 30, 45, 0.65)
+  );
+  clip-path: polygon(0 0, 100% 0, 100% 62%, 0 86%);
+  z-index: 1;
+}
+
+/* Darken lower half slightly for text */
+.hero-overlay-dark {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.0),
+    rgba(0, 0, 0, 0.55)
+  );
+  z-index: 1;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1120px, 100% - 32px);
+  margin: 0 auto;
+  padding: 64px 0 140px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.hero-left {
+  max-width: 540px;
+}
+
+/* Typography a bit closer to JunkRelief style */
+.hero-location {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.85rem;
+  opacity: 0.95;
+}
+
+.hero-title {
+  margin: 8px 0 8px;
+  font-size: 2.8rem;
+  line-height: 1.1;
+  font-weight: 750;
+}
+
+.hero-subtitle {
+  margin: 0 0 10px;
+  font-size: 1.02rem;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* Quote box row */
+.hero-cta-row {
+  margin-top: 22px;
+  max-width: 500px;
+}
+
+.hero-sms-box {
+  background: #ffffff;
+  color: #111111;
+  border-radius: 18px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+  backdrop-filter: none;
+}
+
+.hero-label {
+  color: #777777;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+}
+
+.hero-sms-input-row input {
+  background: #f5f5f5;
+  color: #222222;
+}
+
+.hero-note {
+  color: #555555;
+  font-size: 0.83rem;
+}
+
+/* Checklist over the photo */
+.hero-trust-list {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* ==== TABLET TWEAKS ================================= */
+
+@media (max-width: 960px) {
+  .hero-inner {
+    padding: 48px 0 150px;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+/* ==== MOBILE – JUNKRELIEF-STYLE, BOX LOWER =========== */
+
+@media (max-width: 640px) {
+  /* make hero tall enough for family + box */
+  .hero {
+    min-height: 100vh;
+    align-items: stretch;
+  }
+
+  .hero-inner {
+    padding-top: 18px;
+    padding-bottom: 170px;  /* space for quote box & Tai & red bar */
+  }
+
+  /* turn left column into a flex column so we can push box down */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 150px); /* estimate header height */
+    gap: 8px;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+    line-height: 1.08;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.02rem;
+  }
+
+  /* family photo: a touch more visible on mobile */
+  .hero-bg {
+    opacity: 0.62;
+    filter: grayscale(3%) brightness(1.08) saturate(1.18) contrast(1.04);
+  }
+
+  /* 👉 THIS PUSHES THE QUOTE BOX DOWN */
+  .hero-cta-row {
+    margin-top: auto;          /* pushes it to the bottom of hero-left */
+    margin-bottom: 8px;
+  }
+
+  .hero-sms-box {
+    padding: 16px 16px 22px;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
+  }
+
+  .hero-trust-list {
+    font-size: 0.96rem;
+    margin-top: 14px;
+  }
+}
+
+/* Slightly tighter header on small phones */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
