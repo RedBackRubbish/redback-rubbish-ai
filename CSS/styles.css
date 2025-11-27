@@ -394,6 +394,45 @@ a {
   color: #555555;
 }
 
+/* ============================
+   HERO RIGHT – FULL SPLIT IMAGE
+   ============================ */
+.hero-right {
+  flex: 1 1 50%;
+  position: relative;
+}
+
+.hero-photo-wrap {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.hero-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%; /* focus faces */
+  opacity: 0.85;              /* adjust if needed */
+  filter: brightness(0.95);   /* subtle, keeps natural look */
+}
+
+/* Soft fade toward left side (black/red blend) */
+.hero-photo-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(to right, rgba(0,0,0,0.65), transparent);
+  pointer-events: none;
+}
+
+
 /* BUTTONS ------------------------------------------------------ */
 
 .btn-primary {
