@@ -1180,23 +1180,35 @@ select {
 .mascot-chat-send {
   border: none;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 999px;
-  background: linear-gradient(180deg, #ff6b6b, #e33434);
+  background: #007aff;              /* iMessage blue */
   color: #ffffff;
   font-weight: 600;
-  transition: transform 0.1s ease-in-out, opacity 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transition:
+    background 0.15s ease,
+    transform 0.08s ease,
+    box-shadow 0.15s ease;
+}
+
+.mascot-chat-send:hover:not(:disabled) {
+  background: #1b82ff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
 }
 
 .mascot-chat-send:active:not(:disabled) {
-  transform: scale(0.95);
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
 }
 
 .mascot-chat-send:disabled {
   opacity: 0.5;
   cursor: default;
+  box-shadow: none;
 }
+
 
 
 
