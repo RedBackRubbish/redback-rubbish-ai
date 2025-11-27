@@ -189,71 +189,27 @@ a {
   overflow: hidden;
 }
 
-/* Background: pure black → red gradient (no photo here) */
 .hero-bg {
   position: absolute;
   inset: 0;
   background:
     radial-gradient(circle at 0% 0%, rgba(0, 0, 0, 0.9), transparent 55%),
-    linear-gradient(135deg, #111111 0%, #111111 45%, #be1e2d 90%, #be1e2d 100%);
+    linear-gradient(135deg, #111111 0%, #111111 45%, #be1e2d 90%, #be1e2d 100%),
+    url("../images/family-cab.jpg") right center / cover no-repeat;
+  opacity: 1;
+  filter: brightness(1.02) saturate(1.05);
   z-index: 0;
 }
 
-.hero-bg {
-  filter: drop-shadow(0 0 100px rgba(0,0,0,0.55));
-}
-
-
-/* Split layout */
 .hero-inner {
   position: relative;
   z-index: 1;
   padding: 80px 0 140px;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 48px;
 }
 
 .hero-left {
   max-width: 520px;
-  flex: 1 1 50%;
 }
-
-/* Right half: family photo blended into hero */
-.hero-right {
-  flex: 1 1 50%;
-  position: relative;
-  align-self: stretch;
-}
-
-.hero-photo-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.hero-photo-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 25%;  /* faces balanced */
-  opacity: 0.65;                /* softer — makes title king */
-  filter: brightness(0.80) contrast(1.15) saturate(1.05);
-}
-
-/* Stronger blend into left text area */
-.hero-photo-wrap::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 60%;   /* was 50% — pushes deeper blend */
-  background: linear-gradient(to right, rgba(0,0,0,0.85), transparent);
-  pointer-events: none;
-}
-
 
 .hero-location {
   text-transform: uppercase;
@@ -364,8 +320,6 @@ a {
   font-size: 0.82rem;
   color: #555555;
 }
-
-/* (buttons section continues as in your file) */
 
 /* BUTTONS ------------------------------------------------------ */
 
@@ -1328,12 +1282,6 @@ select {
 
   .hero-inner {
     padding: 90px 0 110px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-right {
-    display: none; /* hide photo on mobile so hero stays clean */
   }
 
   .hero-cta-row {
@@ -1406,7 +1354,6 @@ select {
     height: 72px;
   }
 }
-
 
 @media (max-width: 640px) {
   .header-inner {
