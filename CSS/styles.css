@@ -1096,6 +1096,14 @@ select {
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
+.msg-time {
+  display: block;
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 3px;
+  text-align: right;
+}
+
 /* Input row */
 .mascot-chat-input-row {
   display: flex;
@@ -1126,23 +1134,28 @@ select {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
-
+/* SEND button – premium style */
 .mascot-chat-send {
   border: none;
   padding: 8px 14px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: linear-gradient(180deg, #ff6b6b, #e33434);
+  color: #ffffff;
   font-weight: 600;
-  backdrop-filter: blur(6px);
-  transition: all 0.2s ease;
+  transition: transform 0.1s ease-in-out, opacity 0.2s ease;
 }
 
-.mascot-chat-send:hover {
-  background: rgba(255, 255, 255, 0.22);
+.mascot-chat-send:active:not(:disabled) {
+  transform: scale(0.95);
 }
+
+.mascot-chat-send:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 
 
 .mascot-chat-send:active:not(:disabled) {
@@ -1387,4 +1400,14 @@ select {
     transform: translateY(-3px);
     opacity: 1;
   }
+}
+
+/* Slight bounce when chat opens */
+.mascot-chat.is-open {
+  animation: chat-pop 0.22s ease-out;
+}
+
+@keyframes chat-pop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
