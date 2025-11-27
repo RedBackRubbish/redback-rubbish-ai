@@ -177,6 +177,28 @@ a {
   color: #ffffff;
 }
 
+/* BOOK / QUOTE BUTTON */
+.header-book-btn {
+  margin-left: 12px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: #ff3b30; /* RedBack red */
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+
 /* HERO --------------------------------------------------------- */
 
 .hero {
