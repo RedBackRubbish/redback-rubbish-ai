@@ -1162,9 +1162,16 @@ select {
   border: none;
   background: rgba(255, 255, 255, 0.10);
   color: white;
-  font-size: 13px;
+  font-size: 16px;
   outline: none;
   backdrop-filter: blur(4px);
+}
+
+/* Prevent zoom on iPhone when typing */
+input,
+textarea,
+.mascot-chat-input {
+  font-size: 16px !important;
 }
 
 .mascot-chat-input::placeholder {
