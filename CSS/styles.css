@@ -1369,14 +1369,6 @@ select {
     padding-bottom: 52px;
   }
 
-.mascot-widget {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 9999;
-  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-}
-
 .mascot-toggle {
   display: flex;
   flex-direction: column;  /* text above */
