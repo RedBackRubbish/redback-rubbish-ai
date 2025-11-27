@@ -1529,3 +1529,17 @@ select {
     display: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  .mascot-toggle {
+    position: fixed;
+    bottom: 115px;     /* was 95px — now higher above send button */
+    right: 20px;       /* just a bit more spacing from edge */
+    transform: scale(0.75);
+    z-index: 99999;
+  }
+
+  .mascot-bubble {
+    display: none !important;   /* still hidden until clicked */
+  }
+}
