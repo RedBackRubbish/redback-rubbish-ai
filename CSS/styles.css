@@ -1554,3 +1554,16 @@ select {
   0%   { transform: scale(0.5); opacity: 0; }
   100% { transform: scale(0.75); opacity: 1; }
 }
+
+@media (max-width: 768px) {
+  /* Move the entire widget (chat box + button) up a bit */
+  .mascot-widget {
+    bottom: 130px;   /* tweak up from whatever it is now */
+    right: 12px;
+  }
+
+  .mascot-toggle {
+    transform: scale(0.75);
+  }
+}
+
