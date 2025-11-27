@@ -625,6 +625,171 @@ h1, h2, h3 {
   border-right: none;
 }
 
+/* TAI / LIL REDBACK CHAT -------------------------------------- */
+
+.chat-launcher {
+  position: fixed;
+  bottom: 80px; /* sits above mobile bar on phones */
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background-color: #d7262d;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.chat-launcher-icon {
+  font-size: 22px;
+}
+
+/* On desktop, sit closer to the edge */
+@media (min-width: 721px) {
+  .chat-launcher {
+    bottom: 24px;
+  }
+}
+
+.chat-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  max-height: 70vh;
+  background-color: #191919;
+  color: #f7f4ee;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1201;
+}
+
+.chat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #333333;
+  background: linear-gradient(135deg, #d7262d, #8e171b);
+}
+
+.chat-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.chat-subtitle {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.chat-close {
+  border: none;
+  background: rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px 10px 8px;
+  overflow-y: auto;
+  background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
+}
+
+.chat-message {
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.chat-message-bubble {
+  border-radius: 12px;
+  padding: 7px 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.chat-message-ai .chat-message-bubble {
+  background-color: #262626;
+  border: 1px solid #383838;
+}
+
+.chat-message-user {
+  justify-content: flex-end;
+}
+
+.chat-message-user .chat-message-bubble {
+  background-color: #d7262d;
+  border: 1px solid #d7262d;
+  color: #ffffff;
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid #333333;
+  background-color: #151515;
+}
+
+.chat-input {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #333333;
+  padding: 8px 10px;
+  font-size: 13px;
+  background-color: #111111;
+  color: #f7f4ee;
+}
+
+.chat-input::placeholder {
+  color: #777777;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #d7262d;
+}
+
+.chat-send-btn {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #d7262d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* Mobile adjustments */
+@media (max-width: 720px) {
+  .chat-panel {
+    bottom: 46px; /* sits just above mobile bar */
+    right: 8px;
+    left: 8px;
+    width: auto;
+    max-height: 60vh;
+  }
+}
+
+
 /* RESPONSIVE --------------------------------------------------- */
 
 @media (max-width: 960px) {
