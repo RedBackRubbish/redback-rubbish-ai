@@ -1493,12 +1493,12 @@ select {
 }
 
 @media (max-width: 480px) {
-  .mascot-toggle img {
-    width: 58px;
-    height: 58px;
+  .mascot-avatar {
+    width: 58px; !important;
+    height: 58px; !important;
   }
   .mascot-bubble {
-    font-size: 12px;
-    padding: 8px 12px;
+    font-size: 12px; !important;
+    padding: 8px 12px; !important;
   }
 }
