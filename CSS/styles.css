@@ -1491,3 +1491,14 @@ select {
   right: 16px !important;
   left: auto !important; /* ensure he's not centered */
 }
+
+@media (max-width: 480px) {
+  .mascot-avatar {
+    width: 58px;
+    height: 58px;
+  }
+  .mascot-bubble {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
