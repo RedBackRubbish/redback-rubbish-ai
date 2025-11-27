@@ -974,6 +974,47 @@ select {
   pointer-events: none;
 }
 
+/* ------------------------------
+   PREMIUM SPEECH BUBBLE
+   ------------------------------ */
+.mascot-bubble {
+  position: relative;
+  max-width: 230px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+
+  /* DARK GLASSY STYLE */
+  background: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.40);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  white-space: nowrap;
+  animation: bubble-fade 0.4s ease-out;
+}
+
+/* Little tail on bubble */
+.mascot-bubble::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
+}
+
+/* Slight fade-in animation */
+@keyframes bubble-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* Main chat window */
 .mascot-chat {
