@@ -1209,20 +1209,6 @@ select {
   box-shadow: none;
 }
 
-
-
-
-.mascot-chat-send:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
-}
-
-.mascot-chat-send:disabled {
-  opacity: 0.5;
-  cursor: default;
-  box-shadow: none;
-}
-
 /* Wave animation for Tai’s head */
 @keyframes mascot-wave {
   0%,
