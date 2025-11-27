@@ -1116,17 +1116,18 @@ select {
 
 .mascot-chat-input {
   flex: 1;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 8px 12px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.10);
+  color: white;
   font-size: 13px;
   outline: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  backdrop-filter: blur(4px);
 }
 
 .mascot-chat-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255,255,255,0.5);
 }
 
 .mascot-chat-input:focus {
