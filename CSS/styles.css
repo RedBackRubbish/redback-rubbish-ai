@@ -1493,7 +1493,7 @@ select {
 }
 
 @media (max-width: 480px) {
-  .mascot-widget {
+  .mascot-toggle img {
     width: 58px;
     height: 58px;
   }
