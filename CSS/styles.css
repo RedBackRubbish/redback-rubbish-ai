@@ -1502,3 +1502,19 @@ select {
     padding: 8px 12px; !important;
   }
 }
+
+@media (max-width: 768px) {
+  .header-innter {
+    padding-right: 80px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-book-btn {
+    position: fixed;
+    top: 12px;
+    right: 14px;
+    z-index: 9999;
+    padding: 10px 20px;
+  }
+}
