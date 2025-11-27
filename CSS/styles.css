@@ -1513,3 +1513,19 @@ select {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
   }
 }
+
+/* ---------- MOBILE: Tai in TRUE bottom-right corner ---------- */
+@media (max-width: 768px) {
+  .mascot-toggle {
+    position: fixed;
+    bottom: 95px;        /* sits right ABOVE your red SMS bar */
+    right: 12px;         /* snug to the right edge */
+    transform: scale(0.75);  /* slightly smaller */
+    z-index: 99999;      /* on top of everything, no fighting */
+  }
+
+  /* Hide speech bubble until tapped */
+  .mascot-bubble {
+    display: none !important;
+  }
+}
