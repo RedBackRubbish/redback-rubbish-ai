@@ -246,22 +246,43 @@ a {
   z-index: 0;
 }
 
-<div class="hero-right">
-  <div class="hero-family-photo">
-    <img src="images/family-cab.jpg" alt="TJ, Marika and their son in the RedBack truck" />
-  </div>
-</div>
-
-
 .hero-inner {
   position: relative;
   z-index: 1;
   padding: 80px 0 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
 }
 
 .hero-left {
   max-width: 520px;
+  flex: 1 1 0;
 }
+
+.hero-right {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.hero-family-photo {
+  max-width: 430px;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  transform: translateY(18px);
+}
+
+.hero-family-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .hero-location {
   text-transform: uppercase;
