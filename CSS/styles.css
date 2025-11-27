@@ -189,6 +189,7 @@ a {
   overflow: hidden;
 }
 
+/* Background: pure black → red gradient (no photo here) */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -198,7 +199,7 @@ a {
   z-index: 0;
 }
 
-
+/* Split layout */
 .hero-inner {
   position: relative;
   z-index: 1;
@@ -231,9 +232,9 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
-  opacity: 0.9;
-  filter: brightness(0.96) contrast(1.02) saturate(1.05);
+  object-position: center 25%;         /* keep faces nicely framed */
+  opacity: 0.75;                       /* slightly dim so text stays king */
+  filter: brightness(0.88) contrast(1.08);
 }
 
 /* Soft fade into the left side so text stays readable */
@@ -243,14 +244,9 @@ a {
   left: 0;
   top: 0;
   height: 100%;
-  width: 45%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.85), transparent);
+  width: 50%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.75), transparent);
   pointer-events: none;
-}
-
-
-.hero-left {
-  max-width: 520px;
 }
 
 .hero-location {
@@ -362,6 +358,8 @@ a {
   font-size: 0.82rem;
   color: #555555;
 }
+
+/* (buttons section continues as in your file) */
 
 /* BUTTONS ------------------------------------------------------ */
 
