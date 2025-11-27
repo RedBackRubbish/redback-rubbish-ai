@@ -1595,3 +1595,13 @@ select {
   }
 }
 
+@media (max-width: 960px) {
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-right {
+    display: none; /* Hide family photo on mobile */
+  }
+}
