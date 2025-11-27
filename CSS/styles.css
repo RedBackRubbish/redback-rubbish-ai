@@ -1543,3 +1543,14 @@ select {
     display: none !important;   /* still hidden until clicked */
   }
 }
+
+@media (max-width: 768px) {
+  .mascot-toggle {
+    animation: taiPop 0.4s ease;
+  }
+}
+
+@keyframes taiPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(0.75); opacity: 1; }
+}
