@@ -94,8 +94,6 @@ a {
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
-}
-
 .site-header.scrolled {
   background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -1487,3 +1485,9 @@ select {
   }
 }
 
+/* FINAL TAI POSITIONING – ALWAYS BOTTOM RIGHT */
+.mascot-widget {
+  bottom: 16px !important;
+  right: 16px !important;
+  left: auto !important; /* ensure he's not centered */
+}
