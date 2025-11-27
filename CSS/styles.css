@@ -1504,7 +1504,7 @@ select {
 }
 
 @media (max-width: 768px) {
-  .header-innter {
+  .header-inner {
     padding-right: 80px !important;
   }
 }
