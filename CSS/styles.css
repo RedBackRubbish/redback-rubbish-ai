@@ -714,7 +714,7 @@ a {
 
 .service-area .service-columns {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 18px;
 }
 
@@ -885,7 +885,7 @@ details[open] {
   transform: translateY(100%);
 }
 
-/* FORM FONT SIZE ---------------------------------------------- */
+/* FORM FONT SIZE (stop iPhone zoom) --------------------------- */
 
 input,
 button,
@@ -925,40 +925,44 @@ select {
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.85);
   box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.45),     /* drop shadow */
-    0 0 12px rgba(227, 52, 52, 0.4);    /* red glow */
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), transparent);
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    0 0 12px rgba(227, 52, 52, 0.4);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
   animation: mascot-wave 2.2s ease-in-out infinite;
   transform-origin: 70% 25%;
 }
 
-}
-
-/* Chat bubble text next to face */
+/* bubble next to face */
 .mascot-bubble {
   position: relative;
-  max-width: 220px;
+  max-width: 230px;
   padding: 10px 14px;
   border-radius: 18px;
   font-size: 13px;
   font-weight: 500;
-  color: #fefefe;
-  background: rgba(0, 0, 0, 0.78);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  white-space: normal;
+  white-space: nowrap;
+  animation: bubble-fade 0.4s ease-out;
 }
 
 /* Little tail on bubble */
 .mascot-bubble::after {
   content: "";
   position: absolute;
-  right: -6px;
-  bottom: 12px;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
   border-width: 6px;
   border-style: solid;
-  border-color: transparent transparent transparent rgba(0, 0, 0, 0.78);
+  border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
 }
 
 /* Show bubble ONLY when chat is closed */
@@ -974,47 +978,17 @@ select {
   pointer-events: none;
 }
 
-/* ------------------------------
-   PREMIUM SPEECH BUBBLE
-   ------------------------------ */
-.mascot-bubble {
-  position: relative;
-  max-width: 230px;
-  padding: 10px 14px;
-  border-radius: 18px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #ffffff;
-
-  /* DARK GLASSY STYLE */
-  background: rgba(0, 0, 0, 0.75);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.40);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  white-space: nowrap;
-  animation: bubble-fade 0.4s ease-out;
-}
-
-/* Little tail on bubble */
-.mascot-bubble::after {
-  content: '';
-  position: absolute;
-  left: -6px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
-}
-
 /* Slight fade-in animation */
 @keyframes bubble-fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-
 
 /* Main chat window */
 .mascot-chat {
@@ -1036,6 +1010,7 @@ select {
 /* Show when active */
 .mascot-chat.is-open {
   display: flex;
+  animation: chat-pop 0.22s ease-out;
 }
 
 /* Header */
@@ -1045,10 +1020,11 @@ select {
   justify-content: space-between;
   padding: 10px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.mascot-chat-header {
-  background: linear-gradient(135deg, rgba(10, 10, 10, 0.96), rgba(40, 40, 40, 0.96));
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 10, 0.96),
+    rgba(40, 40, 40, 0.96)
+  );
 }
 
 .mascot-chat-header-left {
@@ -1129,18 +1105,18 @@ select {
 /* USER message – iMessage style */
 .mascot-msg-user {
   align-self: flex-end;
-  background: #007aff;  /* iOS Blue */
+  background: #007aff; /* iOS Blue */
   color: #ffffff;
-  border-radius: 18px 18px 4px 18px; /* iMessage tail shape */
+  border-radius: 18px 18px 4px 18px;
   padding: 8px 12px;
   font-size: 13px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .msg-time {
   display: block;
   font-size: 10px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
   margin-top: 3px;
   text-align: right;
 }
@@ -1160,22 +1136,15 @@ select {
   padding: 8px 12px;
   border-radius: 999px;
   border: none;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   font-size: 16px;
   outline: none;
   backdrop-filter: blur(4px);
 }
 
-/* Prevent zoom on iPhone when typing */
-input,
-textarea,
-.mascot-chat-input {
-  font-size: 16px !important;
-}
-
 .mascot-chat-input::placeholder {
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .mascot-chat-input:focus {
@@ -1190,13 +1159,11 @@ textarea,
   font-size: 14px;
   cursor: pointer;
   border-radius: 999px;
-  background: #007aff;              /* iMessage blue */
+  background: #007aff;
   color: #ffffff;
   font-weight: 600;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-  transition:
-    background 0.15s ease,
-    transform 0.08s ease,
+  transition: background 0.15s ease, transform 0.08s ease,
     box-shadow 0.15s ease;
 }
 
@@ -1239,19 +1206,68 @@ textarea,
   }
 }
 
-/* Mobile tweak: pull him in a bit */
-@media (max-width: 480px) {
-  .mascot-widget {
-    bottom: 18px;
-    right: 10px;
-  }
+/* Typing indicator bubble (iPhone-style dots) */
+.mascot-msg-typing {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+}
 
-  .mascot-bubble {
-    max-width: 190px;
-    font-size: 12px;
+.mascot-typing-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.mascot-typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  animation: mascot-dot-bounce 1.2s infinite ease-in-out;
+}
+
+.mascot-typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.mascot-typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes mascot-dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-3px);
+    opacity: 1;
   }
 }
 
+/* Slight bounce when chat opens */
+@keyframes chat-pop {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* clickable SMS link style */
+.tai-sms-link {
+  color: #007aff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tai-sms-link:hover {
+  text-decoration: underline;
+}
 
 /* RESPONSIVE --------------------------------------------------- */
 
@@ -1317,10 +1333,6 @@ textarea,
     max-width: 260px;
   }
 
-  .service-area .service-columns {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .faq-items {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1341,7 +1353,6 @@ textarea,
   .mascot-toggle img {
     height: 72px;
   }
-  
 }
 
 @media (max-width: 640px) {
@@ -1385,6 +1396,30 @@ textarea,
   .site-footer {
     font-size: 0.8rem;
   }
+
+  /* Tai chat as bottom sheet */
+  .mascot-widget {
+    bottom: 80px;
+    right: 12px;
+  }
+
+  .mascot-chat {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 90px;
+    width: auto;
+    max-height: 65vh;
+    border-radius: 18px;
+  }
+
+  .mascot-chat-messages {
+    max-height: 50vh;
+  }
+
+  .service-area .service-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
@@ -1398,90 +1433,5 @@ textarea,
 
   .hero-sms-box {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
-  }
-
-  .mascot-chat-log {
-    max-height: 180px;
-  }
-}
-
-/* Typing indicator bubble (iPhone-style dots) */
-.mascot-msg-typing {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 6px 10px;
-}
-
-.mascot-typing-dots {
-  display: inline-flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.mascot-typing-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  animation: mascot-dot-bounce 1.2s infinite ease-in-out;
-}
-
-.mascot-typing-dots span:nth-child(2) {
-  animation-delay: 0.15s;
-}
-.mascot-typing-dots span:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-@keyframes mascot-dot-bounce {
-  0%, 80%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  40% {
-    transform: translateY(-3px);
-    opacity: 1;
-  }
-}
-
-/* Slight bounce when chat opens */
-.mascot-chat.is-open {
-  animation: chat-pop 0.22s ease-out;
-}
-
-@keyframes chat-pop {
-  0% { transform: scale(0.95); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* clickable SMS link style */
-.tai-sms-link {
-  color: #007aff;             /* iMessage blue */
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.tai-sms-link:hover {
-  text-decoration: underline;
-}
-
-/* MOBILE – make Tai’s chat behave like a proper bottom sheet */
-@media (max-width: 640px) {
-  .mascot-widget {
-    bottom: 80px;      /* sits above your red SMS bar */
-    right: 12px;
-  }
-
-  .mascot-chat {
-    position: fixed;   /* stick to the viewport — not the page area */
-    left: 12px;
-    right: 12px;
-    bottom: 90px;      /* a bit above the avatar + SMS CTA bar */
-    width: auto;
-    max-height: 65vh;  /* scroll inside instead of taking full screen */
-    border-radius: 18px;
-  }
-
-  .mascot-chat-messages {
-    max-height: 50vh;  /* prevent it from covering entire screen */
   }
 }
