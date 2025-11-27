@@ -1345,7 +1345,7 @@ select {
     padding-bottom: 52px;
   }
 
- .mascot-widget {
+.mascot-widget {
   position: fixed;
   right: 16px;
   bottom: 16px;
@@ -1353,20 +1353,18 @@ select {
   font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
-/* Circle + text stack vertically, text above */
 .mascot-toggle {
   display: flex;
-  flex-direction: column;        /* text on top, circle under */
-  align-items: center;           /* center align */
+  flex-direction: column;  /* text above */
+  align-items: center;
   gap: 6px;
   background: transparent;
   border: none;
   padding: 0;
 }
 
-/* The “Hey I’m Tai — Tap to chat!” pill */
 .mascot-hint-badge {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0,0,0,0.85);
   color: #fff;
   font-size: 0.75rem;
   padding: 4px 10px;
@@ -1374,15 +1372,13 @@ select {
   white-space: nowrap;
 }
 
-/* The round Tai face button */
 .mascot-toggle img {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 20px rgba(0,0,0,0.55);
 }
 
-}
 
 @media (max-width: 640px) {
   .header-inner {
