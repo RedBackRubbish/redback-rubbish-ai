@@ -189,13 +189,13 @@ a {
   text-decoration: none;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .header-book-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 
@@ -941,7 +941,8 @@ select {
 }
 
 /* Face icon */
-.mascot-toggle img {
+.mascot-toggle img,
+.mascot-avatar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -1367,32 +1368,33 @@ select {
     padding-bottom: 52px;
   }
 
-.mascot-toggle {
-  display: flex;
-  flex-direction: column;  /* text above */
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
+  /* Tai toggle layout on tablet/mobile */
+  .mascot-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
 
-.mascot-hint-badge {
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
+  .mascot-hint-badge {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
 
-.mascot-toggle img {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.55);
+  .mascot-toggle img,
+  .mascot-avatar {
+    width: 72px;
+    height: 72px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+  }
 }
-
 
 @media (max-width: 640px) {
   .header-inner {
@@ -1473,15 +1475,17 @@ select {
   .hero-sms-box {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
   }
-}
 
-  @media (max-width: 768px) {
-  .header-book-btn {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    z-index: 9999;
-    padding: 10px 20px;
+  /* Tai a bit smaller + bubble tighter on tiny phones */
+  .mascot-toggle img,
+  .mascot-avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .mascot-bubble {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }
 
@@ -1492,29 +1496,17 @@ select {
   left: auto !important; /* ensure he's not centered */
 }
 
-@media (max-width: 480px) {
-  .mascot-avatar {
-    width: 58px; !important;
-    height: 58px; !important;
-  }
-  .mascot-bubble {
-    font-size: 12px; !important;
-    padding: 8px 12px; !important;
-  }
-}
-
+/* MOBILE HEADER TWEAKS (BOOK BUTTON) -------------------------- */
 @media (max-width: 768px) {
   .header-inner {
-    padding-right: 80px !important;
+    padding-inline: 16px;
+    gap: 10px;
   }
-}
 
-@media (max-width: 768px) {
   .header-book-btn {
-    position: fixed;
-    top: 12px;
-    right: 14px;
-    z-index: 9999;
-    padding: 10px 20px;
+    position: static;          /* no fixed overlap */
+    margin-left: auto;
+    padding: 8px 14px;
+    font-size: 0.78rem;
   }
 }
