@@ -246,6 +246,13 @@ a {
   z-index: 0;
 }
 
+<div class="hero-right">
+  <div class="hero-family-photo">
+    <img src="images/family-cab.jpg" alt="TJ, Marika and their son in the RedBack truck" />
+  </div>
+</div>
+
+
 .hero-inner {
   position: relative;
   z-index: 1;
