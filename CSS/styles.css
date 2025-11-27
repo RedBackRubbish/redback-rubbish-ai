@@ -94,6 +94,11 @@ a {
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* mobile book button - hidden on desktop */
+.header-mobile-book {
+  display: none;
+}
+
 .site-header.scrolled {
   background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -1271,10 +1276,26 @@ select {
 
 /* RESPONSIVE --------------------------------------------------- */
 
-@media (max-width: 960px) {
-  .nav {
-    display: none;
+  /* show Book button on mobile header */
+  .header-mobile-book {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid #ffffff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    background: #be1e2d;
+    color: #ffffff;
   }
+
+  .header-mobile-book:active {
+    opacity: 0.85;
+  }
+
 
   .hero {
     min-height: 100vh;
