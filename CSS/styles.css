@@ -1327,7 +1327,7 @@ select {
   }
 
   .hero-right {
-    display: none;
+    display: none; /* hide photo on mobile so hero stays clean */
   }
 
   .hero-cta-row {
@@ -1400,6 +1400,7 @@ select {
     height: 72px;
   }
 }
+
 
 @media (max-width: 640px) {
   .header-inner {
