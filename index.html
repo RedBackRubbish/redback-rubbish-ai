@@ -740,6 +740,25 @@ function closePanel() {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
+  // --- make phone number tappable (SMS link) ---
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function linkifySms(text) {
+  const safe = escapeHtml(text);
+  const phonePattern = /0459 272 402/g; // EXACT match
+
+  // turns phone into clickable SMS link
+  return safe.replace(
+    phonePattern,
+    `<a href="sms:0459272402" class="tai-sms-link">0459 272 402</a>`
+  );
+}
+
  function addMessage(text, who = 'tai') {
   if (!chatLog || !text) return;
 
@@ -748,18 +767,21 @@ function closePanel() {
   msg.className = 'mascot-msg ' + roleClass;
 
   const p = document.createElement('p');
-  p.textContent = text;
+  p.innerHTML = linkifySms(text);  // HERE is where we upgrade!
+  msg.appendChild(p);
 
   const time = document.createElement('span');
   time.className = 'msg-time';
-  time.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-  msg.appendChild(p);
+  time.textContent = new Date().toLocaleTimeString([], {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
   msg.appendChild(time);
+
   chatLog.appendChild(msg);
   scrollToBottom();
+  return msg;
 }
-
 
   function setLoading(loading) {
     isSending = loading;
