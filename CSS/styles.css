@@ -1334,13 +1334,7 @@ select {
   .mascot-toggle img {
     height: 72px;
   }
-
-  .mascot-panel {
-    width: 280px;
-    bottom: 180px;
-    right: 16px;
-    max-width: 90vw;
-  }
+  
 }
 
 @media (max-width: 640px) {
@@ -1461,4 +1455,26 @@ select {
 
 .tai-sms-link:hover {
   text-decoration: underline;
+}
+
+/* MOBILE – make Tai’s chat behave like a proper bottom sheet */
+@media (max-width: 640px) {
+  .mascot-widget {
+    bottom: 80px;      /* sits above your red SMS bar */
+    right: 12px;
+  }
+
+  .mascot-chat {
+    position: fixed;   /* stick to the viewport — not the page area */
+    left: 12px;
+    right: 12px;
+    bottom: 90px;      /* a bit above the avatar + SMS CTA bar */
+    width: auto;
+    max-height: 65vh;  /* scroll inside instead of taking full screen */
+    border-radius: 18px;
+  }
+
+  .mascot-chat-messages {
+    max-height: 50vh;  /* prevent it from covering entire screen */
+  }
 }
