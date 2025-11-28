@@ -412,7 +412,7 @@
     <div class="chat-messages" id="tai-chat-messages">
       <div class="chat-message chat-message-ai">
         <div class="chat-message-bubble">
-          Hey, I’m Lil RedBack (Tai) 🕷️
+          Hey, I’m Tai 🕷️
           Tell me what you need gone, or ask about pricing, areas we cover, or how booking works.
         </div>
       </div>
@@ -434,7 +434,8 @@
     // Set current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ------------------ Tai / Lil RedBack Chat -------------------
+     <!-- ------------------ Tai / Lil RedBack Chat ------------------- -->
+  <script>
     (function () {
       const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
 
@@ -449,9 +450,40 @@
         return;
       }
 
+      // keep simple structured history for Tai's brain
+      // format: { role: "user" | "assistant", content: "text" }
+      let chatHistory = [];
+      let isSending = false;
+      let hasGreeted = false;
+
+      function appendMessage(text, from) {
+        const wrapper = document.createElement("div");
+        wrapper.className =
+          "chat-message chat-message-" + (from === "user" ? "user" : "ai");
+
+        const bubble = document.createElement("div");
+        bubble.className = "chat-message-bubble";
+        bubble.textContent = text;
+
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function sendGreetingIfNeeded() {
+        if (hasGreeted) return;
+        const greetText =
+          "G’day, I’m Tai from RedBack. Tell me what you’re trying to get rid of and which suburb you’re in.";
+        appendMessage(greetText, "ai");
+        chatHistory.push({ role: "assistant", content: greetText });
+        hasGreeted = true;
+      }
+
       function openChat() {
         panel.style.display = "flex";
         panel.setAttribute("aria-hidden", "false");
+        // first time they open, Tai says hello
+        sendGreetingIfNeeded();
         setTimeout(() => input.focus(), 50);
       }
 
@@ -469,24 +501,11 @@
         }
       });
 
-      closeBtn.addEventListener("click", () => {
-        closeChat();
-      });
-
-      function appendMessage(text, from) {
-        const wrapper = document.createElement("div");
-        wrapper.className = "chat-message chat-message-" + (from === "user" ? "user" : "ai");
-
-        const bubble = document.createElement("div");
-        bubble.className = "chat-message-bubble";
-        bubble.textContent = text;
-
-        wrapper.appendChild(bubble);
-        messagesEl.appendChild(wrapper);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          closeChat();
+        });
       }
-
-      let isSending = false;
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -495,7 +514,9 @@
         const text = input.value.trim();
         if (!text) return;
 
+        // show user message
         appendMessage(text, "user");
+        chatHistory.push({ role: "user", content: text });
         input.value = "";
 
         // thinking placeholder
@@ -513,12 +534,15 @@
           const res = await fetch(TAI_API_URL, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               message: text,
-              source: "website-chat"
-            })
+              history: chatHistory,        // send full chat history to worker
+              tone: "friendly",            // matches your system prompt tone
+              source: "website-chat",
+              // stream: false              // can enable later if you want streaming
+            }),
           });
 
           let replyText = "";
@@ -537,7 +561,12 @@
           }
 
           thinkingBubble.textContent = replyText;
+          chatHistory.push({ role: "assistant", content: replyText });
+
+          // if you ever want to inspect intent:
+          // console.log("Tai intent:", data?.intent, "confidence:", data?.confidence);
         } catch (err) {
+          console.error("Tai error:", err);
           thinkingBubble.textContent =
             "Something went wrong talking to my brain.\n\n" +
             "Please try again in a moment or send us a text with photos for a fast quote.";
@@ -548,6 +577,7 @@
       });
     })();
   </script>
+
 
   <!-- MOBILE STICKY BAR --------------------------------------->
   <div class="mobile-bar">
