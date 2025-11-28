@@ -853,7 +853,7 @@
   btn.style.cursor = "pointer";
 
   btn.addEventListener("click", () => {
-    const smsBody = encodeURIComponent(`Hi Tai — here’s my job:\n${summary}`);
+    const smsBody = encodeURIComponent(`Hey RedBack — here’s my job request:\n${summary}`);
     window.location.href = `sms:0459272402?body=${smsBody}`;
   });
 
