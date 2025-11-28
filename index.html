@@ -821,19 +821,48 @@
 
       // Helper: when booking_ready, show an extra summary bubble
       function handleBookingIfReady(data) {
-        if (!data || !data.booking || !data.booking.booking_ready) return;
+  if (!data?.booking?.booking_ready) return;
 
-        const summary = data.booking.summary || "";
-        if (!summary) return;
+  const b = data.booking;
+  const summary = [
+    `📍 Suburb: ${b.suburb || "Unknown"}`,
+    `📦 Job: ${b.job_type || "Not specified"}`,
+    `🕒 Time: ${b.timing || "Flexible"}`,
+  ].join("\n");
 
-        const extraText =
-          "Here’s a quick summary you can paste into the booking form or an SMS:\n\n" +
-          summary +
-          "\n\nYou can also use the Book Online button on the page to lock it in.";
+  const wrapper = document.createElement("div");
+  wrapper.className = "chat-message chat-message-ai";
 
-        appendMessage(extraText, "ai");
-        chatHistory.push({ role: "assistant", content: extraText });
-      }
+  const bubble = document.createElement("div");
+  bubble.className = "chat-message-bubble";
+  bubble.innerHTML = "Awesome! I can start your booking — review below:";
+
+  const pre = document.createElement("pre");
+  pre.textContent = summary;
+  pre.style.background = "#222";
+  pre.style.padding = "8px";
+  pre.style.borderRadius = "6px";
+
+  const btn = document.createElement("button");
+  btn.textContent = "Send Booking Request 📩";
+  btn.style.background = "#e50914";
+  btn.style.color = "white";
+  btn.style.marginTop = "10px";
+  btn.style.padding = "8px 12px";
+  btn.style.borderRadius = "6px";
+  btn.style.cursor = "pointer";
+
+  btn.addEventListener("click", () => {
+    const smsBody = encodeURIComponent(`Hi Tai — here’s my job:\n${summary}`);
+    window.location.href = `sms:0459272402?body=${smsBody}`;
+  });
+
+  bubble.appendChild(pre);
+  bubble.appendChild(btn);
+  wrapper.appendChild(bubble);
+  messagesEl.appendChild(wrapper);
+}
+
 
       // --- Form submit → send to Tai
       form.addEventListener("submit", async (event) => {
