@@ -658,8 +658,9 @@
     (function () {
       const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
 
-      // ✅ Put your real mobile number here (no spaces)
       const SMS_NUMBER = "0459272402";
+      const JOBBER_URL =
+        "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
 
       const launcher = document.getElementById("tai-chat-launcher");
       const panel = document.getElementById("tai-chat-panel");
@@ -751,7 +752,9 @@
           profile.name = nameMatch[1];
         }
 
-        const suburbMatch = text.match(/\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
+        const suburbMatch = text.match(
+          /\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/,
+        );
         if (suburbMatch && !profile.suburb) {
           profile.suburb = suburbMatch[1];
         }
@@ -816,6 +819,22 @@
         voiceBtn.title = "Voice input not supported on this browser";
       }
 
+      // Helper: when booking_ready, show an extra summary bubble
+      function handleBookingIfReady(data) {
+        if (!data || !data.booking || !data.booking.booking_ready) return;
+
+        const summary = data.booking.summary || "";
+        if (!summary) return;
+
+        const extraText =
+          "Here’s a quick summary you can paste into the booking form or an SMS:\n\n" +
+          summary +
+          "\n\nYou can also use the Book Online button on the page to lock it in.";
+
+        appendMessage(extraText, "ai");
+        chatHistory.push({ role: "assistant", content: extraText });
+      }
+
       // --- Form submit → send to Tai
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -846,6 +865,8 @@
           });
 
           let replyText = "";
+          let data = null;
+
           if (!res.ok) {
             replyText =
               "Sorry, my full brain isn’t loading right now.\n\n" +
@@ -853,7 +874,7 @@
               "• Text photos for a fast quote\n" +
               "• Or tap the Call button at the bottom of the page.";
           } else {
-            const data = await res.json();
+            data = await res.json();
             replyText =
               (data && (data.reply || data.message || data.text)) ||
               "I’ve received your message, but I couldn’t find a clear reply. Try rephrasing or give us a quick call.";
@@ -861,6 +882,9 @@
 
           thinkingBubble.textContent = replyText;
           chatHistory.push({ role: "assistant", content: replyText });
+
+          // If Tai thinks the info is booking-ready, show a summary.
+          handleBookingIfReady(data);
         } catch (err) {
           console.error("Tai error:", err);
           thinkingBubble.textContent =
@@ -873,7 +897,6 @@
     })();
   });
 </script>
-<!-- ================= END CHAT WIDGET ================= -->
 
 </body>
 </html>
