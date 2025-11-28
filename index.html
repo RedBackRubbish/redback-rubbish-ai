@@ -395,189 +395,6 @@
     </div>
   </footer>
 
-  <!-- TAI / LIL REDBACK CHAT ----------------------------------->
-  <button class="chat-launcher" id="tai-chat-launcher" aria-label="Chat with Lil RedBack">
-    <span class="chat-launcher-icon">💬</span>
-  </button>
-
-  <div class="chat-panel" id="tai-chat-panel" aria-label="Lil RedBack chat" aria-hidden="true">
-    <div class="chat-header">
-      <div>
-        <div class="chat-title">Lil RedBack (Tai)</div>
-        <div class="chat-subtitle">Ask about pricing, bookings &amp; what we take.</div>
-      </div>
-      <button class="chat-close" id="tai-chat-close" aria-label="Close chat">✕</button>
-    </div>
-
-    <div class="chat-messages" id="tai-chat-messages">
-      <div class="chat-message chat-message-ai">
-        <div class="chat-message-bubble">
-          Hey, I’m Tai 🕷️
-          Tell me what you need gone, or ask about pricing, areas we cover, or how booking works.
-        </div>
-      </div>
-    </div>
-
-    <form class="chat-input-row" id="tai-chat-form">
-      <input
-        type="text"
-        id="tai-chat-input"
-        class="chat-input"
-        placeholder="Type your question here..."
-        autocomplete="off"
-      />
-      <button type="submit" class="chat-send-btn">Send</button>
-    </form>
-  </div>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-     <!-- ------------------ Tai / Lil RedBack Chat ------------------- -->
-  <script>
-    (function () {
-      const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-
-      const launcher = document.getElementById("tai-chat-launcher");
-      const panel = document.getElementById("tai-chat-panel");
-      const closeBtn = document.getElementById("tai-chat-close");
-      const form = document.getElementById("tai-chat-form");
-      const input = document.getElementById("tai-chat-input");
-      const messagesEl = document.getElementById("tai-chat-messages");
-
-      if (!launcher || !panel || !form || !input || !messagesEl) {
-        return;
-      }
-
-      // keep simple structured history for Tai's brain
-      // format: { role: "user" | "assistant", content: "text" }
-      let chatHistory = [];
-      let isSending = false;
-      let hasGreeted = false;
-
-      function appendMessage(text, from) {
-        const wrapper = document.createElement("div");
-        wrapper.className =
-          "chat-message chat-message-" + (from === "user" ? "user" : "ai");
-
-        const bubble = document.createElement("div");
-        bubble.className = "chat-message-bubble";
-        bubble.textContent = text;
-
-        wrapper.appendChild(bubble);
-        messagesEl.appendChild(wrapper);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
-
-      function sendGreetingIfNeeded() {
-        if (hasGreeted) return;
-        const greetText =
-          "G’day, I’m Tai from RedBack. Tell me what you’re trying to get rid of and which suburb you’re in.";
-        appendMessage(greetText, "ai");
-        chatHistory.push({ role: "assistant", content: greetText });
-        hasGreeted = true;
-      }
-
-      function openChat() {
-        panel.style.display = "flex";
-        panel.setAttribute("aria-hidden", "false");
-        // first time they open, Tai says hello
-        sendGreetingIfNeeded();
-        setTimeout(() => input.focus(), 50);
-      }
-
-      function closeChat() {
-        panel.style.display = "none";
-        panel.setAttribute("aria-hidden", "true");
-      }
-
-      launcher.addEventListener("click", () => {
-        const isOpen = panel.style.display === "flex";
-        if (isOpen) {
-          closeChat();
-        } else {
-          openChat();
-        }
-      });
-
-      if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
-          closeChat();
-        });
-      }
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (isSending) return;
-
-        const text = input.value.trim();
-        if (!text) return;
-
-        // show user message
-        appendMessage(text, "user");
-        chatHistory.push({ role: "user", content: text });
-        input.value = "";
-
-        // thinking placeholder
-        const thinkingWrapper = document.createElement("div");
-        thinkingWrapper.className = "chat-message chat-message-ai";
-        const thinkingBubble = document.createElement("div");
-        thinkingBubble.className = "chat-message-bubble";
-        thinkingBubble.textContent = "Lil RedBack is thinking...";
-        thinkingWrapper.appendChild(thinkingBubble);
-        messagesEl.appendChild(thinkingWrapper);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-
-        isSending = true;
-        try {
-          const res = await fetch(TAI_API_URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              message: text,
-              history: chatHistory,        // send full chat history to worker
-              tone: "friendly",            // matches your system prompt tone
-              source: "website-chat",
-              // stream: false              // can enable later if you want streaming
-            }),
-          });
-
-          let replyText = "";
-
-          if (!res.ok) {
-            replyText =
-              "Sorry, my full brain isn’t loading right now.\n\n" +
-              "You can still send us photos by SMS or call and we’ll give you a quote:\n" +
-              "• Text photos for a fast quote\n" +
-              "• Or tap the Call button at the bottom of the page.";
-          } else {
-            const data = await res.json();
-            replyText =
-              (data && (data.reply || data.message || data.text)) ||
-              "I’ve received your message, but I couldn’t find a clear reply. Try rephrasing or give us a quick call.";
-          }
-
-          thinkingBubble.textContent = replyText;
-          chatHistory.push({ role: "assistant", content: replyText });
-
-          // if you ever want to inspect intent:
-          // console.log("Tai intent:", data?.intent, "confidence:", data?.confidence);
-        } catch (err) {
-          console.error("Tai error:", err);
-          thinkingBubble.textContent =
-            "Something went wrong talking to my brain.\n\n" +
-            "Please try again in a moment or send us a text with photos for a fast quote.";
-        } finally {
-          isSending = false;
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
-      });
-    })();
-  </script>
-
 
   <!-- MOBILE STICKY BAR --------------------------------------->
   <div class="mobile-bar">
@@ -588,51 +405,6 @@
 </body>
 </html>
 
-
-
-<!-- CHAT WIDGET UI -->
-<div class="tai-chat-widget">
-  <!-- Floating Button -->
-  <button id="tai-chat-launcher" class="tai-chat-launcher">
-    💬 Chat with Tai
-  </button>
-
-  <!-- Chat Panel -->
-  <div id="tai-chat-panel" class="tai-chat-panel" aria-hidden="true">
-    <div class="tai-chat-header">
-      <span>Chat with Tai from RedBack</span>
-      <button id="tai-chat-close" class="tai-chat-close" type="button">×</button>
-    </div>
-
-    <div id="tai-chat-messages" class="tai-chat-messages"></div>
-
-    <form id="tai-chat-form" class="tai-chat-form">
-      <div class="tai-chat-quick-row">
-        <button id="tai-photos-btn" class="tai-chat-quick-btn" type="button">
-          📸 Send photos for a quote
-        </button>
-      </div>
-
-      <div class="tai-chat-input-row">
-        <button
-          id="tai-voice-btn"
-          class="tai-chat-voice-btn"
-          type="button"
-          title="Talk to Tai"
-        >
-          🎤
-        </button>
-        <input
-          id="tai-chat-input"
-          class="tai-chat-input"
-          type="text"
-          autocomplete="off"
-          placeholder="Tell me what you’re tossing & which suburb you're in..."
-        />
-      </div>
-    </form>
-  </div>
-</div>
 
 <!-- =============== TAI / LIL REDBACK CHAT WIDGET =============== -->
 
@@ -933,7 +705,7 @@
         const bubble = document.createElement("div");
         bubble.className = "chat-message-bubble";
         bubble.innerHTML =
-          'Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>';
+          'Tai is typing<span class="typing-dots"><span></span><span></span><span></span></span>';
 
         wrapper.appendChild(bubble);
         messagesEl.appendChild(wrapper);
@@ -995,7 +767,7 @@
       // --- SMS / “Send photos” button
       if (photosBtn) {
         photosBtn.addEventListener("click", () => {
-          if (!SMS_NUMBER || SMS_NUMBER === "04XXXXXXXX") {
+          if (!SMS_NUMBER || SMS_NUMBER === "0459272402") {
             alert("Boss, update SMS_NUMBER in the script to your real mobile.");
             return;
           }
@@ -1110,3 +882,4 @@
   });
 </script>
 <!-- ================= END CHAT WIDGET ================= -->
+
