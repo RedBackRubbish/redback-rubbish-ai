@@ -254,9 +254,10 @@ h3 {
   inset: 0;
   background-image: url("../images/family-cab.jpg");
   background-size: cover;
-  background-position: right center; /* faces on the right */
+  /* slide view slightly left so your wife is in shot, you still on right */
+  background-position: 60% center;
   background-repeat: no-repeat;
-  opacity: 1; /* full strength image */
+  opacity: 1;
 }
 
 /* Dark gradient on the left so text is readable */
