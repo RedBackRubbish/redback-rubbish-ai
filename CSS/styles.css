@@ -236,7 +236,7 @@ h3 {
   padding-bottom: 80px;
 }
 
-/* FAMILY HERO USING REAL PHOTO -------------------------------- */
+/* FAMILY HERO USING REAL PHOTO / BRAND GRADIENT --------------- */
 
 .hero-family {
   position: relative;
@@ -247,22 +247,34 @@ h3 {
   overflow: hidden;
 }
 
-/* DESKTOP HERO – BRAND GRADIENT BACKGROUND */
+/* FAMILY HERO BACKGROUND ----------------------------------- */
+/* Mobile-first: family photo on phones, desktop overrides below */
+
 .hero-family::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    #0d0d0d 0%,      /* deep charcoal */
-    #1a1a1a 40%,     /* smooth transition */
-    #d7262d 100%     /* strong red */
-  );
+  background-image: url("../images/family-cab.jpg");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   opacity: 1;
 }
 
+/* Desktop – brand gradient only (no photo) */
+@media (min-width: 721px) {
+  .hero-family::before {
+    background-image: none;
+    background: linear-gradient(
+      135deg,
+      #0d0d0d 0%,
+      #1a1a1a 40%,
+      #d7262d 100%
+    );
+    background-size: cover;
+    background-position: center;
+  }
+}
 
 /* Dark gradient on the left so text is readable */
 .hero-family::after {
@@ -729,19 +741,6 @@ h3 {
     padding-bottom: 64px;
   }
 
-  .hero-family::before {
-    background-position: center;
-  }
-
-  .hero-family::after {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.4) 45%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
-  }
-
   .hero-copy {
     max-width: none;
   }
@@ -756,6 +755,20 @@ h3 {
 
   .mobile-bar {
     display: flex;
+  }
+
+  /* Mobile hero – show family image with vertical gradient */
+  .hero-family::before {
+    background-position: center;
+  }
+
+  .hero-family::after {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.4) 45%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
   }
 }
 
@@ -922,4 +935,3 @@ h3 {
     max-height: 60vh;
   }
 }
-
