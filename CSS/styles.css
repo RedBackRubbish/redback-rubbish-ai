@@ -247,18 +247,22 @@ h3 {
   overflow: hidden;
 }
 
-/* Use your real file here – no edits */
+/* DESKTOP HERO – BRAND GRADIENT BACKGROUND */
 .hero-family::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../images/family-cab.jpg");
+  background: linear-gradient(
+    135deg,
+    #0d0d0d 0%,      /* deep charcoal */
+    #1a1a1a 40%,     /* smooth transition */
+    #d7262d 100%     /* strong red */
+  );
   background-size: cover;
-  /* slide view slightly left so your wife is in shot, you still on right */
-  background-position: 60% center;
-  background-repeat: no-repeat;
+  background-position: center;
   opacity: 1;
 }
+
 
 /* Dark gradient on the left so text is readable */
 .hero-family::after {
