@@ -402,9 +402,6 @@
     <a href="sms:0459272402?&body=Hi%20RedBack,%20I%27d%20like%20a%20rubbish%20removal%20quote.">Text photos</a>
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
-</body>
-</html>
-
 
 <!-- =============== TAI / LIL REDBACK CHAT WIDGET =============== -->
 
@@ -661,8 +658,8 @@
     (function () {
       const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
 
-      // TODO: 🔴 REPLACE THIS WITH YOUR REAL MOBILE NUMBER
-      const SMS_NUMBER = "04XXXXXXXX";
+      // ✅ Put your real mobile number here (no spaces)
+      const SMS_NUMBER = "0459272402";
 
       const launcher = document.getElementById("tai-chat-launcher");
       const panel = document.getElementById("tai-chat-panel");
@@ -705,7 +702,7 @@
         const bubble = document.createElement("div");
         bubble.className = "chat-message-bubble";
         bubble.innerHTML =
-          'Tai is typing<span class="typing-dots"><span></span><span></span><span></span></span>';
+          'Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>';
 
         wrapper.appendChild(bubble);
         messagesEl.appendChild(wrapper);
@@ -749,16 +746,12 @@
 
       // --- very simple name & suburb extraction for "memory mode"
       function tryExtractProfile(text) {
-        const lower = text.toLowerCase();
-
-        // name
         const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
         if (nameMatch && !profile.name) {
           profile.name = nameMatch[1];
         }
 
-        // suburb (very rough, looks for "in <Word>")
-        const suburbMatch = text.match(/\bin\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
+        const suburbMatch = text.match(/\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
         if (suburbMatch && !profile.suburb) {
           profile.suburb = suburbMatch[1];
         }
@@ -767,7 +760,7 @@
       // --- SMS / “Send photos” button
       if (photosBtn) {
         photosBtn.addEventListener("click", () => {
-          if (!SMS_NUMBER || SMS_NUMBER === "0459272402") {
+          if (!SMS_NUMBER || SMS_NUMBER === "04XXXXXXXX") {
             alert("Boss, update SMS_NUMBER in the script to your real mobile.");
             return;
           }
@@ -819,7 +812,6 @@
           voiceBtn.textContent = "🎤";
         });
       } else if (voiceBtn && !recognition) {
-        // no support
         voiceBtn.disabled = true;
         voiceBtn.title = "Voice input not supported on this browser";
       }
@@ -849,7 +841,7 @@
               history: chatHistory,
               tone: "friendly",
               source: "website-chat",
-              profile, // name + suburb so the Worker can use it
+              profile,
             }),
           });
 
@@ -883,3 +875,5 @@
 </script>
 <!-- ================= END CHAT WIDGET ================= -->
 
+</body>
+</html>
