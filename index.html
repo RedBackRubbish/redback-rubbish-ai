@@ -677,288 +677,300 @@
             placeholder="Tell me what you’re tossing & which suburb you're in..."
           />
           <!-- NEW SEND BUTTON -->
-          <button id="tai-send-btn" class="tai-chat-send-btn" type="submit">
-            Send
-          </button>
+          <button id="tai-send-btn" class="tai-chat-send-btn" type="button">
+  Send
+</button>
+
         </div>
       </form>
     </div>
   </div>
 
   <!-- ================= CHAT WIDGET SCRIPT ================= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      (function () {
-        const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    (function () {
+      const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
 
-        const SMS_NUMBER = "0459 272 402".replace(/\s+/g, ""); // just in case
-        const JOBBER_URL =
-          "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+      const SMS_NUMBER = "0459 272 402".replace(/\s+/g, "");
+      const JOBBER_URL =
+        "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
 
-        const launcher = document.getElementById("tai-chat-launcher");
-        const panel = document.getElementById("tai-chat-panel");
-        const closeBtn = document.getElementById("tai-chat-close");
-        const form = document.getElementById("tai-chat-form");
-        const input = document.getElementById("tai-chat-input");
-        const messagesEl = document.getElementById("tai-chat-messages");
-        const photosBtn = document.getElementById("tai-photos-btn");
-        const voiceBtn = document.getElementById("tai-voice-btn");
-        const sendBtn = document.getElementById("tai-send-btn");
+      const launcher = document.getElementById("tai-chat-launcher");
+      const panel = document.getElementById("tai-chat-panel");
+      const closeBtn = document.getElementById("tai-chat-close");
+      const form = document.getElementById("tai-chat-form");
+      const input = document.getElementById("tai-chat-input");
+      const messagesEl = document.getElementById("tai-chat-messages");
+      const photosBtn = document.getElementById("tai-photos-btn");
+      const voiceBtn = document.getElementById("tai-voice-btn");
+      const sendBtn = document.getElementById("tai-send-btn");
 
-        if (!launcher || !panel || !form || !input || !messagesEl) {
-          console.warn("Tai chat: missing elements");
-          return;
-        }
+      if (!launcher || !panel || !form || !input || !messagesEl) {
+        console.warn("Tai chat: missing elements");
+        return;
+      }
 
-        let chatHistory = [];
-        let isSending = false;
-        let hasGreeted = false;
-        let profile = { name: null, suburb: null };
+      let chatHistory = [];
+      let isSending = false;
+      let hasGreeted = false;
+      let profile = { name: null, suburb: null };
 
-        function appendMessage(text, from) {
-          const wrapper = document.createElement("div");
-          wrapper.className =
-            "chat-message chat-message-" + (from === "user" ? "user" : "ai");
+      function appendMessage(text, from) {
+        const wrapper = document.createElement("div");
+        wrapper.className =
+          "chat-message chat-message-" + (from === "user" ? "user" : "ai");
 
-          const bubble = document.createElement("div");
-          bubble.className = "chat-message-bubble";
-          bubble.textContent = text;
+        const bubble = document.createElement("div");
+        bubble.className = "chat-message-bubble";
+        bubble.textContent = text;
 
-          wrapper.appendChild(bubble);
-          messagesEl.appendChild(wrapper);
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-          return bubble;
-        }
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return bubble;
+      }
 
-        function appendTypingMessage() {
-          const wrapper = document.createElement("div");
-          wrapper.className = "chat-message chat-message-ai";
+      function appendTypingMessage() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "chat-message chat-message-ai";
 
-          const bubble = document.createElement("div");
-          bubble.className = "chat-message-bubble";
-          bubble.innerHTML =
-            'Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>';
+        const bubble = document.createElement("div");
+        bubble.className = "chat-message-bubble";
+        bubble.innerHTML =
+          'Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>';
 
-          wrapper.appendChild(bubble);
-          messagesEl.appendChild(wrapper);
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-          return bubble;
-        }
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return bubble;
+      }
 
-        function sendGreetingIfNeeded() {
-          if (hasGreeted) return;
-          const greetText =
-            "G’day, I’m Tai from RedBack. Tell me what you’re trying to get rid of and which suburb you’re in.";
-          appendMessage(greetText, "ai");
-          chatHistory.push({ role: "assistant", content: greetText });
-          hasGreeted = true;
-        }
+      function sendGreetingIfNeeded() {
+        if (hasGreeted) return;
+        const greetText =
+          "G’day, I’m Tai from RedBack. Tell me what you’re trying to get rid of and which suburb you’re in.";
+        appendMessage(greetText, "ai");
+        chatHistory.push({ role: "assistant", content: greetText });
+        hasGreeted = true;
+      }
 
-        function openChat() {
-          panel.style.display = "flex";
-          panel.setAttribute("aria-hidden", "false");
-          sendGreetingIfNeeded();
-          setTimeout(() => input.focus(), 50);
-        }
+      function openChat() {
+        panel.style.display = "flex";
+        panel.setAttribute("aria-hidden", "false");
+        sendGreetingIfNeeded();
+        setTimeout(() => input.focus(), 50);
+      }
 
-        function closeChat() {
-          panel.style.display = "none";
-          panel.setAttribute("aria-hidden", "true");
-        }
+      function closeChat() {
+        panel.style.display = "none";
+        panel.setAttribute("aria-hidden", "true");
+      }
 
-        launcher.addEventListener("click", () => {
-          const isOpen = panel.style.display === "flex";
-          if (isOpen) {
-            closeChat();
+      launcher.addEventListener("click", () => {
+        const isOpen = panel.style.display === "flex";
+        if (isOpen) closeChat();
+        else openChat();
+      });
+
+      if (closeBtn) closeBtn.addEventListener("click", closeChat);
+
+      // --- very simple name & suburb extraction for "memory mode"
+      function tryExtractProfile(text) {
+        const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
+        if (nameMatch && !profile.name) profile.name = nameMatch[1];
+
+        const suburbMatch = text.match(
+          /\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/,
+        );
+        if (suburbMatch && !profile.suburb) profile.suburb = suburbMatch[1];
+      }
+
+      // --- SMS / “Send photos” button
+      if (photosBtn) {
+        photosBtn.addEventListener("click", () => {
+          if (!SMS_NUMBER) {
+            alert("Boss, update SMS_NUMBER in the script to your real mobile.");
+            return;
+          }
+          const baseText = profile.suburb
+            ? `Hi Tai, I’ve got some rubbish to remove in ${profile.suburb}.`
+            : "Hi Tai, I’ve got some rubbish to remove. I’m in [your suburb].";
+          const smsBody = baseText + " I’ll send some photos now.";
+          const href = `sms:${SMS_NUMBER}?body=${encodeURIComponent(smsBody)}`;
+          window.location.href = href;
+        });
+      }
+
+      // --- Voice input (speech → text)
+      let recognition = null;
+      let isListening = false;
+
+      if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SR();
+        recognition.lang = "en-AU";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+      }
+
+      if (voiceBtn && recognition) {
+        voiceBtn.addEventListener("click", () => {
+          if (!isListening) {
+            recognition.start();
+            isListening = true;
+            voiceBtn.classList.add("listening");
+            voiceBtn.textContent = "🛑";
           } else {
-            openChat();
+            recognition.stop();
           }
         });
 
-        if (closeBtn) {
-          closeBtn.addEventListener("click", closeChat);
-        }
+        recognition.addEventListener("result", (event) => {
+          const transcript = event.results[0][0].transcript;
+          if (input.value) input.value += " " + transcript;
+          else input.value = transcript;
+        });
 
-        // --- very simple name & suburb extraction for "memory mode"
-        function tryExtractProfile(text) {
-          const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
-          if (nameMatch && !profile.name) {
-            profile.name = nameMatch[1];
-          }
+        recognition.addEventListener("end", () => {
+          isListening = false;
+          voiceBtn.classList.remove("listening");
+          voiceBtn.textContent = "🎤";
+        });
+      } else if (voiceBtn && !recognition) {
+        voiceBtn.disabled = true;
+        voiceBtn.title = "Voice input not supported on this browser";
+      }
 
-          const suburbMatch = text.match(
-            /\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/,
+      // Helper: when booking_ready, show an extra summary bubble
+      function handleBookingIfReady(data) {
+        if (!data?.booking?.booking_ready) return;
+
+        const b = data.booking;
+        const summary = [
+          `📍 Suburb: ${b.suburb || "Unknown"}`,
+          `📦 Job: ${b.job_type || "Not specified"}`,
+          `🕒 Time: ${b.timing || "Flexible"}`,
+        ].join("\n");
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "chat-message chat-message-ai";
+
+        const bubble = document.createElement("div");
+        bubble.className = "chat-message-bubble";
+        bubble.innerHTML = "Awesome! I can start your booking — review below:";
+
+        const pre = document.createElement("pre");
+        pre.textContent = summary;
+        pre.style.background = "#222";
+        pre.style.padding = "8px";
+        pre.style.borderRadius = "6px";
+
+        const btn = document.createElement("button");
+        btn.textContent = "Send Booking Request 📩";
+        btn.style.background = "#e50914";
+        btn.style.color = "white";
+        btn.style.marginTop = "10px";
+        btn.style.padding = "8px 12px";
+        btn.style.borderRadius = "6px";
+        btn.style.cursor = "pointer";
+
+        btn.addEventListener("click", () => {
+          const smsBody = encodeURIComponent(
+            `Hey RedBack — here’s my job request:\n${summary}`,
           );
-          if (suburbMatch && !profile.suburb) {
-            profile.suburb = suburbMatch[1];
+          window.location.href = `sms:${SMS_NUMBER}?body=${smsBody}`;
+        });
+
+        bubble.appendChild(pre);
+        bubble.appendChild(btn);
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      // --- Core send logic (used by button + Enter key)
+      async function sendMessage() {
+        if (isSending) return;
+
+        const text = input.value.trim();
+        if (!text) return;
+
+        appendMessage(text, "user");
+        chatHistory.push({ role: "user", content: text });
+        tryExtractProfile(text);
+        input.value = "";
+
+        const thinkingBubble = appendTypingMessage();
+
+        isSending = true;
+        try {
+          const res = await fetch(TAI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              message: text,
+              history: chatHistory,
+              tone: "friendly",
+              source: "website-chat",
+              profile,
+            }),
+          });
+
+          let replyText = "";
+          let data = null;
+
+          if (!res.ok) {
+            replyText =
+              "Sorry, my full brain isn’t loading right now.\n\n" +
+              "You can still send us photos by SMS or call and we’ll give you a quote:\n" +
+              "• Text photos for a fast quote\n" +
+              "• Or tap the Call button at the bottom of the page.";
+          } else {
+            data = await res.json();
+            replyText =
+              (data && (data.reply || data.message || data.text)) ||
+              "I’ve received your message, but I couldn’t find a clear reply. Try rephrasing or give us a quick call.";
           }
-        }
 
-        // --- SMS / “Send photos” button
-        if (photosBtn) {
-          photosBtn.addEventListener("click", () => {
-            if (!SMS_NUMBER) {
-              alert("Boss, update SMS_NUMBER in the script to your real mobile.");
-              return;
-            }
-            const baseText = profile.suburb
-              ? `Hi Tai, I’ve got some rubbish to remove in ${profile.suburb}.`
-              : "Hi Tai, I’ve got some rubbish to remove. I’m in [your suburb].";
-            const smsBody = baseText + " I’ll send some photos now.";
-            const href = `sms:${SMS_NUMBER}?body=${encodeURIComponent(smsBody)}`;
-            window.location.href = href;
-          });
-        }
+          thinkingBubble.textContent = replyText;
+          chatHistory.push({ role: "assistant", content: replyText });
 
-        // --- Voice input (speech → text)
-        let recognition = null;
-        let isListening = false;
-
-        if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-          const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-          recognition = new SR();
-          recognition.lang = "en-AU";
-          recognition.interimResults = false;
-          recognition.maxAlternatives = 1;
-        }
-
-        if (voiceBtn && recognition) {
-          voiceBtn.addEventListener("click", () => {
-            if (!isListening) {
-              recognition.start();
-              isListening = true;
-              voiceBtn.classList.add("listening");
-              voiceBtn.textContent = "🛑";
-            } else {
-              recognition.stop();
-            }
-          });
-
-          recognition.addEventListener("result", (event) => {
-            const transcript = event.results[0][0].transcript;
-            if (input.value) {
-              input.value += " " + transcript;
-            } else {
-              input.value = transcript;
-            }
-          });
-
-          recognition.addEventListener("end", () => {
-            isListening = false;
-            voiceBtn.classList.remove("listening");
-            voiceBtn.textContent = "🎤";
-          });
-        } else if (voiceBtn && !recognition) {
-          voiceBtn.disabled = true;
-          voiceBtn.title = "Voice input not supported on this browser";
-        }
-
-        // Helper: when booking_ready, show an extra summary bubble
-        function handleBookingIfReady(data) {
-          if (!data?.booking?.booking_ready) return;
-
-          const b = data.booking;
-          const summary = [
-            `📍 Suburb: ${b.suburb || "Unknown"}`,
-            `📦 Job: ${b.job_type || "Not specified"}`,
-            `🕒 Time: ${b.timing || "Flexible"}`,
-          ].join("\n");
-
-          const wrapper = document.createElement("div");
-          wrapper.className = "chat-message chat-message-ai";
-
-          const bubble = document.createElement("div");
-          bubble.className = "chat-message-bubble";
-          bubble.innerHTML = "Awesome! I can start your booking — review below:";
-
-          const pre = document.createElement("pre");
-          pre.textContent = summary;
-          pre.style.background = "#222";
-          pre.style.padding = "8px";
-          pre.style.borderRadius = "6px";
-
-          const btn = document.createElement("button");
-          btn.textContent = "Send Booking Request 📩";
-          btn.style.background = "#e50914";
-          btn.style.color = "white";
-          btn.style.marginTop = "10px";
-          btn.style.padding = "8px 12px";
-          btn.style.borderRadius = "6px";
-          btn.style.cursor = "pointer";
-
-          btn.addEventListener("click", () => {
-            const smsBody = encodeURIComponent(`Hey RedBack — here’s my job request:\n${summary}`);
-            window.location.href = `sms:${SMS_NUMBER}?body=${smsBody}`;
-          });
-
-          bubble.appendChild(pre);
-          bubble.appendChild(btn);
-          wrapper.appendChild(bubble);
-          messagesEl.appendChild(wrapper);
+          handleBookingIfReady(data);
+        } catch (err) {
+          console.error("Tai error:", err);
+          thinkingBubble.textContent =
+            "Something went wrong talking to my brain.\n\nPlease try again in a moment or send us a text with photos for a fast quote.";
+        } finally {
+          isSending = false;
           messagesEl.scrollTop = messagesEl.scrollHeight;
+          // keep focus so keyboard stays up
+          input.focus();
         }
+      }
 
-        // --- Form submit → send to Tai
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          if (isSending) return;
+      // Click on SEND button
+      if (sendBtn) {
+        sendBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          sendMessage();
+        });
+      }
 
-          const text = input.value.trim();
-          if (!text) return;
-
-          appendMessage(text, "user");
-          chatHistory.push({ role: "user", content: text });
-          tryExtractProfile(text);
-          input.value = "";
-
-          const thinkingBubble = appendTypingMessage();
-
-          isSending = true;
-          try {
-            const res = await fetch(TAI_API_URL, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                message: text,
-                history: chatHistory,
-                tone: "friendly",
-                source: "website-chat",
-                profile,
-              }),
-            });
-
-            let replyText = "";
-            let data = null;
-
-            if (!res.ok) {
-              replyText =
-                "Sorry, my full brain isn’t loading right now.\n\n" +
-                "You can still send us photos by SMS or call and we’ll give you a quote:\n" +
-                "• Text photos for a fast quote\n" +
-                "• Or tap the Call button at the bottom of the page.";
-            } else {
-              data = await res.json();
-              replyText =
-                (data && (data.reply || data.message || data.text)) ||
-                "I’ve received your message, but I couldn’t find a clear reply. Try rephrasing or give us a quick call.";
-            }
-
-            thinkingBubble.textContent = replyText;
-            chatHistory.push({ role: "assistant", content: replyText });
-
-            // If Tai thinks the info is booking-ready, show a summary.
-            handleBookingIfReady(data);
-          } catch (err) {
-            console.error("Tai error:", err);
-            thinkingBubble.textContent =
-              "Something went wrong talking to my brain.\n\nPlease try again in a moment or send us a text with photos for a fast quote.";
-          } finally {
-            isSending = false;
-            messagesEl.scrollTop = messagesEl.scrollHeight;
+      // Pressing Enter in the input
+      if (input) {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
           }
         });
-      })();
-    });
-  </script>
-</body>
-</html>
+      }
+
+      // Prevent default form submit (so Safari doesn't mess with layout)
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
+    })();
+  });
+</script>
