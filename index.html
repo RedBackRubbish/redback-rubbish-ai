@@ -475,630 +475,712 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-    <!-- ================= REDBACK CHAT WIDGET v4.0 (FULLY LOADED) ================= -->
-  <style>
-    .rbx-chat-launcher {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      background: #d7262d;
-      color: #fff;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 15px;
-      cursor: pointer;
+<!-- ================= REDBACK CHAT WIDGET v4.0 (FULLY LOADED) ================= -->
+<style>
+  .rbx-chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #d7262d;
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  }
+
+  .rbx-chat-launcher span {
+    font-size: 13px;
+    opacity: 0.9;
+  }
+
+  /* Entrance + idle glow */
+  .rbx-chat-launcher.rbx-enter {
+    animation: taiEntrance 0.7s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
+  }
+
+  /* Attention wiggle on scroll */
+  .rbx-chat-launcher.rbx-wiggle {
+    animation: taiWiggle 0.8s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
+  }
+
+  /* Desktop hover – tiny lift */
+  @media (hover: hover) and (pointer: fine) {
+    .rbx-chat-launcher:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.5);
+    }
+  }
+
+  /* Idle glow */
+  @keyframes taiIdleGlow {
+    0%, 100% {
       box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    }
+    50% {
+      box-shadow: 0 14px 40px rgba(215,38,45,0.55);
+    }
+  }
+
+  /* Entrance from bottom */
+  @keyframes taiEntrance {
+    0%   { transform: translateY(20px); opacity: 0; }
+    60%  { transform: translateY(-3px); opacity: 1; }
+    100% { transform: translateY(0); }
+  }
+
+  /* Little wiggle */
+  @keyframes taiWiggle {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-3px); }
+    40%  { transform: translateX(3px); }
+    60%  { transform: translateX(-2px); }
+    80%  { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+  }
+
+  .rbx-chat-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100% - 32px);
+    background: #111;
+    color: #fff;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: width 0.22s ease-out;
+  }
+
+  /* Wide mode (desktop only – we'll override on mobile) */
+  .rbx-chat-panel.rbx-wide {
+    width: 420px;
+    max-width: calc(100% - 32px);
+  }
+
+  @media (max-width: 720px) {
+    .rbx-chat-launcher {
+      bottom: 76px; /* sits nicely above mobile sticky bar */
+      right: 14px;
     }
 
-    .rbx-chat-launcher span {
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    /* Entrance + idle glow */
-    .rbx-chat-launcher.rbx-enter {
-      animation: taiEntrance 0.7s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
-    }
-
-    /* Attention wiggle on scroll */
-    .rbx-chat-launcher.rbx-wiggle {
-      animation: taiWiggle 0.8s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
-    }
-
-    /* Desktop hover – tiny lift */
-    @media (hover: hover) and (pointer: fine) {
-      .rbx-chat-launcher:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 34px rgba(0,0,0,0.5);
-      }
-    }
-
-    /* Idle glow */
-    @keyframes taiIdleGlow {
-      0%, 100% {
-        box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      }
-      50% {
-        box-shadow: 0 14px 40px rgba(215,38,45,0.55);
-      }
-    }
-
-    /* Entrance from bottom */
-    @keyframes taiEntrance {
-      0%   { transform: translateY(20px); opacity: 0; }
-      60%  { transform: translateY(-3px); opacity: 1; }
-      100% { transform: translateY(0); }
-    }
-
-    /* Little wiggle */
-    @keyframes taiWiggle {
-      0%   { transform: translateX(0); }
-      20%  { transform: translateX(-3px); }
-      40%  { transform: translateX(3px); }
-      60%  { transform: translateX(-2px); }
-      80%  { transform: translateX(2px); }
-      100% { transform: translateX(0); }
-    }
-
-    .rbx-chat-panel {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 320px;
-      max-width: calc(100% - 32px);
-      background: #111;
-      color: #fff;
-      border-radius: 20px;
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 9999;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.55);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: width 0.22s ease-out;
-    }
-
-    /* Wide mode (desktop only – we'll override on mobile) */
+    .rbx-chat-panel,
     .rbx-chat-panel.rbx-wide {
-      width: 420px;
-      max-width: calc(100% - 32px);
+      right: 10px;
+      left: 10px;
+      width: auto;
+      bottom: 72px; /* above sticky footer */
     }
+  }
 
-    @media (max-width: 720px) {
-      .rbx-chat-launcher {
-        bottom: 76px; /* sits nicely above mobile sticky bar */
-        right: 14px;
-      }
+  .rbx-chat-header {
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #d7262d, #8e171b);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    gap: 8px;
+  }
 
-      .rbx-chat-panel,
-      .rbx-chat-panel.rbx-wide {
-        right: 10px;
-        left: 10px;
-        width: auto;
-        bottom: 72px; /* above sticky footer */
-      }
-    }
+  .rbx-chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    .rbx-chat-header {
-      padding: 10px 14px;
-      background: linear-gradient(135deg, #d7262d, #8e171b);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      gap: 8px;
-    }
+  .rbx-chat-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #111;
+    border: 2px solid #f5eee4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
 
-    .rbx-chat-header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+  .rbx-chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-    .rbx-chat-avatar {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #111;
-      border: 2px solid #f5eee4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
+  .rbx-chat-resize {
+    background: rgba(0,0,0,0.18);
+    border-radius: 999px;
+    border: none;
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
+    cursor: pointer;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .rbx-chat-header-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+  .rbx-chat-close {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 999px;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+  }
 
-    .rbx-chat-resize {
-      background: rgba(0,0,0,0.18);
-      border-radius: 999px;
-      border: none;
-      color: #fff;
-      width: 22px;
-      height: 22px;
-      font-size: 13px;
-      cursor: pointer;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  .rbx-chat-messages {
+    padding: 12px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
+  }
 
-    .rbx-chat-close {
-      background: rgba(0, 0, 0, 0.2);
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 999px;
-      width: 24px;
-      height: 24px;
-      line-height: 1;
-    }
+  .rbx-msg {
+    margin-bottom: 12px;
+    display: flex;
+  }
 
-    .rbx-chat-messages {
-      padding: 12px;
-      max-height: 320px;
-      overflow-y: auto;
-      background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
-    }
+  .rbx-msg.user { justify-content: flex-end; }
+  .rbx-msg.ai { justify-content: flex-start; }
 
-    .rbx-msg {
-      margin-bottom: 12px;
-      display: flex;
-    }
+  .rbx-bubble {
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: 13px;
+    max-width: 80%;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 
-    .rbx-msg.user { justify-content: flex-end; }
-    .rbx-msg.ai { justify-content: flex-start; }
+  .rbx-msg.user .rbx-bubble {
+    background: #0283FF;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
 
-    .rbx-bubble {
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      max-width: 80%;
-      line-height: 1.35;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
+  .rbx-msg.ai .rbx-bubble {
+    background: #1f1f1f;
+    color: #fff;
+    border-bottom-left-radius: 4px;
+  }
 
-    .rbx-msg.user .rbx-bubble {
-      background: #0283FF;
-      color: #fff;
-      border-bottom-right-radius: 4px;
-    }
+  /* quick replies */
+  .rbx-quick-wrapper {
+    padding: 0 10px 4px;
+    background: #101010;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
 
-    .rbx-msg.ai .rbx-bubble {
-      background: #1f1f1f;
-      color: #fff;
-      border-bottom-left-radius: 4px;
-    }
+  .rbx-quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 4px;
+  }
 
-    /* quick replies */
-    .rbx-quick-wrapper {
-      padding: 0 10px 4px;
-      background: #101010;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
+  .rbx-quick-replies button {
+    border: none;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 11px;
+    background: #1f1f1f;
+    color: #f5eee4;
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
 
-    .rbx-quick-replies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 8px 0 4px;
-    }
+  .rbx-quick-replies button:hover {
+    background: #292929;
+  }
 
-    .rbx-quick-replies button {
-      border: none;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 11px;
-      background: #1f1f1f;
-      color: #f5eee4;
-      cursor: pointer;
-      white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+  .rbx-chat-form {
+    padding: 8px 10px 10px;
+    background: #101010;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    gap: 6px;
+  }
 
-    .rbx-quick-replies button:hover {
-      background: #292929;
-    }
+  .rbx-input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #181818;
+    border: 1px solid #333;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+  }
 
-    .rbx-chat-form {
-      padding: 8px 10px 10px;
-      background: #101010;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      gap: 6px;
-    }
+  .rbx-send {
+    background: #d7262d;
+    border: none;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+  }
 
-    .rbx-input {
-      flex: 1;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #181818;
-      border: 1px solid #333;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-    }
+  .typing { opacity: 0.7; font-size: 12px; }
 
-    .rbx-send {
-      background: #d7262d;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
+  .rbx-photo-btn {
+    background: #222;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
 
-    .typing { opacity: 0.7; font-size: 12px; }
+  .rbx-link-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    margin-top: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: #d7262d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
 
-    .rbx-photo-btn {
-      background: #222;
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 6px;
-    }
+  .rbx-link-btn.secondary {
+    background: #1f1f1f;
+    border-color: rgba(255,255,255,0.22);
+  }
 
-        .rbx-link-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 12px;
-      margin-top: 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: #d7262d;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-    }
+  .rbx-link-btn:hover {
+    filter: brightness(1.05);
+  }
 
-    .rbx-link-btn.secondary {
-      background: #1f1f1f;
-      border-color: rgba(255,255,255,0.22);
-    }
+  /* animated typing dots */
+  .rbx-dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin-left: 2px;
+    border-radius: 50%;
+    background: #ffffff;
+    opacity: 0.4;
+    animation: taiDots 1.2s infinite;
+  }
 
-    .rbx-link-btn:hover {
-      filter: brightness(1.05);
-    }
+  .rbx-dot:nth-child(2) { animation-delay: 0.2s; }
+  .rbx-dot:nth-child(3) { animation-delay: 0.4s; }
 
+  @keyframes taiDots {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50%      { transform: translateY(-2px); opacity: 1; }
+  }
 
-    /* animated typing dots */
-    .rbx-dot {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      margin-left: 2px;
-      border-radius: 50%;
-      background: #ffffff;
-      opacity: 0.4;
-      animation: taiDots 1.2s infinite;
-    }
+  /* thumbnails for uploaded photos */
+  .rbx-upload-thumb {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 8px;
+    margin: 2px;
+    object-fit: cover;
+    display: inline-block;
+  }
+</style>
 
-    .rbx-dot:nth-child(2) { animation-delay: 0.2s; }
-    .rbx-dot:nth-child(3) { animation-delay: 0.4s; }
+<button id="rbx-launcher" class="rbx-chat-launcher rbx-enter">
+  🕷️ <span>Chat with Tai</span>
+</button>
 
-    @keyframes taiDots {
-      0%, 100% { transform: translateY(0); opacity: 0.3; }
-      50%      { transform: translateY(-2px); opacity: 1; }
-    }
-  </style>
-
-  <button id="rbx-launcher" class="rbx-chat-launcher rbx-enter">
-    🕷️ <span>Chat with Tai</span>
-  </button>
-
-  <div id="rbx-panel" class="rbx-chat-panel">
-    <div class="rbx-chat-header">
-      <div class="rbx-chat-header-left">
-        <div class="rbx-chat-avatar">🕷️</div>
-        <span>Chat with Tai · TJ &amp; Marika's team</span>
-      </div>
-      <div class="rbx-chat-header-actions">
-        <button id="rbx-resize" class="rbx-chat-resize" title="Expand chat">⤢</button>
-        <button id="rbx-close" class="rbx-chat-close">&times;</button>
-      </div>
+<div id="rbx-panel" class="rbx-chat-panel">
+  <div class="rbx-chat-header">
+    <div class="rbx-chat-header-left">
+      <div class="rbx-chat-avatar">🕷️</div>
+      <span>Chat with Tai · TJ &amp; Marika's team</span>
     </div>
-
-    <div id="rbx-messages" class="rbx-chat-messages"></div>
-
-    <div class="rbx-quick-wrapper">
-      <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Send photos for a quote</button>
-      <div id="rbx-quick" class="rbx-quick-replies">
-        <button type="button" data-text="Can I get your price list and how your load sizes work?">Price & load sizes</button>
-        <button type="button" data-text="Which suburbs do you service?">Service areas</button>
-        <button type="button"
-          data-text="Can you please give me a full list of the main types of rubbish you can usually take, and anything you usually can’t take?">
-          What can you take?
-        </button>
-        <button type="button" data-text="How soon could you come out to help me?">Earliest availability</button>
-        <button type="button" data-text="What do you need from me to give a proper quote?">What do you need for a quote?</button>
-        <button type="button" data-text="I'm ready to book a pickup. Can you run me through what you need to know?">I’m ready to book</button>
-      </div>
+    <div class="rbx-chat-header-actions">
+      <button id="rbx-resize" class="rbx-chat-resize" title="Expand chat">⤢</button>
+      <button id="rbx-close" class="rbx-chat-close">&times;</button>
     </div>
-
-    <form id="rbx-form" class="rbx-chat-form">
-      <input id="rbx-input" class="rbx-input" type="text"
-             placeholder="Ask about rubbish, prices, suburbs..."
-             autocomplete="off">
-      <button id="rbx-send" class="rbx-send">Send</button>
-    </form>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-      const phone = "0459272402";
+  <div id="rbx-messages" class="rbx-chat-messages"></div>
 
-      const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
-      const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
-      const STORAGE_KEY_WIDE = "rbx_tai_panel_wide";
+  <div class="rbx-quick-wrapper">
+    <!-- text changed here -->
+    <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Upload photos for a quote</button>
+    <div id="rbx-quick" class="rbx-quick-replies">
+      <button type="button" data-text="Can I get your price list and how your load sizes work?">Price & load sizes</button>
+      <button type="button" data-text="Which suburbs do you service?">Service areas</button>
+      <button type="button"
+        data-text="Can you please give me a full list of the main types of rubbish you can usually take, and anything you usually can’t take?">
+        What can you take?
+      </button>
+      <button type="button" data-text="How soon could you come out to help me?">Earliest availability</button>
+      <button type="button" data-text="What do you need from me to give a proper quote?">What do you need for a quote?</button>
+      <button type="button" data-text="I'm ready to book a pickup. Can you run me through what you need to know?">I’m ready to book</button>
+    </div>
+  </div>
 
-      const launcher = document.getElementById("rbx-launcher");
-      const panel = document.getElementById("rbx-panel");
-      const closeBtn = document.getElementById("rbx-close");
-      const resizeBtn = document.getElementById("rbx-resize");
-      const messages = document.getElementById("rbx-messages");
-      const input = document.getElementById("rbx-input");
-      const form = document.getElementById("rbx-form");
-      const photoBtn = document.getElementById("rbx-photo-btn");
-      const quick = document.getElementById("rbx-quick");
+  <form id="rbx-form" class="rbx-chat-form">
+    <input id="rbx-input" class="rbx-input" type="text"
+           placeholder="Ask about rubbish, prices, suburbs..."
+           autocomplete="off">
+    <button id="rbx-send" class="rbx-send">Send</button>
+  </form>
+</div>
 
-      let history = [];
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
+    const phone = "0459272402";
 
-      // ----- tiny UI sounds (very subtle) -----
-      let audioCtx = null;
-      function playTone(freq, durationMs) {
-        try {
-          if (!audioCtx) {
-            const AC = window.AudioContext || window.webkitAudioContext;
-            if (!AC) return;
-            audioCtx = new AC();
-          }
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = "square";
-          osc.frequency.value = freq;
-          gain.gain.value = 0.06;
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + durationMs / 1000);
-        } catch (e) { /* ignore */ }
-      }
-      function playClick() { playTone(750, 60); }
-      function playSendSound() { playTone(520, 80); }
+    const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
+    const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
+    const STORAGE_KEY_WIDE = "rbx_tai_panel_wide";
 
-      // ----- load saved chat -----
+    const launcher = document.getElementById("rbx-launcher");
+    const panel = document.getElementById("rbx-panel");
+    const closeBtn = document.getElementById("rbx-close");
+    const resizeBtn = document.getElementById("rbx-resize");
+    const messages = document.getElementById("rbx-messages");
+    const input = document.getElementById("rbx-input");
+    const form = document.getElementById("rbx-form");
+    const photoBtn = document.getElementById("rbx-photo-btn");
+    const quick = document.getElementById("rbx-quick");
+
+    // hidden file input for Vision uploads
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.multiple = true;
+    fileInput.style.display = "none";
+    document.body.appendChild(fileInput);
+
+    let history = [];
+
+    // ----- tiny UI sounds (very subtle) -----
+    let audioCtx = null;
+    function playTone(freq, durationMs) {
       try {
-        const savedH = localStorage.getItem(STORAGE_KEY_HISTORY);
-        const savedM = localStorage.getItem(STORAGE_KEY_MESSAGES);
-        const wide = localStorage.getItem(STORAGE_KEY_WIDE);
-        if (wide === "1") {
-          panel.classList.add("rbx-wide");
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          audioCtx = new AC();
         }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "square";
+        osc.frequency.value = freq;
+        gain.gain.value = 0.06;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + durationMs / 1000);
+      } catch (e) { /* ignore */ }
+    }
+    function playClick() { playTone(750, 60); }
+    function playSendSound() { playTone(520, 80); }
 
-        if (savedH && savedM) {
-          const parsed = JSON.parse(savedH);
-          if (Array.isArray(parsed)) {
-            history = parsed;
-          }
-          messages.innerHTML = savedM;
-          if (messages.innerHTML.trim()) {
-            messages.dataset.loaded = "1";
-          }
-        }
-      } catch (e) {
-        history = [];
+    // ----- load saved chat -----
+    try {
+      const savedH = localStorage.getItem(STORAGE_KEY_HISTORY);
+      const savedM = localStorage.getItem(STORAGE_KEY_MESSAGES);
+      const wide = localStorage.getItem(STORAGE_KEY_WIDE);
+      if (wide === "1") {
+        panel.classList.add("rbx-wide");
       }
 
-      function saveChat() {
-        try {
-          localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
-          localStorage.setItem(STORAGE_KEY_MESSAGES, messages.innerHTML);
-        } catch (e) { /* ignore */ }
-      }
-
-      function showPanel() {
-        panel.style.display = "flex";
-        if (!messages.dataset.loaded) {
-          const intro =
-  "Hey, I’m Tai 👋\n" +
-  "Ask me about quotes – I’ll get you sorted quicker than it takes TJ to load the trailer 😂\n" +
-  "Tell me what you’re getting rid of + your suburb, you can send photos too.";
-
-          addAI(intro);
-          history.push({ role: "assistant", content: intro });
+      if (savedH && savedM) {
+        const parsed = JSON.parse(savedH);
+        if (Array.isArray(parsed)) {
+          history = parsed;
+        }
+        messages.innerHTML = savedM;
+        if (messages.innerHTML.trim()) {
           messages.dataset.loaded = "1";
-          saveChat();
         }
       }
+    } catch (e) {
+      history = [];
+    }
 
-      function hidePanel() { panel.style.display = "none"; }
+    function saveChat() {
+      try {
+        localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
+        localStorage.setItem(STORAGE_KEY_MESSAGES, messages.innerHTML);
+      } catch (e) { /* ignore */ }
+    }
 
-      launcher.onclick = () => {
-        playClick();
-        if (panel.style.display === "flex") {
-          hidePanel();
-        } else {
-          showPanel();
-        }
-      };
-      closeBtn.onclick = hidePanel;
+    function showPanel() {
+      panel.style.display = "flex";
+      if (!messages.dataset.loaded) {
+        const intro =
+"Hey, I’m Tai 👋\n" +
+"Ask me about quotes – I’ll get you sorted quicker than it takes TJ to load the trailer 😂\n" +
+"Tell me what you’re getting rid of + your suburb, you can send photos too.";
 
-      if (resizeBtn) {
-        resizeBtn.onclick = () => {
-          panel.classList.toggle("rbx-wide");
-          try {
-            localStorage.setItem(
-              STORAGE_KEY_WIDE,
-              panel.classList.contains("rbx-wide") ? "1" : "0"
-            );
-          } catch (e) { /* ignore */ }
-        };
-      }
-
-          function formatAiText(text) {
-        // Basic escape so Tai can't accidentally inject HTML
-        let safe = text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-
-        // Turn bare line-breaks into <br> for nicer formatting
-        safe = safe.replace(/\n/g, "<br>");
-
-        // 1) SMS link → "Text details to TJ & Marika" button
-        // We assume Tai puts the sms link on its own line.
-        safe = safe.replace(
-          /(sms:[^\s<]+)/g,
-          (_, href) =>
-            `<button class="rbx-link-btn" data-href="${href}">📲 Text details to TJ &amp; Marika</button>`
-        );
-
-        // 2) Jobber booking link → "Book online" button
-        safe = safe.replace(
-          /(https:\/\/clienthub\.getjobber\.com[^\s<]+)/g,
-          (_, href) =>
-            `<button class="rbx-link-btn secondary" data-href="${href}">📝 Book online</button>`
-        );
-
-        return safe;
-      }
-
-      function addAI(text) {
-        const wrap = document.createElement("div");
-        wrap.className = "rbx-msg ai";
-        wrap.innerHTML = `<div class="rbx-bubble">${formatAiText(text)}</div>`;
-        messages.appendChild(wrap);
-        messages.scrollTop = messages.scrollHeight;
+        addAI(intro);
+        history.push({ role: "assistant", content: intro });
+        messages.dataset.loaded = "1";
         saveChat();
       }
+    }
 
+    function hidePanel() { panel.style.display = "none"; }
 
-      function addUser(text) {
-        const wrap = document.createElement("div");
-        wrap.className = "rbx-msg user";
-        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
-        messages.appendChild(wrap);
-        messages.scrollTop = messages.scrollHeight;
-        saveChat();
+    launcher.onclick = () => {
+      playClick();
+      if (panel.style.display === "flex") {
+        hidePanel();
+      } else {
+        showPanel();
       }
+    };
+    closeBtn.onclick = hidePanel;
 
-      function typing() {
-        const el = document.createElement("div");
-        el.className = "rbx-msg ai typing";
-        el.innerHTML = `
-          <div class="rbx-bubble">
-            Tai is typing<span class="rbx-dot"></span><span class="rbx-dot"></span><span class="rbx-dot"></span>
-          </div>`;
-        messages.appendChild(el);
-        messages.scrollTop = messages.scrollHeight;
-        return el;
-      }
-
-      photoBtn.onclick = () => {
-        playClick();
-        window.location.href = `sms:${phone}?body=Hey RedBack, here are some photos for a quote:`;
-      };
-
-      async function sendMessage(txt) {
-        if (!txt) return;
-
-        addUser(txt);
-
-        // history we send to the Worker = previous turns only
-        const previous = history.slice();
-
-        const loader = typing();
+    if (resizeBtn) {
+      resizeBtn.onclick = () => {
+        panel.classList.toggle("rbx-wide");
         try {
-          const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: txt, history: previous })
-          });
-          const data = await res.json();
-          loader.remove();
-          addAI(data.reply);
-          // Now update local history with this turn
-          history.push({ role: "user", content: txt });
-          history.push({ role: "assistant", content: data.reply });
-          saveChat();
-        } catch (err) {
-          console.error(err);
-          loader.remove();
-          addAI("Ah sorry, Tai got tangled in a web 🕷️😂\\n" +
-                "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote.");
-        }
+          localStorage.setItem(
+            STORAGE_KEY_WIDE,
+            panel.classList.contains("rbx-wide") ? "1" : "0"
+          );
+        } catch (e) { /* ignore */ }
+      };
+    }
+
+    function formatAiText(text) {
+      // Basic escape so Tai can't accidentally inject HTML
+      let safe = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+      // Turn bare line-breaks into <br> for nicer formatting
+      safe = safe.replace(/\n/g, "<br>");
+
+      // 1) SMS link → "Text details to TJ & Marika" button
+      safe = safe.replace(
+        /(sms:[^\s<]+)/g,
+        (_, href) =>
+          `<button class="rbx-link-btn" data-href="${href}">📲 Text details to TJ &amp; Marika</button>`
+      );
+
+      // 2) Jobber booking link → "Book online" button
+      safe = safe.replace(
+        /(https:\/\/clienthub\.getjobber\.com[^\s<]+)/g,
+        (_, href) =>
+          `<button class="rbx-link-btn secondary" data-href="${href}">📝 Book online</button>`
+      );
+
+      return safe;
+    }
+
+    function addAI(text) {
+      const wrap = document.createElement("div");
+      wrap.className = "rbx-msg ai";
+      wrap.innerHTML = `<div class="rbx-bubble">${formatAiText(text)}</div>`;
+      messages.appendChild(wrap);
+      messages.scrollTop = messages.scrollHeight;
+      saveChat();
+    }
+
+    function addUser(text) {
+      const wrap = document.createElement("div");
+      wrap.className = "rbx-msg user";
+      wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+      messages.appendChild(wrap);
+      messages.scrollTop = messages.scrollHeight;
+      saveChat();
+    }
+
+    // show thumbnails of uploaded photos as a user bubble
+    function addUserImages(imageDataUrls) {
+      if (!imageDataUrls || !imageDataUrls.length) return;
+      const wrap = document.createElement("div");
+      wrap.className = "rbx-msg user";
+      const imgsHtml = imageDataUrls
+        .map(
+          (src) =>
+            `<img src="${src}" alt="Uploaded photo" class="rbx-upload-thumb">`
+        )
+        .join("");
+      wrap.innerHTML = `<div class="rbx-bubble">${imgsHtml}</div>`;
+      messages.appendChild(wrap);
+      messages.scrollTop = messages.scrollHeight;
+      saveChat();
+    }
+
+    function typing() {
+      const el = document.createElement("div");
+      el.className = "rbx-msg ai typing";
+      el.innerHTML = `
+        <div class="rbx-bubble">
+          Tai is typing<span class="rbx-dot"></span><span class="rbx-dot"></span><span class="rbx-dot"></span>
+        </div>`;
+      messages.appendChild(el);
+      messages.scrollTop = messages.scrollHeight;
+      return el;
+    }
+
+    // Photo button → open file picker, send to Tai with Vision
+    photoBtn.onclick = () => {
+      playClick();
+      fileInput.click();
+    };
+
+    fileInput.addEventListener("change", async () => {
+      const files = Array.from(fileInput.files || []);
+      if (!files.length) return;
+
+      try {
+        const selected = files.slice(0, 4); // safety cap
+        const dataUrls = await Promise.all(
+          selected.map(
+            (file) =>
+              new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+              })
+          )
+        );
+
+        // show user bubble + thumbnails
+        addUser("I've uploaded some photos for a rubbish removal quote.");
+        addUserImages(dataUrls);
+
+        // send prompt + images to Worker
+        playSendSound();
+        await sendMessage(
+          "These are photos of the rubbish I want a quote for. Please look at the images and help with load size, rough ballpark, and any questions you need to ask.",
+          dataUrls
+        );
+      } catch (err) {
+        console.error(err);
+        addAI(
+          "Ah, something went wrong uploading those pics 😅 Maybe try again, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote."
+        );
+      } finally {
+        fileInput.value = "";
+      }
+    });
+
+    // main send function now supports optional images (for Vision)
+    async function sendMessage(txt, imageDataUrls) {
+      if (!txt && (!imageDataUrls || !imageDataUrls.length)) return;
+
+      // For normal text messages, show a user bubble here
+      if (!imageDataUrls) {
+        addUser(txt);
       }
 
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        const txt = (input.value || "").trim();
+      const previous = history.slice();
+      const loader = typing();
+
+      try {
+        const payload = {
+          message: txt,
+          history: previous,
+          images: imageDataUrls || []
+        };
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        loader.remove();
+        addAI(data.reply);
+        history.push({ role: "user", content: txt || "[photos uploaded]" });
+        history.push({ role: "assistant", content: data.reply });
+        saveChat();
+      } catch (err) {
+        console.error(err);
+        loader.remove();
+        addAI(
+          "Ah sorry, Tai got tangled in a web 🕷️😂\n" +
+          "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote."
+        );
+      }
+    }
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const txt = (input.value || "").trim();
+      if (!txt) return;
+      input.value = "";
+      playSendSound();
+      sendMessage(txt); // normal text path (no images)
+    };
+
+    // handle link buttons inside AI messages
+    messages.addEventListener("click", (e) => {
+      const btn = e.target.closest(".rbx-link-btn");
+      if (!btn) return;
+      const href = btn.getAttribute("data-href");
+      if (!href) return;
+      playClick();
+      window.location.href = href;
+    });
+
+    // quick-reply chips
+    if (quick) {
+      quick.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-text]");
+        if (!btn) return;
+        const txt = btn.getAttribute("data-text") || "";
         if (!txt) return;
-        input.value = "";
         playSendSound();
         sendMessage(txt);
-      };
-
-            // handle link buttons inside AI messages
-      messages.addEventListener("click", (e) => {
-        const btn = e.target.closest(".rbx-link-btn");
-        if (!btn) return;
-        const href = btn.getAttribute("data-href");
-        if (!href) return;
-        playClick();
-        window.location.href = href;
       });
+    }
 
+    // one-time wiggle when user scrolls (if chat not opened yet)
+    let wiggleDone = false;
+    window.addEventListener("scroll", () => {
+      if (wiggleDone || panel.style.display === "flex") return;
+      wiggleDone = true;
+      launcher.classList.remove("rbx-enter");
+      launcher.classList.add("rbx-wiggle");
+      setTimeout(() => {
+        launcher.classList.remove("rbx-wiggle");
+        launcher.classList.add("rbx-enter");
+      }, 900);
+    }, { passive: true });
+  });
+</script>
+<!-- ================= END WIDGET ================= -->
 
-      // quick-reply chips
-      if (quick) {
-        quick.addEventListener("click", (e) => {
-          const btn = e.target.closest("button[data-text]");
-          if (!btn) return;
-          const txt = btn.getAttribute("data-text") || "";
-          if (!txt) return;
-          playSendSound();
-          sendMessage(txt);
-        });
-      }
-
-      // one-time wiggle when user scrolls (if chat not opened yet)
-      let wiggleDone = false;
-      window.addEventListener("scroll", () => {
-        if (wiggleDone || panel.style.display === "flex") return;
-        wiggleDone = true;
-        launcher.classList.remove("rbx-enter");
-        launcher.classList.add("rbx-wiggle");
-        setTimeout(() => {
-          launcher.classList.remove("rbx-wiggle");
-          launcher.classList.add("rbx-enter");
-        }, 900);
-      }, { passive: true });
-    });
-  </script>
-  <!-- ================= END WIDGET ================= -->
 
 
