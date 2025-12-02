@@ -525,10 +525,13 @@
 }
 </style>
 
-<button id="rbx-launcher" class="rbx-chat-launcher">💬 Chat with Tai</button>
+<button id="rbx-launcher" class="rbx-chat-launcher">
+  💬 Chat with Tai (TJ &amp; Marika)
+</button>
+
 <div id="rbx-panel" class="rbx-chat-panel">
   <div class="rbx-chat-header">
-    <span>Chat with Tai</span>
+    <span>Chat with Tai · TJ &amp; Marika's team</span>
     <button id="rbx-close" class="rbx-chat-close">&times;</button>
   </div>
   <div id="rbx-messages" class="rbx-chat-messages"></div>
@@ -559,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showPanel() {
     panel.style.display = "flex";
     if (!messages.dataset.loaded) {
-      addAI("G’day! I’m Tai 👋\nWhat are you tossing and which suburb are you in?");
+      addAI("G’day! I’m Tai 👋\nI help out TJ & Marika from RedBack Rubbish Removal.\nWhat are you tossing and which suburb are you in?");
       messages.dataset.loaded = "1";
     }
   }
@@ -614,7 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
       history.push({ role: "assistant", content: data.reply });
     } catch (err) {
       loader.remove();
-      addAI("Network hiccup 🤯 Try again.");
+      addAI("Quick glitch 🤯 Try again, or text photos + your suburb to 0459 272 402 and TJ & Marika will reply with a quote.");
     }
   }
 
@@ -628,4 +631,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <!-- ================= END WIDGET ================= -->
+
 
