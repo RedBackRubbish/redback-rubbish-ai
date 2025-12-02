@@ -732,6 +732,14 @@ h3 {
   gap: 6px;
 }
 
+.flag-img {
+  width: 20px;
+  height: auto;
+  display: block;
+  border-radius: 2px; /* optional but premium */
+}
+
+
 .flag-icons {
   display: flex;
   gap: 8px;
