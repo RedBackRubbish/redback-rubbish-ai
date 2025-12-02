@@ -475,7 +475,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v4.0 (FULLY LOADED) ================= -->
+<!-- ================= REDBACK CHAT WIDGET v4.1 (VISION + MODERN SOUNDS) ================= -->
 <style>
   .rbx-chat-launcher {
     position: fixed;
@@ -833,7 +833,6 @@
   <div id="rbx-messages" class="rbx-chat-messages"></div>
 
   <div class="rbx-quick-wrapper">
-    <!-- text changed here -->
     <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Upload photos for a quote</button>
     <div id="rbx-quick" class="rbx-quick-replies">
       <button type="button" data-text="Can I get your price list and how your load sizes work?">Price & load sizes</button>
@@ -885,28 +884,52 @@
 
     let history = [];
 
-    // ----- tiny UI sounds (very subtle) -----
+    // ----- MODERN UI SOUNDS (two-tone chimes) -----
     let audioCtx = null;
-    function playTone(freq, durationMs) {
-      try {
-        if (!audioCtx) {
-          const AC = window.AudioContext || window.webkitAudioContext;
-          if (!AC) return;
-          audioCtx = new AC();
-        }
+
+    function ensureAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+    }
+
+    function playSound(type) {
+      ensureAudio();
+      if (!audioCtx) return;
+
+      const now = audioCtx.currentTime;
+
+      function tone(freq, start, duration, vol = 0.15) {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = "square";
-        osc.frequency.value = freq;
-        gain.gain.value = 0.06;
+
+        osc.frequency.setValueAtTime(freq, now + start);
+        gain.gain.setValueAtTime(0.001, now + start);
+        gain.gain.exponentialRampToValueAtTime(vol, now + start + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + start + duration);
+
+        osc.type = "sine";
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + durationMs / 1000);
-      } catch (e) { /* ignore */ }
+
+        osc.start(now + start);
+        osc.stop(now + start + duration + 0.02);
+      }
+
+      if (type === "tap") {
+        // subtle tap
+        tone(260, 0, 0.08, 0.12);
+      } else if (type === "send") {
+        // crisp two-tone pop
+        tone(360, 0, 0.09, 0.15);
+        tone(520, 0.05, 0.09, 0.12);
+      } else if (type === "open") {
+        // warm soft whoom
+        tone(180, 0, 0.12, 0.13);
+        tone(260, 0.04, 0.12, 0.11);
+      }
     }
-    function playClick() { playTone(750, 60); }
-    function playSendSound() { playTone(520, 80); }
 
     // ----- load saved chat -----
     try {
@@ -956,7 +979,7 @@
     function hidePanel() { panel.style.display = "none"; }
 
     launcher.onclick = () => {
-      playClick();
+      playSound("open");
       if (panel.style.display === "flex") {
         hidePanel();
       } else {
@@ -1053,7 +1076,7 @@
 
     // Photo button → open file picker, send to Tai with Vision
     photoBtn.onclick = () => {
-      playClick();
+      playSound("tap");
       fileInput.click();
     };
 
@@ -1080,7 +1103,7 @@
         addUserImages(dataUrls);
 
         // send prompt + images to Worker
-        playSendSound();
+        playSound("send");
         await sendMessage(
           "These are photos of the rubbish I want a quote for. Please look at the images and help with load size, rough ballpark, and any questions you need to ask.",
           dataUrls
@@ -1140,7 +1163,7 @@
       const txt = (input.value || "").trim();
       if (!txt) return;
       input.value = "";
-      playSendSound();
+      playSound("send");
       sendMessage(txt); // normal text path (no images)
     };
 
@@ -1150,7 +1173,7 @@
       if (!btn) return;
       const href = btn.getAttribute("data-href");
       if (!href) return;
-      playClick();
+      playSound("tap");
       window.location.href = href;
     });
 
@@ -1161,7 +1184,7 @@
         if (!btn) return;
         const txt = btn.getAttribute("data-text") || "";
         if (!txt) return;
-        playSendSound();
+        playSound("send");
         sendMessage(txt);
       });
     }
@@ -1181,6 +1204,3 @@
   });
 </script>
 <!-- ================= END WIDGET ================= -->
-
-
-
