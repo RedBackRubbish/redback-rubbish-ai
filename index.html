@@ -872,8 +872,11 @@
       function showPanel() {
         panel.style.display = "flex";
         if (!messages.dataset.loaded) {
-          const intro = "Hey, I’m Tai 👋\\nI help out TJ & Marika from RedBack Rubbish Removal.\\n" +
-            "For a fast quote, tell me what you’re tossing + your suburb – and you can send photos too.";
+          const intro =
+  "Hey, I’m Tai 👋\n" +
+  "Ask me about quotes – I’ll get you sorted quicker than it takes TJ to load the trailer 😂\n" +
+  "Tell me what you’re getting rid of + your suburb, you can send photos too.";
+
           addAI(intro);
           history.push({ role: "assistant", content: intro });
           messages.dataset.loaded = "1";
@@ -965,8 +968,8 @@
         } catch (err) {
           console.error(err);
           loader.remove();
-          addAI("Ah sorry, Tai got tangled in the web for a sec 🕷️😂\\n" +
-                "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ & Marika will sort a quote.");
+          addAI("Ah sorry, Tai got tangled in a web 🕷️😂\\n" +
+                "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote.");
         }
       }
 
