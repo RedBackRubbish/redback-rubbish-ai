@@ -411,7 +411,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v4.0 ================= -->
+<!-- ================= REDBACK CHAT WIDGET v5.0 ================= -->
 <style>
 .rbx-chat-launcher {
   position: fixed;
@@ -560,7 +560,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
   const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
   const launcher = document.getElementById("rbx-launcher");
   const panel = document.getElementById("rbx-panel");
@@ -627,12 +626,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       loader.remove();
 
-      let ai;
-      try { ai = JSON.parse(data.choices?.[0]?.message?.content || '{}'); } 
-      catch { ai = { reply: "Quick glitch 🤯 Send your suburb + photos for a quote." }; }
-
-      addAI(ai.reply);
-      history.push({ role: "assistant", content: ai.reply });
+      // Directly use the 'reply' from the API response
+      const reply = data.reply || "Quick glitch 🤯 Send your suburb + photos for a quote.";
+      addAI(reply);
+      history.push({ role: "assistant", content: reply });
 
       // Cap history at last 10 messages
       if (history.length > 10) history = history.slice(-10);
@@ -671,7 +668,6 @@ document.addEventListener("DOMContentLoaded", () => {
   photoInput.onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
     const reader = new FileReader();
     reader.onload = async () => {
       const base64 = reader.result.split(',')[1];
@@ -679,7 +675,5 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     reader.readAsDataURL(file);
   };
-
 });
 </script>
-
