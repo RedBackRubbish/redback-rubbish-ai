@@ -846,35 +846,60 @@ h3 {
   }
 
   .hero {
-    padding-top: 96px;
-  }
+  padding-top: 96px;
+}
 
-  .hero-family {
-    min-height: 70vh;
-    text-align: center;
-    padding-top: 80px;
-    padding-bottom: 64px;
-  }
+.hero-family {
+  min-height: 80vh;
+  text-align: center;
+  padding-top: 88px;
+  padding-bottom: 72px;
+  align-items: flex-end;
+}
 
-  .hero-inner {
-    flex-direction: column;
-    align-items: center;
-  }
+.hero-inner {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
-  .hero-copy {
-    max-width: none;
-    padding: 0 16px;
-  }
+.hero-copy {
+  max-width: 480px;
+  padding: 0 18px 8px;
+}
 
-  /* mobile overlay over family photo */
-  .hero-family::after {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.42) 45%,
-      rgba(0, 0, 0, 0.12) 100%
-    );
-  }
+.hero-family h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero-family .hero-sub,
+.hero-family .pill,
+.hero-family .hero-trust {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+.hero-cta {
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* upgraded mobile overlay */
+.hero-family::before {
+  background-position: center;
+  filter: brightness(1.02);
+}
+
+.hero-family::after {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+}
+
 
   .hero-media {
     display: none; /* background already shows family */
