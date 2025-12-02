@@ -413,38 +413,180 @@
 
 <!-- =============== TAI / LIL REDBACK CHAT WIDGET =============== -->
 <style>
-  /* Basic layout for widget */
-  .tai-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
-  .tai-chat-launcher { border: none; border-radius: 999px; padding: 10px 16px; font-size: 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; background: #e50914; color: #ffffff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
-  .tai-chat-panel { position: fixed; bottom: 80px; right: 20px; width: 320px; max-width: calc(100% - 32px); background: #111111; color: #ffffff; border-radius: 20px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.08); display: none; flex-direction: column; overflow: hidden; }
-  @media (max-width: 640px) { .tai-chat-panel { right: 10px; left: 10px; width: auto; } }
-  .tai-chat-header { padding: 12px 14px; background: #1a1a1a; display: flex; align-items: center; justify-content: space-between; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-  .tai-chat-close { border: none; background: transparent; color: #ffffff; font-size: 16px; cursor: pointer; }
-  .tai-chat-messages { padding: 10px 12px; max-height: 320px; overflow-y: auto; background: #121212; }
-  .chat-message { margin-bottom: 8px; display: flex; }
-  .chat-message-user { justify-content: flex-end; }
-  .chat-message-ai { justify-content: flex-start; }
-  .chat-message-bubble { padding: 8px 10px; border-radius: 14px; font-size: 13px; line-height: 1.4; max-width: 80%; white-space: pre-wrap; }
-  .chat-message-user .chat-message-bubble { background: #0283FF; color: #ffffff; border-bottom-right-radius: 4px; }
-  .chat-message-ai .chat-message-bubble { background: #1f1f1f; color: #ffffff; border-bottom-left-radius: 4px; }
-  .tai-chat-form { padding: 8px 10px 10px; background: #101010; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 6px; }
-  .tai-chat-quick-row { display: flex; gap: 6px; }
-  .tai-chat-quick-btn { flex: 1; border-radius: 999px; border: none; font-size: 11px; padding: 6px 10px; cursor: pointer; background: #222222; color: #f5f5f5; }
-  .tai-chat-quick-btn:hover { background: #2b2b2b; }
-  .tai-chat-input-row { display: flex; align-items: center; gap: 6px; }
-  .tai-chat-input { flex: 1; border-radius: 999px; border: 1px solid #333333; background: #181818; color: #ffffff; font-size: 13px; padding: 7px 10px; outline: none; min-width: 0; }
-  .tai-chat-input::placeholder { color: #777777; }
-  .tai-chat-voice-btn { border-radius: 999px; border: none; padding: 7px 9px; background: #222222; color: #ffffff; font-size: 14px; cursor: pointer; flex-shrink: 0; }
-  .tai-chat-voice-btn.listening { background: #e50914; }
-  .tai-chat-send-btn { background: #0283FF; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; flex-shrink: 0; transition: 0.2s ease; }
-  .tai-chat-send-btn:hover { filter: brightness(1.08); }
-  .typing-dots { display: inline-flex; gap: 3px; margin-left: 4px; vertical-align: middle; }
-  .typing-dots span { display: block; width: 4px; height: 4px; border-radius: 50%; background: #bbbbbb; animation: taiTyping 1s infinite ease-in-out; }
-  .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-  .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-  @keyframes taiTyping { 0%, 80%, 100% { transform: translateY(0); opacity: 0.4; } 40% { transform: translateY(-3px); opacity: 1; } }
-  @media (max-width: 768px) { .tai-chat-widget, .tai-chat-panel { bottom: calc(60px + 20px); } }
-  .sms-button { display:inline-block; background:#e50914; color:#fff; padding:8px 12px; border-radius:6px; margin-top:10px; text-align:center; text-decoration:none; }
+/* Basic layout for widget */
+.tai-chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+.tai-chat-launcher {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: #e50914;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.tai-chat-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100% - 32px);
+  background: #111111;
+  color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .tai-chat-panel { right: 10px; left: 10px; width: auto; }
+}
+.tai-chat-header {
+  padding: 12px 14px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.tai-chat-close {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+.tai-chat-messages {
+  padding: 10px 12px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: #121212;
+}
+.chat-message { margin-bottom: 8px; display: flex; }
+.chat-message-user { justify-content: flex-end; }
+.chat-message-ai { justify-content: flex-start; }
+.chat-message-bubble {
+  padding: 8px 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 80%;
+  white-space: pre-wrap;
+}
+/* USER BUBBLES – REDBACK BLUE */
+.chat-message-user .chat-message-bubble {
+  background: #0283FF;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+.chat-message-ai .chat-message-bubble {
+  background: #1f1f1f;
+  color: #ffffff;
+  border-bottom-left-radius: 4px;
+}
+.tai-chat-form {
+  padding: 8px 10px 10px;
+  background: #101010;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tai-chat-quick-row {
+  display: flex;
+  gap: 6px;
+}
+.tai-chat-quick-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  font-size: 11px;
+  padding: 6px 10px;
+  cursor: pointer;
+  background: #222222;
+  color: #f5f5f5;
+}
+.tai-chat-quick-btn:hover { background: #2b2b2b; }
+.tai-chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tai-chat-input {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #333333;
+  background: #181818;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 7px 10px;
+  outline: none;
+  min-width: 0;
+}
+.tai-chat-input::placeholder { color: #777777; }
+.tai-chat-voice-btn {
+  border-radius: 999px;
+  border: none;
+  padding: 7px 9px;
+  background: #222222;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.tai-chat-voice-btn.listening { background: #e50914; }
+/* SEND BUTTON – REDBACK BLUE */
+.tai-chat-send-btn {
+  background: #0283FF;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: 0.2s ease;
+}
+.tai-chat-send-btn:hover { filter: brightness(1.08); }
+/* typing dots */
+.typing-dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.typing-dots span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #bbbbbb;
+  animation: taiTyping 1s infinite ease-in-out;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes taiTyping {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+/* Push chat above mobile sticky bar */
+@media (max-width: 768px) {
+  .tai-chat-widget, .tai-chat-panel {
+    bottom: calc(60px + 20px);
+  }
+}
 </style>
 
 <!-- CHAT WIDGET UI -->
@@ -467,231 +609,235 @@
       <div class="tai-chat-input-row">
         <button id="tai-voice-btn" class="tai-chat-voice-btn" type="button" title="Talk to Tai"> 🎤 </button>
         <input id="tai-chat-input" class="tai-chat-input" type="text" autocomplete="off" placeholder="Tell me what you’re tossing & which suburb you're in..." />
-        <button id="tai-send-btn" class="tai-chat-send-btn" type="button"> Send </button>
+        <button id="tai-send-btn" class="tai-chat-send-btn" type="button">Send</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- ================ CHAT WIDGET SCRIPT (CLEAN) ================ -->
+<!-- ================= CHAT WIDGET SCRIPT ================= -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  (function () {
-    const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-    const SMS_NUMBER = "0459272402";
-    const JOBBER_URL = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+(function () {
+  const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
+  const SMS_NUMBER = "0459272402";
+  const JOBBER_URL = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
 
-    const launcher = document.getElementById("tai-chat-launcher");
-    const panel = document.getElementById("tai-chat-panel");
-    const closeBtn = document.getElementById("tai-chat-close");
-    const form = document.getElementById("tai-chat-form");
-    const input = document.getElementById("tai-chat-input");
-    const messagesEl = document.getElementById("tai-chat-messages");
-    const photosBtn = document.getElementById("tai-photos-btn");
-    const voiceBtn = document.getElementById("tai-voice-btn");
-    const sendBtn = document.getElementById("tai-send-btn");
+  const launcher = document.getElementById("tai-chat-launcher");
+  const panel = document.getElementById("tai-chat-panel");
+  const closeBtn = document.getElementById("tai-chat-close");
+  const form = document.getElementById("tai-chat-form");
+  const input = document.getElementById("tai-chat-input");
+  const messagesEl = document.getElementById("tai-chat-messages");
+  const photosBtn = document.getElementById("tai-photos-btn");
+  const voiceBtn = document.getElementById("tai-voice-btn");
+  const sendBtn = document.getElementById("tai-send-btn");
 
-    if (!launcher || !panel || !form || !input || !messagesEl) {
-      console.warn("Tai chat: missing elements");
-      return;
-    }
+  if (!launcher || !panel || !form || !input || !messagesEl) { 
+    console.warn("Tai chat: missing elements"); 
+    return; 
+  }
 
-    /** ---------------- PROFILE ---------------- **/
-    let chatHistory = [];
-    let isSending = false;
-    let hasGreeted = false;
-    let profile = { name: null, suburb: null, items: null, timing: null };
+  let chatHistory = [];
+  let isSending = false;
+  let hasGreeted = false;
 
-    /** ---------------- UI HELPERS ---------------- **/
-    function appendMessage(text, from) {
-      const wrap = document.createElement("div");
-      wrap.className = "chat-message chat-message-" + (from === "user" ? "user" : "ai");
-      const bubble = document.createElement("div");
-      bubble.className = "chat-message-bubble";
-      bubble.textContent = text;
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return bubble;
-    }
+  let profile = {
+    name: null,
+    suburb: null,
+    items: null,
+    timing: null
+  };
 
-    function appendTypingMessage() {
-      const wrap = document.createElement("div");
-      wrap.className = "chat-message chat-message-ai";
-      const bubble = document.createElement("div");
-      bubble.className = "chat-message-bubble";
-      bubble.innerHTML = 'Lil RedBack is thinking <span class="typing-dots"><span></span><span></span><span></span></span>';
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return bubble;
-    }
+  function appendMessage(text, from) {
+    const wrap = document.createElement("div");
+    wrap.className = "chat-message chat-message-" + (from === "user" ? "user" : "ai");
+    const bubble = document.createElement("div");
+    bubble.className = "chat-message-bubble";
+    bubble.textContent = text;
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return bubble;
+  }
 
-    /** ---------------- QUICK SUGGESTIONS ---------------- **/
-    function addSuggestionButtons() {
-      const types = [
-        "Household rubbish",
-        "Green waste / garden bags",
-        "Furniture removal",
-        "Renovation waste",
-        "Moving out clear-out"
-      ];
-      const row = document.createElement("div");
-      row.style.display = "flex";
-      row.style.flexWrap = "wrap";
-      row.style.gap = "6px";
-      row.style.marginTop = "6px";
-      types.forEach((label) => {
-        const btn = document.createElement("button");
-        btn.textContent = label;
-        btn.className = "tai-chat-quick-btn";
-        btn.style.flex = "1 1 calc(50% - 6px)";
-        btn.addEventListener("click", () => {
-          appendMessage(label, "user");
-          chatHistory.push({ role: "user", content: label });
-          suggestPhotoFlow(label);
-        });
-        row.appendChild(btn);
+  function appendTypingMessage() {
+    const wrap = document.createElement("div");
+    wrap.className = "chat-message chat-message-ai";
+    const bubble = document.createElement("div");
+    bubble.className = "chat-message-bubble";
+    bubble.innerHTML = `Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>`;
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return bubble;
+  }
+
+  function addSuggestionButtons() {
+    const types = [
+      "Household rubbish",
+      "Green waste / garden bags",
+      "Furniture removal",
+      "Renovation waste",
+      "Moving out clear-out"
+    ];
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.flexWrap = "wrap";
+    row.style.gap = "6px";
+    row.style.marginTop = "6px";
+
+    types.forEach((label) => {
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      btn.className = "tai-chat-quick-btn";
+      btn.style.flex = "1 1 calc(50% - 6px)";
+      btn.addEventListener("click", () => {
+        appendMessage(label, "user");
+        chatHistory.push({ role: "user", content: label });
+        suggestPhotoFlow(label);
       });
-      messagesEl.appendChild(row);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+      row.appendChild(btn);
+    });
 
-    function suggestPhotoFlow(type) {
-      appendMessage(`No worries — we handle ${type.toLowerCase()} all the time. What suburb are you in?`, "ai");
-    }
+    messagesEl.appendChild(row);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
 
-    /** ---------------- GREETING ---------------- **/
-    function sendGreetingIfNeeded() {
-      if (hasGreeted) return;
-      const greetText = "G’day, I’m Tai 👋 Tell me your name to get started.";
-      appendMessage(greetText, "ai");
-      hasGreeted = true;
-      addSuggestionButtons();
-    }
+  function suggestPhotoFlow(type) {
+    appendMessage(`No worries — we handle ${type.toLowerCase()} all the time. What suburb are you in?`, "ai");
+  }
 
-    /** ---------------- CHAT PANEL EVENTS ---------------- **/
-    function openChat() {
-      panel.style.display = "flex";
-      panel.setAttribute("aria-hidden", "false");
-      sendGreetingIfNeeded();
-      setTimeout(() => input.focus(), 50);
-    }
-    function closeChat() {
-      panel.style.display = "none";
-      panel.setAttribute("aria-hidden", "true");
-    }
-    launcher.addEventListener("click", () => panel.style.display === "flex" ? closeChat() : openChat());
-    if (closeBtn) closeBtn.addEventListener("click", closeChat);
+  function sendGreetingIfNeeded() {
+    if (hasGreeted) return;
+    const greetText = "G’day, I’m Tai 👋 Tell me your name to get started.";
+    appendMessage(greetText, "ai");
+    hasGreeted = true;
+    addSuggestionButtons();
+  }
 
-    /** ---------------- PROFILE LEARNING ---------------- **/
-    function extractProfile(text) {
-      // Try to capture a simple name if not yet collected
-      if (!profile.name) {
-        const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z'-]+)/i);
-        if (nameMatch) profile.name = nameMatch[1];
-        else if (/^[A-Za-z'-]+$/.test(text)) profile.name = text;
-        if (profile.name) {
-          appendMessage(`Nice to meet you ${profile.name}! Which suburb are you in?`, "ai");
-          return true;
-        }
-      }
+  function openChat() {
+    panel.style.display = "flex";
+    panel.setAttribute("aria-hidden", "false");
+    sendGreetingIfNeeded();
+    setTimeout(() => input.focus(), 50);
+  }
 
-      if (profile.name && !profile.suburb) {
-        profile.suburb = text;
-        appendMessage("Great! What are you needing removed?", "ai");
+  function closeChat() {
+    panel.style.display = "none";
+    panel.setAttribute("aria-hidden", "true");
+  }
+
+  launcher.addEventListener("click", () => 
+    panel.style.display === "flex" ? closeChat() : openChat()
+  );
+  if (closeBtn) closeBtn.addEventListener("click", closeChat);
+
+  function extractProfile(text) {
+    if (!profile.name) {
+      const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
+      if (nameMatch) profile.name = nameMatch[1];
+      else if (/^[A-Za-z]+$/.test(text)) profile.name = text;
+
+      if (profile.name) {
+        appendMessage(`Nice to meet you ${profile.name}! Which suburb are you in?`, "ai");
         return true;
       }
-
-      if (profile.suburb && !profile.items) {
-        profile.items = text;
-        appendMessage("Got it. When would you like the job done?", "ai");
-        return true;
-      }
-
-      if (profile.items && !profile.timing) {
-        profile.timing = text;
-        sendSMSButton();
-        return true;
-      }
-
-      return false;
     }
 
-    /** ---------------- SMS GENERATION ---------------- **/
-    function sendSMSButton() {
-      const smsBody = `Hey RedBack — got a job:
+    if (profile.name && !profile.suburb) {
+      profile.suburb = text;
+      appendMessage(`Great! What are you needing removed?`, "ai");
+      return true;
+    }
+
+    if (profile.suburb && !profile.items) {
+      profile.items = text;
+      appendMessage(`Got it. When would you like the job done?`, "ai");
+      return true;
+    }
+
+    if (profile.items && !profile.timing) {
+      profile.timing = text;
+      sendSMSButton();
+      return true;
+    }
+
+    return false;
+  }
+
+  function sendSMSButton() {
+    const sms = encodeURIComponent(
+`Hey RedBack — got a job:
+
 Name: ${profile.name}
 Suburb: ${profile.suburb}
 Items: ${profile.items}
-Timing: ${profile.timing}`;
-      const encoded = encodeURIComponent(smsBody);
-      appendMessage("Perfect! Tap below to send the details straight to the team 👇", "ai");
+Timing: ${profile.timing}`
+    );
 
-      const btn = document.createElement("a");
-      btn.href = `sms:${SMS_NUMBER}?body=${encoded}`;
-      btn.textContent = "Send SMS 📩";
-      btn.className = "sms-button";
-      messagesEl.appendChild(btn);
+    appendMessage(`Perfect! Tap below to send the details straight to the team 👇`, "ai");
+
+    const btn = document.createElement("a");
+    btn.href = `sms:${SMS_NUMBER}?body=${sms}`;
+    btn.textContent = "Send SMS 📩";
+    btn.className = "sms-button";
+    btn.style.cssText =
+      "display:inline-block;background:#e50914;color:#fff;padding:8px 12px;border-radius:6px;margin-top:10px;text-align:center;text-decoration:none;";
+    
+    messagesEl.appendChild(btn);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  async function sendMessage() {
+    if (isSending) return;
+
+    const text = input.value.trim();
+    if (!text) return;
+
+    appendMessage(text, "user");
+    chatHistory.push({ role: "user", content: text });
+    input.value = "";
+
+    if (extractProfile(text)) return;
+
+    const thinking = appendTypingMessage();
+    isSending = true;
+
+    try {
+      const res = await fetch(TAI_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: text,
+          history: chatHistory,
+          profile
+        })
+      });
+      const data = await res.json();
+      thinking.textContent = data.reply || "All good!";
+    } catch (err) {
+      thinking.textContent = "Brain glitch 🤯 Try again!";
+    } finally {
+      isSending = false;
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
+  }
 
-    /** ---------------- SEND MESSAGE ---------------- **/
-    async function sendMessage() {
-      if (isSending) return;
-      const text = input.value.trim();
-      if (!text) return;
-      appendMessage(text, "user");
-      chatHistory.push({ role: "user", content: text });
-      input.value = "";
+  sendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    sendMessage();
+  });
 
-      if (extractProfile(text)) return;
-
-      const thinking = appendTypingMessage();
-      isSending = true;
-      try {
-        const res = await fetch(TAI_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, history: chatHistory, profile })
-        });
-
-        const data = await res.json();
-        thinking.textContent = data.reply || "All good!";
-        // push assistant reply to history
-        chatHistory.push({ role: "assistant", content: thinking.textContent });
-      } catch (err) {
-        thinking.textContent = "Brain glitch 🤯 Try again!";
-        console.error("Tai API error:", err);
-      } finally {
-        isSending = false;
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
     }
+  });
 
-    sendBtn.addEventListener("click", (e) => { e.preventDefault(); sendMessage(); });
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); sendMessage(); } });
-    form.addEventListener("submit", (e) => e.preventDefault());
-
-    // Photos quick button - bring up SMS template for photos
-    if (photosBtn) {
-      photosBtn.addEventListener("click", () => {
-        appendMessage("I'd like to send photos for a quote. Which suburb are we looking at?", "user");
-        chatHistory.push({ role: "user", content: "Send photos for quote" });
-        suggestPhotoFlow("Household rubbish");
-      });
-    }
-
-    // Optional: voice button placeholder (no recording implemented)
-    if (voiceBtn) {
-      voiceBtn.addEventListener("click", () => {
-        appendMessage("Voice input is not enabled in this build — please type or tap the camera button to send photos.", "ai");
-      });
-    }
-
-  })();
+  form.addEventListener("submit", (e) => e.preventDefault());
+})();
 });
 </script>
 
-</body>
-</html>
