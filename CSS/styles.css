@@ -19,7 +19,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: #111111;
-  background-color: #f7f4ee;
+  background-color: #0a0a0a; /* dark frame around light sections = premium */
 }
 
 /* BASIC -------------------------------------------------------- */
@@ -54,6 +54,18 @@ h3 {
 
 .section {
   padding: 80px 0;
+  position: relative;
+}
+
+.section::before {
+  /* subtle divider between sections for a more structured feel */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(1120px, 100% - 32px);
+  transform: translateX(-50%);
+  border-top: 1px solid rgba(0, 0, 0, 0.035);
 }
 
 .section-light {
@@ -75,8 +87,9 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid #e5ded0;
+  backdrop-filter: blur(14px);
 }
 
 .header-inner {
@@ -105,7 +118,7 @@ h3 {
 
 .brand-name {
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.08em;
   font-size: 15px;
   text-transform: uppercase;
 }
@@ -130,12 +143,12 @@ h3 {
 .header-label {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: #888888;
 }
 
 .header-phone {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 16px;
 }
 
@@ -151,24 +164,29 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
+  transition: all 0.18s ease-out;
+  letter-spacing: 0.02em;
 }
 
 .btn-primary {
   background-color: #d7262d;
   border-color: #d7262d;
   color: #ffffff;
+  box-shadow: 0 10px 24px rgba(215, 38, 45, 0.3);
 }
 
 .btn-primary:hover {
   background-color: #b01f24;
   border-color: #b01f24;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(176, 31, 36, 0.4);
 }
 
 .btn-outline {
@@ -192,13 +210,13 @@ h3 {
 }
 
 .btn-ghost-light {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.12);
   border-color: transparent;
   color: #ffffff;
 }
 
 .btn-ghost-light:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* PILLS -------------------------------------------------------- */
@@ -232,7 +250,7 @@ h3 {
 /* HERO --------------------------------------------------------- */
 
 .hero {
-  padding-top: 96px;
+  padding-top: 104px;
   padding-bottom: 80px;
 }
 
@@ -259,16 +277,11 @@ h3 {
   opacity: 1;
 }
 
-/* Desktop – brand gradient only */
+/* Desktop – brand gradient only, photo shown in hero-media */
 @media (min-width: 721px) {
   .hero-family::before {
     background-image: none;
-    background: linear-gradient(
-      135deg,
-      #0d0d0d 0%,
-      #1a1a1a 40%,
-      #d7262d 100%
-    );
+    background: radial-gradient(circle at top left, #2a2a2a 0, #111111 46%, #2b0a0d 100%);
     background-size: cover;
     background-position: center;
   }
@@ -281,9 +294,9 @@ h3 {
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.85) 0%,
-    rgba(0, 0, 0, 0.75) 35%,
-    rgba(0, 0, 0, 0.25) 70%,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.78) 35%,
+    rgba(0, 0, 0, 0.35) 70%,
     rgba(0, 0, 0, 0.05) 100%
   );
 }
@@ -291,6 +304,9 @@ h3 {
 .hero-inner {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
 
 .hero-copy {
@@ -298,7 +314,7 @@ h3 {
 }
 
 .hero-family h1 {
-  font-size: clamp(30px, 3vw, 36px);
+  font-size: clamp(32px, 3.2vw, 42px);
   margin-bottom: 12px;
 }
 
@@ -309,7 +325,7 @@ h3 {
 }
 
 .hero-family .hero-sub {
-  color: #f0e8db;
+  color: #f3e7d6;
 }
 
 .hero-cta {
@@ -334,6 +350,39 @@ h3 {
   color: #ddd1c0;
 }
 
+/* HERO MEDIA --------------------------------------------------- */
+
+.hero-media {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.hero-photo-frame {
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(243, 232, 219, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  max-width: 380px;
+  margin-left: auto;
+}
+
+.hero-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-badge {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #f0e8db;
+  opacity: 0.9;
+}
+
 /* SECTION HEADERS --------------------------------------------- */
 
 .section-header {
@@ -348,6 +397,10 @@ h3 {
 
 .section-header p {
   color: #555555;
+}
+
+.section-dark .section-header p {
+  color: #e0d6c6;
 }
 
 /* GRID UTILITIES ---------------------------------------------- */
@@ -368,10 +421,11 @@ h3 {
 
 .card {
   background-color: #ffffff;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 18px 18px 20px;
   border: 1px solid #e5ded0;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
 }
 
 .section-dark .card {
@@ -392,6 +446,15 @@ h3 {
 .section-dark .card p,
 .section-dark .card li {
   color: #f0e8db;
+}
+
+/* subtle hover lift on desktop */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    border-color: #d5c7b0;
+  }
 }
 
 /* WHY LOCALS CHOOSE ------------------------------------------- */
@@ -463,8 +526,8 @@ h3 {
 }
 
 .card-pricing-featured {
-  background-color: #ffffff;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  background: radial-gradient(circle at top, #ffffff 0, #f7f0e7 55%, #f0e4d3 100%);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.12);
   border-color: #d7262d;
   transform: translateY(-6px);
 }
@@ -612,9 +675,10 @@ h3 {
 /* FOOTER ------------------------------------------------------- */
 
 .site-footer {
-  border-top: 1px solid #e3d8c8;
-  background-color: #f3ebe0;
+  border-top: 1px solid #3b3327;
+  background-color: #15110d;
   font-size: 13px;
+  color: #f5eee4;
 }
 
 .footer-inner {
@@ -630,7 +694,7 @@ h3 {
 }
 
 .footer-right {
-  color: #555555;
+  color: #c8bba8;
 }
 
 /* UTILS -------------------------------------------------------- */
@@ -707,11 +771,24 @@ h3 {
   .contact-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .hero-inner {
+    gap: 28px;
+  }
+
+  .hero-photo-frame {
+    margin-left: 0;
+    max-width: 320px;
+  }
 }
 
 @media (max-width: 720px) {
   .section {
     padding: 64px 0;
+  }
+
+  .section::before {
+    width: 100%;
   }
 
   .header-inner {
@@ -756,7 +833,7 @@ h3 {
   }
 
   .hero {
-    padding-top: 88px;
+    padding-top: 96px;
   }
 
   .hero-family {
@@ -764,6 +841,11 @@ h3 {
     text-align: center;
     padding-top: 80px;
     padding-bottom: 64px;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-copy {
@@ -788,10 +870,14 @@ h3 {
   .hero-family::after {
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.4) 45%,
-      rgba(0, 0, 0, 0.1) 100%
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.5) 45%,
+      rgba(0, 0, 0, 0.15) 100%
     );
+  }
+
+  .hero-media {
+    display: none; /* mobile already shows full family background */
   }
 
   .site-footer {
@@ -808,166 +894,3 @@ h3 {
   }
 }
 
-/* TAI / LIL REDBACK CHAT -------------------------------------- */
-
-.chat-launcher {
-  position: fixed;
-  bottom: 70px; /* sits above mobile bar on phones */
-  right: 20px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background-color: #d7262d;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1200;
-}
-
-.chat-launcher-icon {
-  font-size: 22px;
-}
-
-/* On desktop, sit closer to the edge */
-@media (min-width: 721px) {
-  .chat-launcher {
-    bottom: 24px;
-  }
-}
-
-.chat-panel {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 320px;
-  max-height: 70vh;
-  background-color: #191919;
-  color: #f7f4ee;
-  border-radius: 16px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 1201;
-}
-
-.chat-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 14px;
-  border-bottom: 1px solid #333333;
-  background: linear-gradient(135deg, #d7262d, #8e171b);
-}
-
-.chat-title {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.chat-subtitle {
-  font-size: 11px;
-  opacity: 0.85;
-}
-
-.chat-close {
-  border: none;
-  background: rgba(0, 0, 0, 0.15);
-  color: #ffffff;
-  border-radius: 999px;
-  width: 24px;
-  height: 24px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.chat-messages {
-  flex: 1;
-  padding: 10px 10px 8px;
-  overflow-y: auto;
-  background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
-}
-
-.chat-message {
-  margin-bottom: 8px;
-  display: flex;
-}
-
-.chat-message-bubble {
-  border-radius: 12px;
-  padding: 7px 10px;
-  font-size: 13px;
-  line-height: 1.4;
-  max-width: 100%;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.chat-message-ai .chat-message-bubble {
-  background-color: #262626;
-  border: 1px solid #383838;
-}
-
-.chat-message-user {
-  justify-content: flex-end;
-}
-
-.chat-message-user .chat-message-bubble {
-  background-color: #d7262d;
-  border: 1px solid #d7262d;
-  color: #ffffff;
-}
-
-.chat-input-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px;
-  border-top: 1px solid #333333;
-  background-color: #151515;
-}
-
-.chat-input {
-  flex: 1;
-  border-radius: 999px;
-  border: 1px solid #333333;
-  padding: 8px 10px;
-  font-size: 13px;
-  background-color: #111111;
-  color: #f7f4ee;
-}
-
-.chat-input::placeholder {
-  color: #777777;
-}
-
-.chat-input:focus {
-  outline: none;
-  border-color: #d7262d;
-}
-
-.chat-send-btn {
-  border-radius: 999px;
-  border: none;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  background-color: #d7262d;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-/* Mobile adjustments */
-@media (max-width: 720px) {
-  .chat-panel {
-    bottom: 46px; /* sits just above mobile bar */
-    right: 8px;
-    left: 8px;
-    width: auto;
-    max-height: 60vh;
-  }
-}
