@@ -733,6 +733,33 @@
       margin-bottom: 6px;
     }
 
+        .rbx-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      margin-top: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #d7262d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .rbx-link-btn.secondary {
+      background: #1f1f1f;
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .rbx-link-btn:hover {
+      filter: brightness(1.05);
+    }
+
+
     /* animated typing dots */
     .rbx-dot {
       display: inline-block;
@@ -908,14 +935,43 @@
         };
       }
 
+          function formatAiText(text) {
+        // Basic escape so Tai can't accidentally inject HTML
+        let safe = text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        // Turn bare line-breaks into <br> for nicer formatting
+        safe = safe.replace(/\n/g, "<br>");
+
+        // 1) SMS link → "Text details to TJ & Marika" button
+        // We assume Tai puts the sms link on its own line.
+        safe = safe.replace(
+          /(sms:[^\s<]+)/g,
+          (_, href) =>
+            `<button class="rbx-link-btn" data-href="${href}">📲 Text details to TJ &amp; Marika</button>`
+        );
+
+        // 2) Jobber booking link → "Book online" button
+        safe = safe.replace(
+          /(https:\/\/clienthub\.getjobber\.com[^\s<]+)/g,
+          (_, href) =>
+            `<button class="rbx-link-btn secondary" data-href="${href}">📝 Book online</button>`
+        );
+
+        return safe;
+      }
+
       function addAI(text) {
         const wrap = document.createElement("div");
         wrap.className = "rbx-msg ai";
-        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+        wrap.innerHTML = `<div class="rbx-bubble">${formatAiText(text)}</div>`;
         messages.appendChild(wrap);
         messages.scrollTop = messages.scrollHeight;
         saveChat();
       }
+
 
       function addUser(text) {
         const wrap = document.createElement("div");
@@ -981,6 +1037,17 @@
         playSendSound();
         sendMessage(txt);
       };
+
+            // handle link buttons inside AI messages
+      messages.addEventListener("click", (e) => {
+        const btn = e.target.closest(".rbx-link-btn");
+        if (!btn) return;
+        const href = btn.getAttribute("data-href");
+        if (!href) return;
+        playClick();
+        window.location.href = href;
+      });
+
 
       // quick-reply chips
       if (quick) {
