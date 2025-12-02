@@ -451,224 +451,560 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-    export default {
-  async fetch(request, env) {
-    const allow = {
-      "Access-Control-Allow-Origin": request.headers.get("Origin") || "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    };
-
-    // Preflight
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: allow });
+    <!-- ================= REDBACK CHAT WIDGET v4.0 (FULLY LOADED) ================= -->
+  <style>
+    .rbx-chat-launcher {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: #d7262d;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
     }
 
-    // Only POST
-    if (request.method !== "POST") {
-      return new Response(
-        JSON.stringify({ error: "POST only." }),
-        { status: 405, headers: allow }
-      );
+    .rbx-chat-launcher span {
+      font-size: 13px;
+      opacity: 0.9;
     }
 
-    // API key check
-    if (!env.OPENAI_API_KEY) {
-      return new Response(
-        JSON.stringify({ error: "Missing OPENAI_API_KEY" }),
-        { status: 500, headers: allow }
-      );
+    /* Entrance + idle glow */
+    .rbx-chat-launcher.rbx-enter {
+      animation: taiEntrance 0.7s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
     }
 
-    let body = {};
-    try { body = await request.json(); } catch {}
-
-    const message = (body.message || "").trim();
-    const history = Array.isArray(body.history) ? body.history : [];
-
-    // Fallback greeting if no message
-    if (!message) {
-      return new Response(
-        JSON.stringify({
-          reply: "G’day! I’m Tai 👋 I help out TJ & Marika from RedBack Rubbish Removal. What are you tossing and which suburb?"
-        }),
-        { headers: allow }
-      );
+    /* Attention wiggle on scroll */
+    .rbx-chat-launcher.rbx-wiggle {
+      animation: taiWiggle 0.8s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
     }
 
-    const systemPrompt = `
-You are Tai, the friendly helper on the RedBack Rubbish Removal website.
+    /* Desktop hover – tiny lift */
+    @media (hover: hover) and (pointer: fine) {
+      .rbx-chat-launcher:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(0,0,0,0.5);
+      }
+    }
 
-PROFILE & ROLE
-- You are the website chat helper for RedBack Rubbish Removal.
-- RedBack is a family-run business owned by TJ & Marika.
-- Service area: Brisbane Southside & Logan (and nearby suburbs).
-- Services: rubbish removal, green waste, furniture removal, household junk, garage/shed cleanouts, deceased estates, and small A→B moves if it fits in the trailer.
-- Your mission: help visitors understand the service and move them towards a quote or booking.
+    /* Idle glow */
+    @keyframes taiIdleGlow {
+      0%, 100% {
+        box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      }
+      50% {
+        box-shadow: 0 14px 40px rgba(215,38,45,0.55);
+      }
+    }
 
-TONE
-- Aussie, local, friendly.
-- Short replies, no fluff. Aim for 1–3 short sentences.
-- Down-to-earth, a little cheeky, but always respectful and professional.
-- Write like SMS/Messenger, not like an email.
+    /* Entrance from bottom */
+    @keyframes taiEntrance {
+      0%   { transform: translateY(20px); opacity: 0; }
+      60%  { transform: translateY(-3px); opacity: 1; }
+      100% { transform: translateY(0); }
+    }
 
-BASIC BUSINESS FACTS
-- Pricing is mainly based on trailer load size (quarter, half, three-quarter, full, XL) plus access/material type.
-- Safe rough ballparks you may use (always say they're rough guides):
-  - Quarter load: around $130–$150 for lighter, easy-access loads.
-  - Half load: often in the low $300s.
-  - Three-quarter load: usually in the low-to-mid $400s.
-  - Full load: usually mid-$500s and up for big cleanouts.
-- Best way to quote properly: ask them to text clear photos + their suburb to 0459 272 402.
-- Online booking link: https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c
+    /* Little wiggle */
+    @keyframes taiWiggle {
+      0%   { transform: translateX(0); }
+      20%  { transform: translateX(-3px); }
+      40%  { transform: translateX(3px); }
+      60%  { transform: translateX(-2px); }
+      80%  { transform: translateX(2px); }
+      100% { transform: translateX(0); }
+    }
 
-LOAD SIZE EXPLANATIONS
-- If they ask about load sizes, give a simple, visual explanation such as:
-  - Quarter load ≈ small pile / about 1 box trailer.
-  - Half load ≈ small room or a mix of furniture and bags.
-  - Three-quarter ≈ big garage / shed cleanout.
-  - Full load ≈ major cleanout, lots of furniture/junk.
-- Combine this with the rough price ranges above.
-- Always repeat that final price depends on access, weight, tip fees, and what's in the load.
+    .rbx-chat-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 320px;
+      max-width: calc(100% - 32px);
+      background: #111;
+      color: #fff;
+      border-radius: 20px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: width 0.22s ease-out;
+    }
 
-GUIDED BOOKING FUNNEL (VERY IMPORTANT)
-Whenever they show interest in a quote or booking (e.g. “how much”, “can I book”, “I’m ready to book”, “need a pickup”):
+    /* Wide mode (desktop only – we'll override on mobile) */
+    .rbx-chat-panel.rbx-wide {
+      width: 420px;
+      max-width: calc(100% - 32px);
+    }
 
-1) STEP 1 – SUBURB
-   - Ask for which suburb they’re in (if you don’t already know).
-   - If they already told you a suburb earlier, remember and use it instead of asking again.
+    @media (max-width: 720px) {
+      .rbx-chat-launcher {
+        bottom: 76px; /* sits nicely above mobile sticky bar */
+        right: 14px;
+      }
 
-2) STEP 2 – WHAT THEY’RE TOSSING / LOAD SIZE
-   - Ask for a rough description:
-     - What’s going? (e.g. “old couch + boxes”, “green waste”, “whole garage”)
-     - Rough load size if they know (quarter/half/full etc).
+      .rbx-chat-panel,
+      .rbx-chat-panel.rbx-wide {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: 72px; /* above sticky footer */
+      }
+    }
 
-3) STEP 3 – ACCESS
-   - Ask 1–2 quick questions about access:
-     - Is it inside or outside?
-     - Any stairs / long driveway / tricky access?
+    .rbx-chat-header {
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #d7262d, #8e171b);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      gap: 8px;
+    }
 
-4) STEP 4 – TIMING
-   - Ask when they’d ideally like it done (e.g. “this week”, “Saturday morning”, “ASAP”).
+    .rbx-chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-5) STEP 5 – CLOSE
-   - Summarise what they’ve told you in 1 short sentence.
-   - Then give clear next steps:
-     - Suggest texting photos + suburb to 0459 272 402 for a proper quote and confirmation.
-     - Optionally also mention they can book online via the booking link.
+    .rbx-chat-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #111;
+      border: 2px solid #f5eee4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
 
-Only ask 1–2 questions per message so it feels like a real chat, not a form.
+    .rbx-chat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-NAME & SUBURB MEMORY
-- If they tell you their name (e.g. “I’m Sarah”) or suburb (“I’m in Rochedale South”), remember it for the rest of the chat.
-- Use their name naturally from time to time (every few replies at most), e.g. “No worries Sarah,” or “In Rochedale South we can usually fit you in pretty quickly.”
-- Don’t overdo it or repeat the name every sentence.
+    .rbx-chat-resize {
+      background: rgba(0,0,0,0.18);
+      border-radius: 999px;
+      border: none;
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      font-size: 13px;
+      cursor: pointer;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-HOW TO HANDLE COMMON INTENTS
+    .rbx-chat-close {
+      background: rgba(0, 0, 0, 0.2);
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 999px;
+      width: 24px;
+      height: 24px;
+      line-height: 1;
+    }
 
-1) PRICE / QUOTE QUESTIONS
-- If they ask "how much", "price", "rough cost", etc:
-  - Give a rough ballpark using the load sizes, clearly marked as an estimate.
-  - Immediately guide into the booking funnel steps described above.
-  - Always suggest texting photos + suburb to 0459 272 402 for a proper quote.
+    .rbx-chat-messages {
+      padding: 12px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
+    }
 
-2) AVAILABILITY / WHEN CAN YOU COME?
-- Give a simple, safe answer:
-  - "We can usually fit people in within 24–48 hours depending on suburb and load size."
-- Then drop into the funnel:
-  - Ask for suburb.
-  - Ask what they’re tossing.
-  - Suggest photos + suburb to 0459 272 402.
+    .rbx-msg {
+      margin-bottom: 12px;
+      display: flex;
+    }
 
-3) SERVICE AREAS
-- If they ask "do you come to X":
-  - If X is clearly in/near Brisbane Southside & Logan, say yes.
-  - If X is clearly far away (like Sydney, Melbourne, overseas), politely say it’s out of range.
-- Always follow up with:
-  - "What are you tossing?" or
-  - "If you’re nearby, text photos + suburb to 0459 272 402 and the team will confirm."
+    .rbx-msg.user { justify-content: flex-end; }
+    .rbx-msg.ai { justify-content: flex-start; }
 
-4) WHAT YOU TAKE / DON’T TAKE
-- You CAN say you usually take:
-  - General household junk, old furniture, mattresses, broken appliances (where safe to handle), bags/boxes, garage & shed cleanouts, green waste, small A→B moves if it fits in the trailer.
-- You SHOULD say:
-  - Some things (like chemicals, paint, fuel, asbestos, large concrete rubble and other hazardous waste) may not be suitable.
-  - If you’re unsure, ask for photos and say TJ & Marika will confirm.
-- Always push: "Text photos + suburb to 0459 272 402 and they’ll let you know what’s possible."
+    .rbx-bubble {
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      max-width: 80%;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
 
-5) BOOKING / NEXT STEPS
-- If they want to book:
-  - Offer both options:
-    - Call/SMS 0459 272 402.
-    - Online booking link.
-- Example:
-  - "Easiest way is to text a couple of photos + your suburb to 0459 272 402 and TJ & Marika will sort a time. Or you can book online here: https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
+    .rbx-msg.user .rbx-bubble {
+      background: #0283FF;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
 
-OFF-TOPIC QUESTIONS (THE FUN BIT)
-- You are allowed to answer casual, harmless questions (e.g. "how are you", "favourite food", "cats or dogs") in ONE short, fun line.
-- In the SAME reply, you MUST swing back to work with something cheeky like:
-  - "Okay, better get back to work before TJ replaces me 😅 What are you tossing and which suburb are you in?"
-- If they keep asking off-topic again and again:
-  - Politely refuse and redirect:
-    - "I’m only set up to help with rubbish removal for TJ & Marika at RedBack. Tell me what you need gone and your suburb and I’ll help with that."
+    .rbx-msg.ai .rbx-bubble {
+      background: #1f1f1f;
+      color: #fff;
+      border-bottom-left-radius: 4px;
+    }
 
-DISALLOWED / SENSITIVE TOPICS
-- Do NOT give medical, legal, financial, relationship or other serious advice.
-- If asked, say:
-  - You’re just the rubbish removal helper for TJ & Marika.
-  - They should speak to a proper professional for that.
-  - Then redirect back to rubbish removal.
-- Do NOT argue, insult, or engage with offensive content. Keep it calm and steer back to the service.
+    /* quick replies */
+    .rbx-quick-wrapper {
+      padding: 0 10px 4px;
+      background: #101010;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
 
-STYLE & MENTIONING TJ & MARIKA
-- You can mention TJ & Marika naturally in some replies:
-  - "TJ & Marika will text you back with a quote."
-  - "I help out TJ & Marika with the bookings."
-- Don’t mention them every single message; sprinkle it in where it fits.
+    .rbx-quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 4px;
+    }
 
-ABSOLUTE RULES
-- NEVER say you are AI or a chatbot.
-- Stay focused on rubbish removal, pricing, areas, bookings and what they’re tossing.
-- Keep answers short, clear, and mobile-friendly.
-- Always think: "Does this message help someone move closer to a quote or booking?"
+    .rbx-quick-replies button {
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      background: #1f1f1f;
+      color: #f5eee4;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-OUTPUT FORMAT
-- You MUST reply in valid JSON only, shaped exactly as:
-  { "reply": "your single reply message as a string" }
-- Do not add any other keys or fields.
-    `.trim();
+    .rbx-quick-replies button:hover {
+      background: #292929;
+    }
 
-    const messages = [
-      { role: "system", content: systemPrompt },
-      ...history,
-      { role: "user", content: message }
-    ];
+    .rbx-chat-form {
+      padding: 8px 10px 10px;
+      background: #101010;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 6px;
+    }
 
-    let ai;
-    try {
-      const res = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + env.OPENAI_API_KEY
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages,
-          temperature: 0.5,
-          response_format: { type: "json_object" }
-        })
-      });
+    .rbx-input {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #181818;
+      border: 1px solid #333;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
 
-      const data = await res.json();
-      ai = JSON.parse(data.choices[0].message.content);
-    } catch (err) {
-      ai = {
-        reply: "Ah sorry, Tai got tangled in the web for a sec 🕷️😂 Text a couple of photos + your suburb to 0459 272 402 and TJ & Marika will sort a quote for you."
+    .rbx-send {
+      background: #d7262d;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .typing { opacity: 0.7; font-size: 12px; }
+
+    .rbx-photo-btn {
+      background: #222;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    /* animated typing dots */
+    .rbx-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      margin-left: 2px;
+      border-radius: 50%;
+      background: #ffffff;
+      opacity: 0.4;
+      animation: taiDots 1.2s infinite;
+    }
+
+    .rbx-dot:nth-child(2) { animation-delay: 0.2s; }
+    .rbx-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes taiDots {
+      0%, 100% { transform: translateY(0); opacity: 0.3; }
+      50%      { transform: translateY(-2px); opacity: 1; }
+    }
+  </style>
+
+  <button id="rbx-launcher" class="rbx-chat-launcher rbx-enter">
+    🕷️ <span>Chat with Tai</span>
+  </button>
+
+  <div id="rbx-panel" class="rbx-chat-panel">
+    <div class="rbx-chat-header">
+      <div class="rbx-chat-header-left">
+        <div class="rbx-chat-avatar">🕷️</div>
+        <span>Chat with Tai · TJ &amp; Marika's team</span>
+      </div>
+      <div class="rbx-chat-header-actions">
+        <button id="rbx-resize" class="rbx-chat-resize" title="Expand chat">⤢</button>
+        <button id="rbx-close" class="rbx-chat-close">&times;</button>
+      </div>
+    </div>
+
+    <div id="rbx-messages" class="rbx-chat-messages"></div>
+
+    <div class="rbx-quick-wrapper">
+      <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Send photos for a quote</button>
+      <div id="rbx-quick" class="rbx-quick-replies">
+        <button type="button" data-text="Can I get your price list and how your load sizes work?">Price & load sizes</button>
+        <button type="button" data-text="Which suburbs do you service?">Service areas</button>
+        <button type="button"
+          data-text="Can you please give me a full list of the main types of rubbish you can usually take, and anything you usually can’t take?">
+          What can you take?
+        </button>
+        <button type="button" data-text="How soon could you come out to help me?">Earliest availability</button>
+        <button type="button" data-text="What do you need from me to give a proper quote?">What do you need for a quote?</button>
+        <button type="button" data-text="I'm ready to book a pickup. Can you run me through what you need to know?">I’m ready to book</button>
+      </div>
+    </div>
+
+    <form id="rbx-form" class="rbx-chat-form">
+      <input id="rbx-input" class="rbx-input" type="text"
+             placeholder="Ask about rubbish, prices, suburbs..."
+             autocomplete="off">
+      <button id="rbx-send" class="rbx-send">Send</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
+      const phone = "0459272402";
+
+      const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
+      const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
+      const STORAGE_KEY_WIDE = "rbx_tai_panel_wide";
+
+      const launcher = document.getElementById("rbx-launcher");
+      const panel = document.getElementById("rbx-panel");
+      const closeBtn = document.getElementById("rbx-close");
+      const resizeBtn = document.getElementById("rbx-resize");
+      const messages = document.getElementById("rbx-messages");
+      const input = document.getElementById("rbx-input");
+      const form = document.getElementById("rbx-form");
+      const photoBtn = document.getElementById("rbx-photo-btn");
+      const quick = document.getElementById("rbx-quick");
+
+      let history = [];
+
+      // ----- tiny UI sounds (very subtle) -----
+      let audioCtx = null;
+      function playTone(freq, durationMs) {
+        try {
+          if (!audioCtx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            audioCtx = new AC();
+          }
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "square";
+          osc.frequency.value = freq;
+          gain.gain.value = 0.06;
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + durationMs / 1000);
+        } catch (e) { /* ignore */ }
+      }
+      function playClick() { playTone(750, 60); }
+      function playSendSound() { playTone(520, 80); }
+
+      // ----- load saved chat -----
+      try {
+        const savedH = localStorage.getItem(STORAGE_KEY_HISTORY);
+        const savedM = localStorage.getItem(STORAGE_KEY_MESSAGES);
+        const wide = localStorage.getItem(STORAGE_KEY_WIDE);
+        if (wide === "1") {
+          panel.classList.add("rbx-wide");
+        }
+
+        if (savedH && savedM) {
+          const parsed = JSON.parse(savedH);
+          if (Array.isArray(parsed)) {
+            history = parsed;
+          }
+          messages.innerHTML = savedM;
+          if (messages.innerHTML.trim()) {
+            messages.dataset.loaded = "1";
+          }
+        }
+      } catch (e) {
+        history = [];
+      }
+
+      function saveChat() {
+        try {
+          localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
+          localStorage.setItem(STORAGE_KEY_MESSAGES, messages.innerHTML);
+        } catch (e) { /* ignore */ }
+      }
+
+      function showPanel() {
+        panel.style.display = "flex";
+        if (!messages.dataset.loaded) {
+          const intro = "Hey, I’m Tai 👋\\nI help out TJ & Marika from RedBack Rubbish Removal.\\n" +
+            "For a fast quote, tell me what you’re tossing + your suburb – and you can send photos too.";
+          addAI(intro);
+          history.push({ role: "assistant", content: intro });
+          messages.dataset.loaded = "1";
+          saveChat();
+        }
+      }
+
+      function hidePanel() { panel.style.display = "none"; }
+
+      launcher.onclick = () => {
+        playClick();
+        if (panel.style.display === "flex") {
+          hidePanel();
+        } else {
+          showPanel();
+        }
       };
-    }
+      closeBtn.onclick = hidePanel;
 
-    return new Response(JSON.stringify(ai), { headers: allow });
-  }
-};
+      if (resizeBtn) {
+        resizeBtn.onclick = () => {
+          panel.classList.toggle("rbx-wide");
+          try {
+            localStorage.setItem(
+              STORAGE_KEY_WIDE,
+              panel.classList.contains("rbx-wide") ? "1" : "0"
+            );
+          } catch (e) { /* ignore */ }
+        };
+      }
+
+      function addAI(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "rbx-msg ai";
+        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+        saveChat();
+      }
+
+      function addUser(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "rbx-msg user";
+        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+        saveChat();
+      }
+
+      function typing() {
+        const el = document.createElement("div");
+        el.className = "rbx-msg ai typing";
+        el.innerHTML = `
+          <div class="rbx-bubble">
+            Tai is typing<span class="rbx-dot"></span><span class="rbx-dot"></span><span class="rbx-dot"></span>
+          </div>`;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+        return el;
+      }
+
+      photoBtn.onclick = () => {
+        playClick();
+        window.location.href = `sms:${phone}?body=Hey RedBack, here are some photos for a quote:`;
+      };
+
+      async function sendMessage(txt) {
+        if (!txt) return;
+
+        addUser(txt);
+
+        // history we send to the Worker = previous turns only
+        const previous = history.slice();
+
+        const loader = typing();
+        try {
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: txt, history: previous })
+          });
+          const data = await res.json();
+          loader.remove();
+          addAI(data.reply);
+          // Now update local history with this turn
+          history.push({ role: "user", content: txt });
+          history.push({ role: "assistant", content: data.reply });
+          saveChat();
+        } catch (err) {
+          console.error(err);
+          loader.remove();
+          addAI("Ah sorry, Tai got tangled in the web for a sec 🕷️😂\\n" +
+                "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ & Marika will sort a quote.");
+        }
+      }
+
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const txt = (input.value || "").trim();
+        if (!txt) return;
+        input.value = "";
+        playSendSound();
+        sendMessage(txt);
+      };
+
+      // quick-reply chips
+      if (quick) {
+        quick.addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-text]");
+          if (!btn) return;
+          const txt = btn.getAttribute("data-text") || "";
+          if (!txt) return;
+          playSendSound();
+          sendMessage(txt);
+        });
+      }
+
+      // one-time wiggle when user scrolls (if chat not opened yet)
+      let wiggleDone = false;
+      window.addEventListener("scroll", () => {
+        if (wiggleDone || panel.style.display === "flex") return;
+        wiggleDone = true;
+        launcher.classList.remove("rbx-enter");
+        launcher.classList.add("rbx-wiggle");
+        setTimeout(() => {
+          launcher.classList.remove("rbx-wiggle");
+          launcher.classList.add("rbx-enter");
+        }, 900);
+      }, { passive: true });
+    });
+  </script>
+  <!-- ================= END WIDGET ================= -->
+
 
