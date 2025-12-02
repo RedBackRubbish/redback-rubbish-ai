@@ -686,7 +686,7 @@
     </div>
   </div>
 
- <!-- ================= CHAT WIDGET SCRIPT ================= -->
+<!-- ================= CHAT WIDGET SCRIPT (UPDATED) ================= -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   (function () {
@@ -709,10 +709,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    /** ---------------- PROFILE ---------------- **/
     let chatHistory = [];
     let isSending = false;
     let hasGreeted = false;
-    let profile = { name: null, suburb: null };
+
+    let profile = {
+      name: null,
+      suburb: null,
+      items: null,
+      timing: null
+    };
 
     /** ---------------- UI HELPERS ---------------- **/
     function appendMessage(text, from) {
@@ -743,9 +750,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return bubble;
     }
 
-    /** ---------------- SUGGESTION BUTTONS ---------------- **/
+    /** ---------------- QUICK SUGGESTIONS ---------------- **/
     function addSuggestionButtons() {
-      const suggestions = [
+      const types = [
         "Household rubbish",
         "Green waste / garden bags",
         "Furniture removal",
@@ -759,7 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.style.gap = "6px";
       row.style.marginTop = "6px";
 
-      suggestions.forEach((label) => {
+      types.forEach((label) => {
         const btn = document.createElement("button");
         btn.textContent = label;
         btn.className = "tai-chat-quick-btn";
@@ -767,7 +774,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
           appendMessage(label, "user");
           chatHistory.push({ role: "user", content: label });
-          handleSuggestion(label);
+          suggestPhotoFlow(label);
         });
         row.appendChild(btn);
       });
@@ -776,33 +783,23 @@ document.addEventListener("DOMContentLoaded", () => {
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    function handleSuggestion(type) {
-      const reply = `No worries — we remove ${type.toLowerCase()} all the time.\nCan you send a couple of photos so I can give you a fast quote?`;
-      appendMessage(reply, "ai");
-      chatHistory.push({ role: "assistant", content: reply });
-      scrollToPhotosButton();
-    }
-
-    function scrollToPhotosButton() {
-      const btn = document.getElementById("tai-photos-btn");
-      if (!btn) return;
-      btn.style.animation = "pulse 1s infinite";
-      setTimeout(() => (btn.style.animation = ""), 5000);
+    function suggestPhotoFlow(type) {
+      appendMessage(
+        `No worries — we handle ${type.toLowerCase()} all the time. What suburb are you in?`,
+        "ai"
+      );
     }
 
     /** ---------------- GREETING ---------------- **/
     function sendGreetingIfNeeded() {
       if (hasGreeted) return;
-
-      const greetText = "G’day, I’m Tai 👋 Tell me what you’re tossing & which suburb you're in, or tap an option below:";
+      const greetText = "G’day, I’m Tai 👋 Tell me your name to get started.";
       appendMessage(greetText, "ai");
-      chatHistory.push({ role: "assistant", content: greetText });
-
-      addSuggestionButtons();
       hasGreeted = true;
+      addSuggestionButtons();
     }
 
-    /** ---------------- CHAT OPEN/CLOSE ---------------- **/
+    /** ---------------- CHAT PANEL EVENTS ---------------- **/
     function openChat() {
       panel.style.display = "flex";
       panel.setAttribute("aria-hidden", "false");
@@ -818,97 +815,66 @@ document.addEventListener("DOMContentLoaded", () => {
     launcher.addEventListener("click", () => panel.style.display === "flex" ? closeChat() : openChat());
     if (closeBtn) closeBtn.addEventListener("click", closeChat);
 
-    /** ---------------- PROFILE MEMORY ---------------- **/
-    function tryExtractProfile(text) {
-      const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
-      if (nameMatch && !profile.name) profile.name = nameMatch[1];
+    /** ---------------- PROFILE LEARNING ---------------- **/
+    function extractProfile(text) {
+      if (!profile.name) {
+        const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
+        if (nameMatch) profile.name = nameMatch[1];
+        else if (/^[A-Za-z]+$/.test(text)) profile.name = text;
+        if (profile.name) {
+          appendMessage(`Nice to meet you ${profile.name}! Which suburb are you in?`, "ai");
+          return true;
+        }
+      }
 
-      const suburbMatch = text.match(/\b(?:in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/);
-      if (suburbMatch && !profile.suburb) profile.suburb = suburbMatch[1];
+      if (profile.name && !profile.suburb) {
+        profile.suburb = text;
+        appendMessage(`Great! What are you needing removed?`, "ai");
+        return true;
+      }
+
+      if (profile.suburb && !profile.items) {
+        profile.items = text;
+        appendMessage(`Got it. When would you like the job done?`, "ai");
+        return true;
+      }
+
+      if (profile.items && !profile.timing) {
+        profile.timing = text;
+        sendSMSButton();
+        return true;
+      }
+
+      return false;
     }
 
-    /** ---------------- SMS PHOTO FLOW ---------------- **/
-    if (photosBtn) {
-      photosBtn.addEventListener("click", () => {
-        const base = profile.suburb
-          ? `Hi Tai, I’ve got some rubbish to remove in ${profile.suburb}.`
-          : "Hi Tai, I’ve got some rubbish to remove. I’m in [your suburb].";
+    /** ---------------- SMS GENERATION ---------------- **/
+    function sendSMSButton() {
+      const sms = encodeURIComponent(
+`Hey RedBack — got a job:
 
-        const body = encodeURIComponent(base + " I’ll send some photos now.");
-        window.location.href = `sms:${SMS_NUMBER}?body=${body}`;
-      });
-    }
+Name: ${profile.name}
+Suburb: ${profile.suburb}
+Items: ${profile.items}
+Timing: ${profile.timing}`
+      );
 
-    /** ---------------- VOICE INPUT ---------------- **/
-    let recognition = null;
-    let isListening = false;
+      appendMessage(
+        `Perfect! Tap below to send the details straight to the team 👇`,
+        "ai"
+      );
 
-    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SR();
-      recognition.lang = "en-AU";
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
+      const btn = document.createElement("a");
+      btn.href = `sms:${SMS_NUMBER}?body=${sms}`;
+      btn.textContent = "Send SMS 📩";
+      btn.className = "sms-button";
+      btn.style.cssText = `
+        display:inline-block;background:#e50914;color:#fff;
+        padding:8px 12px;border-radius:6px;margin-top:10px;
+        text-align:center;text-decoration:none;
+      `;
 
-      voiceBtn.addEventListener("click", () => {
-        if (!isListening) {
-          recognition.start();
-          isListening = true;
-          voiceBtn.classList.add("listening");
-          voiceBtn.textContent = "🛑";
-        } else recognition.stop();
-      });
-
-      recognition.addEventListener("result", (event) => {
-        const transcript = event.results[0][0].transcript;
-        input.value = input.value ? input.value + " " + transcript : transcript;
-      });
-
-      recognition.addEventListener("end", () => {
-        isListening = false;
-        voiceBtn.classList.remove("listening");
-        voiceBtn.textContent = "🎤";
-      });
-    } else if (voiceBtn) {
-      voiceBtn.disabled = true;
-      voiceBtn.title = "Voice input not supported on this browser";
-    }
-
-    /** ---------------- BOOKING SUMMARY HANDLER ---------------- **/
-    function handleBookingIfReady(data) {
-      if (!data?.booking?.booking_ready) return;
-
-      const b = data.booking;
-      const summary = `📍 Suburb: ${b.suburb || "Unknown"}
-📦 Job: ${b.job_type || "Not specified"}
-🕒 Time: ${b.timing || "Flexible"}`;
-
-      const wrap = document.createElement("div");
-      wrap.className = "chat-message chat-message-ai";
-
-      const bubble = document.createElement("div");
-      bubble.className = "chat-message-bubble";
-      bubble.innerHTML = "Awesome! let’s forward this straight to the team — review below:";
-
-      const pre = document.createElement("pre");
-      pre.textContent = summary;
-      pre.style.background = "#222";
-      pre.style.padding = "8px";
-      pre.style.borderRadius = "6px";
-
-      const btn = document.createElement("button");
-      btn.textContent = "Send Booking Request 📩";
-      btn.style.cssText = "background:#e50914;color:#fff;padding:8px 12px;margin-top:10px;border-radius:6px;cursor:pointer;";
-
-      btn.addEventListener("click", () => {
-        const smsBody = encodeURIComponent(`Hey RedBack — here’s my job request:\n${summary}`);
-        window.location.href = `sms:${SMS_NUMBER}?body=${smsBody}`;
-      });
-
-      bubble.appendChild(pre);
-      bubble.appendChild(btn);
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
+      messagesEl.appendChild(btn);
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
@@ -921,8 +887,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       appendMessage(text, "user");
       chatHistory.push({ role: "user", content: text });
-      tryExtractProfile(text);
       input.value = "";
+
+      if (extractProfile(text)) return;
 
       const thinking = appendTypingMessage();
       isSending = true;
@@ -931,45 +898,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch(TAI_API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: text,
-            history: chatHistory,
-            tone: "friendly",
-            source: "website-chat",
-            profile
-          }),
+          body: JSON.stringify({ message: text, history: chatHistory, profile })
         });
 
-        let reply = "";
-        let data = null;
-
-        if (!res.ok) {
-          reply = "Sorry, my full brain isn’t loading right now.\n\nYou can still text us photos for a fast quote or tap Call below.";
-        } else {
-          data = await res.json();
-          reply = data.reply || data.message || data.text || "I saw your message, but couldn’t form a reply — try again!";
-        }
-
-        thinking.textContent = reply;
-        chatHistory.push({ role: "assistant", content: reply });
-        handleBookingIfReady(data);
+        const data = await res.json();
+        thinking.textContent = data.reply || "All good!";
 
       } catch (err) {
-        console.error("Tai error:", err);
-        thinking.textContent =
-          "Something went wrong talking to my brain.\n\nTry again soon or send us photos for a fast quote.";
+        thinking.textContent = "Brain glitch 🤯 Try again!";
       } finally {
         isSending = false;
         messagesEl.scrollTop = messagesEl.scrollHeight;
-        input.focus();
       }
     }
 
-    /** ---------------- INPUT EVENTS ---------------- **/
-    if (sendBtn) sendBtn.addEventListener("click", (e) => { e.preventDefault(); sendMessage(); });
+    sendBtn.addEventListener("click", (e) => { e.preventDefault(); sendMessage(); });
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); sendMessage(); } });
     form.addEventListener("submit", (e) => e.preventDefault());
   })();
 });
 </script>
+
 
