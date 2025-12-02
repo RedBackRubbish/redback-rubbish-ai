@@ -746,6 +746,55 @@
         return bubble;
       }
 
+      function addSuggestionButtons() {
+  const suggestions = [
+    "Household rubbish",
+    "Green waste / garden bags",
+    "Furniture removal",
+    "Renovation waste",
+    "Moving out clear-out"
+  ];
+
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.flexWrap = "wrap";
+  row.style.gap = "6px";
+  row.style.marginTop = "6px";
+
+  suggestions.forEach((label) => {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.className = "tai-chat-quick-btn";
+    btn.style.flex = "1 1 calc(50% - 6px)";
+    btn.addEventListener("click", () => {
+      appendMessage(label, "user");
+      chatHistory.push({ role: "user", content: label });
+      handleSuggestion(label);
+    });
+    row.appendChild(btn);
+  });
+
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function handleSuggestion(type) {
+  const reply =
+    `No worries — we remove ${type.toLowerCase()} all the time.\n` +
+    `Can you send a couple photos so I can give you a fast quote?`;
+
+  appendMessage(reply, "ai");
+  chatHistory.push({ role: "assistant", content: reply });
+  scrollToPhotosButton();
+}
+
+function scrollToPhotosButton() {
+  const btn = document.getElementById("tai-photos-btn");
+  if (!btn) return;
+  btn.style.animation = "pulse 1s infinite";
+  setTimeout(() => (btn.style.animation = ""), 5000);
+}
+
       function sendGreetingIfNeeded() {
         if (hasGreeted) return;
         const greetText =
