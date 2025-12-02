@@ -16,10 +16,11 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+/* DARK FRAME BODY ------------------------------------------------ */
+body.dark-frame {
   font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  color: #111111;
-  background-color: #0a0a0a; /* dark frame around light sections = premium */
+  color: #f5eee4;
+  background-color: #0a0a0a; /* premium dark background */
 }
 
 /* BASIC -------------------------------------------------------- */
@@ -36,15 +37,15 @@ a {
 
 p {
   margin: 0 0 0.75rem;
-  color: #333333;
+  color: inherit;
 }
-
 
 h1,
 h2,
 h3 {
   margin: 0 0 0.75rem;
   line-height: 1.2;
+  color: inherit;
 }
 
 /* LAYOUT ------------------------------------------------------- */
@@ -59,23 +60,27 @@ h3 {
   position: relative;
 }
 
+/* subtle divider between sections */
 .section::before {
-  /* subtle divider between sections for a more structured feel */
   content: "";
   position: absolute;
   left: 50%;
   top: 0;
   width: min(1120px, 100% - 32px);
   transform: translateX(-50%);
-  border-top: 1px solid rgba(0, 0, 0, 0.035);
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
 }
+
+/* SECTION BACKGROUNDS ----------------------------------------- */
 
 .section-light {
   background-color: #ffffff;
+  color: #111111;
 }
 
 .section-cream {
   background-color: #f0e8db;
+  color: #111111;
 }
 
 .section-dark {
@@ -83,21 +88,33 @@ h3 {
   color: #f5eee4;
 }
 
-/* Make sure ALL text in dark sections is high contrast */
+/* AUTO FIX: Any section sitting on dark background but NOT marked as light/cream/dark */
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) {
+  background-color: #0a0a0a;
+  color: #f5eee4;
+}
+
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) h1,
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) h2,
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) h3,
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) p,
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) li,
+.dark-frame .section:not(.section-light):not(.section-cream):not(.section-dark) .section-header p {
+  color: #f5eee4 !important;
+}
+
+/* DARK SECTION OVERRIDES FOR CONSISTENCY */
+.section-dark p,
 .section-dark h1,
 .section-dark h2,
 .section-dark h3,
-.section-dark p,
-.section-dark li,
-.section-dark .review-name {
+.section-dark li {
   color: #f5eee4;
 }
 
 .section-dark .small,
 .section-dark .contact-note {
   color: #e0d6c6;
-}
-
 }
 
 /* HEADER ------------------------------------------------------- */
@@ -140,11 +157,12 @@ h3 {
   letter-spacing: 0.08em;
   font-size: 15px;
   text-transform: uppercase;
+  color: #111;
 }
 
 .brand-sub {
   font-size: 12px;
-  color: #666666;
+  color: #666;
 }
 
 .header-actions {
@@ -163,12 +181,13 @@ h3 {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #888888;
+  color: #888;
 }
 
 .header-phone {
   font-weight: 700;
   font-size: 16px;
+  color: #111;
 }
 
 .header-buttons {
@@ -197,7 +216,7 @@ h3 {
 .btn-primary {
   background-color: #d7262d;
   border-color: #d7262d;
-  color: #ffffff;
+  color: #fff;
   box-shadow: 0 10px 24px rgba(215, 38, 45, 0.3);
 }
 
@@ -221,7 +240,7 @@ h3 {
 .btn-ghost {
   background-color: #f4f0e7;
   border-color: transparent;
-  color: #111111;
+  color: #111;
 }
 
 .btn-ghost:hover {
@@ -231,7 +250,7 @@ h3 {
 .btn-ghost-light {
   background-color: rgba(255, 255, 255, 0.12);
   border-color: transparent;
-  color: #ffffff;
+  color: #fff;
 }
 
 .btn-ghost-light:hover {
@@ -263,7 +282,7 @@ h3 {
 
 .pill-strong {
   background-color: #d7262d;
-  color: #ffffff;
+  color: #fff;
 }
 
 /* HERO --------------------------------------------------------- */
@@ -273,14 +292,12 @@ h3 {
   padding-bottom: 80px;
 }
 
-/* FAMILY HERO – MOBILE PHOTO + DESKTOP GRADIENT ---------------- */
-
 .hero-family {
   position: relative;
   min-height: 80vh;
   display: flex;
   align-items: center;
-  color: #ffffff;
+  color: #fff;
   overflow: hidden;
 }
 
@@ -296,17 +313,14 @@ h3 {
   opacity: 1;
 }
 
-/* Desktop – brand gradient only, photo shown in hero-media */
 @media (min-width: 721px) {
   .hero-family::before {
     background-image: none;
-    background: radial-gradient(circle at top left, #2a2a2a 0, #111111 46%, #2b0a0d 100%);
-    background-size: cover;
-    background-position: center;
+    background: radial-gradient(circle at top left, #2a2a2a 0, #111 46%, #2b0a0d 100%);
   }
 }
 
-/* Dark overlay for text readability */
+/* Dark overlay */
 .hero-family::after {
   content: "";
   position: absolute;
@@ -339,7 +353,6 @@ h3 {
 
 .hero-sub {
   font-size: 16px;
-  color: #444444;
   margin-bottom: 20px;
 }
 
@@ -359,7 +372,6 @@ h3 {
   align-items: flex-start;
   gap: 10px;
 }
-
 .hero-trust .stars {
   font-size: 18px;
 }
@@ -415,7 +427,7 @@ h3 {
 }
 
 .section-header p {
-  color: #555555;
+  color: inherit;
 }
 
 .section-dark .section-header p {
@@ -445,11 +457,13 @@ h3 {
   border: 1px solid #e5ded0;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
   transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+  color: #111;
 }
 
 .section-dark .card {
   background-color: #222222;
   border-color: #333333;
+  color: #f5eee4;
 }
 
 .card h3 {
@@ -459,7 +473,7 @@ h3 {
 
 .card p {
   font-size: 14px;
-  color: #444444;
+  color: inherit;
 }
 
 .section-dark .card p,
@@ -474,12 +488,6 @@ h3 {
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     border-color: #d5c7b0;
   }
-}
-
-/* WHY LOCALS CHOOSE ------------------------------------------- */
-
-.section-light .card h3 {
-  margin-bottom: 4px;
 }
 
 /* SERVICES ----------------------------------------------------- */
@@ -498,11 +506,6 @@ h3 {
 
 .service-card ul li {
   font-size: 13px;
-  color: #555555;
-}
-
-.services-extra {
-  margin-top: 24px;
 }
 
 /* PRICING ------------------------------------------------------ */
@@ -540,8 +543,8 @@ h3 {
 
 .card-pricing li {
   font-size: 13px;
-  color: #555555;
   margin-bottom: 4px;
+  color: inherit;
 }
 
 .card-pricing-featured {
@@ -623,10 +626,12 @@ h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px 24px;
   font-size: 14px;
+  color: inherit;
 }
 
 .areas-card p {
   font-size: 14px;
+  color: inherit;
 }
 
 /* REVIEWS ------------------------------------------------------ */
@@ -643,12 +648,13 @@ h3 {
 
 .review-card p {
   font-size: 14px;
+  color: inherit;
 }
 
 .review-name {
   margin-top: 8px;
   font-size: 13px;
-  color: #777777;
+  color: #c8bba8;
 }
 
 /* CONTACT ------------------------------------------------------ */
@@ -674,6 +680,7 @@ h3 {
 
 .contact-note a {
   text-decoration: underline;
+  color: #f5eee4;
 }
 
 .contact-details {
@@ -687,6 +694,7 @@ h3 {
 }
 
 .contact-list li {
+  color: inherit;
   font-size: 14px;
   margin-bottom: 6px;
 }
@@ -716,16 +724,6 @@ h3 {
   color: #c8bba8;
 }
 
-/* UTILS -------------------------------------------------------- */
-
-.small {
-  font-size: 12px;
-}
-
-.align-center {
-  text-align: center;
-}
-
 /* MOBILE BAR --------------------------------------------------- */
 
 .mobile-bar {
@@ -733,8 +731,8 @@ h3 {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #111111;
-  color: #ffffff;
+  background-color: #111;
+  color: #fff;
   display: none;
   justify-content: space-around;
   align-items: center;
@@ -754,7 +752,7 @@ h3 {
   border-right: none;
 }
 
-/* RESPONSIVE --------------------------------------------------- */
+/* RESPONSIVE -------------------------------------------------- */
 
 @media (max-width: 960px) {
   .header-inner {
@@ -768,27 +766,27 @@ h3 {
   }
 
   .grid-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .grid-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .areas-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .areas-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .contact-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .hero-inner {
@@ -804,10 +802,6 @@ h3 {
 @media (max-width: 720px) {
   .section {
     padding: 64px 0;
-  }
-
-  .section::before {
-    width: 100%;
   }
 
   .header-inner {
@@ -834,21 +828,17 @@ h3 {
     justify-content: center;
   }
 
-  .grid-4 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .grid-3 {
-    grid-template-columns: minmax(0, 1fr);
+  .grid-4, .grid-3 {
+    grid-template-columns: 1fr;
   }
 
   .gallery-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
     padding: 0 14px;
   }
 
   .areas-list {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .hero {
@@ -872,44 +862,31 @@ h3 {
     padding: 0 16px;
   }
 
-  .hero-family h1 {
-    line-height: 1.18;
+  /* Mobile hero overlay refinement */
+  .hero-family::after {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.42) 45%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
   }
-
-  .hero-cta {
-    flex-direction: column;
-  }
-
-  /* Mobile hero overlay: vertical gradient over photo */
-  .hero-family::before {
-    background-position: center;
-    filter: brightness(1.06);
-  }
-
-.hero-family::after {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.78) 0%,
-    rgba(0, 0, 0, 0.42) 45%,
-    rgba(0, 0, 0, 0.12) 100%
-  );
-}
 
   .hero-media {
-    display: none; /* mobile already shows full family background */
+    display: none;
   }
 
   .site-footer {
-    padding-bottom: 46px; /* space for mobile bar */
+    padding-bottom: 46px;
   }
 
   .mobile-bar {
     display: flex;
   }
 
-  /* Extra breathing room above sticky footer for areas CTA */
   .areas-card.card {
     margin-bottom: 80px;
   }
 }
+
 
