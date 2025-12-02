@@ -795,8 +795,9 @@ function scrollToPhotosButton() {
   setTimeout(() => (btn.style.animation = ""), 5000);
 }
 
-      function sendGreetingIfNeeded() {
-        if (hasGreeted) return;
+     sendGreetingIfNeeded();
+addSuggestionButtons(); // ← ADD THIS LINE
+ if (hasGreeted) return;
         const greetText =
           "G’day, I’m Tai from RedBack. Tell me what you’re trying to get rid of and which suburb you’re in.";
         appendMessage(greetText, "ai");
