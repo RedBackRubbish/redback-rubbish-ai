@@ -892,3 +892,37 @@ h3 {
     margin-bottom: 80px;
   }
 }
+
+/* ============================
+   CIRCLE HERO PHOTO (FINAL BOSS)
+   ============================ */
+
+.circle-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.circle-photo-wrap {
+  width: 320px;           /* size of circle */
+  height: 320px;
+  border-radius: 50%;     /* <-- turns it into a perfect circle */
+  overflow: hidden;
+  border: 4px solid #d7262d;    /* RedBack border */
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.circle-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* ensures proper cropping inside circle */
+}
+
+/* Hide circle photo on mobile */
+@media (max-width: 720px) {
+  .circle-hero {
+    display: none;
+  }
+}
+
