@@ -81,6 +81,15 @@
             </div>
           </div>
         </div>
+
+        <!-- New premium hero media block (desktop) -->
+        <div class="hero-media" aria-hidden="true">
+          <div class="hero-photo-frame">
+            <img src="images/family-cab.jpg"
+                 alt="TJ &amp; Marika from RedBack Rubbish Removal in their work vehicle">
+          </div>
+          <p class="hero-badge">Real family business · Real people · Real results</p>
+        </div>
       </div>
     </section>
 
@@ -411,225 +420,283 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v3.0 ================= -->
-<style>
-.rbx-chat-launcher {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  background: #e50914;
-  color: #fff;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 999px;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-}
-.rbx-chat-panel {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 320px;
-  max-width: calc(100% - 32px);
-  background: #111;
-  color: #fff;
-  border-radius: 20px;
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-@media (max-width: 650px) {
-  .rbx-chat-panel {
-    right: 10px;
-    left: 10px;
-    width: auto;
-  }
-}
-.rbx-chat-header {
-  padding: 12px 14px;
-  background: #1a1a1a;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-}
-.rbx-chat-close {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-}
-.rbx-chat-messages {
-  padding: 12px;
-  max-height: 320px;
-  overflow-y: auto;
-  background: #121212;
-}
-.rbx-msg {
-  margin-bottom: 12px;
-  display: flex;
-}
-.rbx-msg.user { justify-content: flex-end; }
-.rbx-msg.ai { justify-content: flex-start; }
-.rbx-bubble {
-  padding: 10px 12px;
-  border-radius: 14px;
-  font-size: 13px;
-  max-width: 80%;
-  line-height: 1.35;
-}
-.rbx-msg.user .rbx-bubble { background: #0283FF; color: #fff; border-bottom-right-radius: 4px; }
-.rbx-msg.ai .rbx-bubble { background: #1f1f1f; color: #fff; border-bottom-left-radius: 4px; }
-.rbx-chat-form {
-  padding: 10px;
-  background: #101010;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  gap: 6px;
-}
-.rbx-input {
-  flex: 1;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: #181818;
-  border: 1px solid #333;
-  color: #fff;
-  font-size: 13px;
-  outline: none;
-}
-.rbx-send {
-  background: #0283FF;
-  border: none;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-}
-.typing { opacity: 0.7; font-size: 12px; }
-.rbx-photo-btn {
-  background: #222;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 8px;
-}
-</style>
-
-<button id="rbx-launcher" class="rbx-chat-launcher">
-  💬 Chat with Tai (TJ &amp; Marika)
-</button>
-
-<div id="rbx-panel" class="rbx-chat-panel">
-  <div class="rbx-chat-header">
-    <span>Chat with Tai · TJ &amp; Marika's team</span>
-    <button id="rbx-close" class="rbx-chat-close">&times;</button>
-  </div>
-  <div id="rbx-messages" class="rbx-chat-messages"></div>
-  <div style="padding: 8px 12px;">
-    <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Send photos for a quote</button>
-  </div>
-  <form id="rbx-form" class="rbx-chat-form">
-    <input id="rbx-input" class="rbx-input" type="text" placeholder="Ask about prices, availability..." autocomplete="off">
-    <button id="rbx-send" class="rbx-send">Send</button>
-  </form>
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-  const phone = "0459272402";
-
-  const launcher = document.getElementById("rbx-launcher");
-  const panel = document.getElementById("rbx-panel");
-  const closeBtn = document.getElementById("rbx-close");
-  const messages = document.getElementById("rbx-messages");
-  const input = document.getElementById("rbx-input");
-  const form = document.getElementById("rbx-form");
-  const photoBtn = document.getElementById("rbx-photo-btn");
-
-  let history = [];
-
-  function showPanel() {
-    panel.style.display = "flex";
-    if (!messages.dataset.loaded) {
-      addAI("G’day! I’m Tai 👋\nI help out TJ & Marika from RedBack Rubbish Removal.\nWhat are you tossing and which suburb are you in?");
-      messages.dataset.loaded = "1";
+  <!-- ================= REDBACK CHAT WIDGET v3.1 ================= -->
+  <style>
+    .rbx-chat-launcher {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: #d7262d;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
     }
-  }
 
-  function hidePanel() { panel.style.display = "none"; }
-
-  launcher.onclick = () => panel.style.display === "flex" ? hidePanel() : showPanel();
-  closeBtn.onclick = hidePanel;
-
-  function addAI(text) {
-    const wrap = document.createElement("div");
-    wrap.className = "rbx-msg ai";
-    wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
-    messages.appendChild(wrap);
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  function addUser(text) {
-    const wrap = document.createElement("div");
-    wrap.className = "rbx-msg user";
-    wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
-    messages.appendChild(wrap);
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  function typing() {
-    const el = document.createElement("div");
-    el.className = "rbx-msg ai typing";
-    el.innerHTML = `<div class="rbx-bubble">Tai is typing...</div>`;
-    messages.appendChild(el);
-    messages.scrollTop = messages.scrollHeight;
-    return el;
-  }
-
-  photoBtn.onclick = () => {
-    window.location.href = `sms:${phone}?body=Hey RedBack, here are some photos for a quote:`;
-  };
-
-  async function sendMessage(txt) {
-    addUser(txt);
-    history.push({ role: "user", content: txt });
-    const loader = typing();
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: txt, history })
-      });
-      const data = await res.json();
-      loader.remove();
-      addAI(data.reply);
-      history.push({ role: "assistant", content: data.reply });
-    } catch (err) {
-      loader.remove();
-      addAI("Quick glitch 🤯 Try again, or text photos + your suburb to 0459 272 402 and TJ & Marika will reply with a quote.");
+    .rbx-chat-launcher span {
+      font-size: 13px;
+      opacity: 0.9;
     }
-  }
 
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    if (!input.value.trim()) return;
-    const txt = input.value.trim();
-    input.value = "";
-    sendMessage(txt);
-  };
-});
-</script>
-<!-- ================= END WIDGET ================= -->
+    .rbx-chat-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 320px;
+      max-width: calc(100% - 32px);
+      background: #111;
+      color: #fff;
+      border-radius: 20px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 720px) {
+      .rbx-chat-launcher {
+        bottom: 76px; /* sits nicely above mobile sticky bar */
+        right: 14px;
+      }
+
+      .rbx-chat-panel {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: 72px; /* above sticky footer */
+      }
+    }
+
+    .rbx-chat-header {
+      padding: 12px 14px;
+      background: linear-gradient(135deg, #d7262d, #8e171b);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .rbx-chat-close {
+      background: rgba(0, 0, 0, 0.2);
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 999px;
+      width: 24px;
+      height: 24px;
+      line-height: 1;
+    }
+    .rbx-chat-messages {
+      padding: 12px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
+    }
+    .rbx-msg {
+      margin-bottom: 12px;
+      display: flex;
+    }
+    .rbx-msg.user { justify-content: flex-end; }
+    .rbx-msg.ai { justify-content: flex-start; }
+    .rbx-bubble {
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      max-width: 80%;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .rbx-msg.user .rbx-bubble {
+      background: #0283FF;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .rbx-msg.ai .rbx-bubble {
+      background: #1f1f1f;
+      color: #fff;
+      border-bottom-left-radius: 4px;
+    }
+    .rbx-chat-form {
+      padding: 10px;
+      background: #101010;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 6px;
+    }
+    .rbx-input {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #181818;
+      border: 1px solid #333;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+    .rbx-send {
+      background: #d7262d;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .typing { opacity: 0.7; font-size: 12px; }
+    .rbx-photo-btn {
+      background: #222;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <button id="rbx-launcher" class="rbx-chat-launcher">
+    🕷️ <span>Chat with Tai</span>
+  </button>
+
+  <div id="rbx-panel" class="rbx-chat-panel">
+    <div class="rbx-chat-header">
+      <span>Chat with Tai · TJ &amp; Marika's team</span>
+      <button id="rbx-close" class="rbx-chat-close">&times;</button>
+    </div>
+    <div id="rbx-messages" class="rbx-chat-messages"></div>
+    <div style="padding: 8px 12px;">
+      <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Send photos for a quote</button>
+    </div>
+    <form id="rbx-form" class="rbx-chat-form">
+      <input id="rbx-input" class="rbx-input" type="text"
+             placeholder="Ask about rubbish, prices, suburbs..."
+             autocomplete="off">
+      <button id="rbx-send" class="rbx-send">Send</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
+      const phone = "0459272402";
+
+      const launcher = document.getElementById("rbx-launcher");
+      const panel = document.getElementById("rbx-panel");
+      const closeBtn = document.getElementById("rbx-close");
+      const messages = document.getElementById("rbx-messages");
+      const input = document.getElementById("rbx-input");
+      const form = document.getElementById("rbx-form");
+      const photoBtn = document.getElementById("rbx-photo-btn");
+
+      // System prompt to keep Tai focused on rubbish removal
+      const systemPrompt = `
+You are Tai (Lil RedBack), the friendly mascot of RedBack Rubbish Removal.
+You:
+- Answer like a real human, friendly and down-to-earth, using Aussie tone where natural.
+- Always try to talk about rubbish removal, quotes, suburbs, pricing, what can/can’t be taken.
+- If the user asks general/random questions, you can answer briefly, then steer back to rubbish removal with a cheeky line like:
+  "Alright, better get back to loading this trailer before TJ replaces me 😅"
+- Always aim to get: what they’re tossing + photos + which suburb they’re in + rough timing they’d like the job done.
+      `.trim();
+
+      let history = [];
+
+      function showPanel() {
+        panel.style.display = "flex";
+        if (!messages.dataset.loaded) {
+          addAI("G’day! I’m Tai 👋\nI help out TJ & Marika from RedBack Rubbish Removal.\nWhat are you tossing and which suburb are you in?");
+          messages.dataset.loaded = "1";
+        }
+      }
+
+      function hidePanel() { panel.style.display = "none"; }
+
+      launcher.onclick = () => panel.style.display === "flex" ? hidePanel() : showPanel();
+      closeBtn.onclick = hidePanel;
+
+      function addAI(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "rbx-msg ai";
+        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function addUser(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "rbx-msg user";
+        wrap.innerHTML = `<div class="rbx-bubble">${text}</div>`;
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function typing() {
+        const el = document.createElement("div");
+        el.className = "rbx-msg ai typing";
+        el.innerHTML = `<div class="rbx-bubble">Tai is typing...</div>`;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+        return el;
+      }
+
+      photoBtn.onclick = () => {
+        window.location.href = `sms:${phone}?body=Hey RedBack, here are some photos for a quote:`;
+      };
+
+      async function sendMessage(txt) {
+        if (!txt) return;
+
+        // First message: seed system prompt in the history we send to the Worker
+        if (!history.length) {
+          history.push({ role: "system", content: systemPrompt });
+        }
+
+        addUser(txt);
+        history.push({ role: "user", content: txt });
+
+        const loader = typing();
+        try {
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: txt, history })
+          });
+          const data = await res.json();
+          loader.remove();
+          addAI(data.reply);
+          history.push({ role: "assistant", content: data.reply });
+        } catch (err) {
+          console.error(err);
+          loader.remove();
+          addAI("Quick glitch 🤯 Try again, or text photos + your suburb to 0459 272 402 and TJ & Marika will reply with a quote.");
+        }
+      }
+
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const txt = (input.value || "").trim();
+        if (!txt) return;
+        input.value = "";
+        sendMessage(txt);
+      };
+    });
+  </script>
+  <!-- ================= END WIDGET ================= -->
+</body>
+</html>
+
 
 
