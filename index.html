@@ -451,7 +451,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-  <!-- ================= REDBACK CHAT WIDGET v3.1 ================= -->
+   <!-- ================= REDBACK CHAT WIDGET v3.2 (animated) ================= -->
   <style>
     .rbx-chat-launcher {
       position: fixed;
@@ -470,11 +470,39 @@
       align-items: center;
       gap: 8px;
       font-weight: 600;
+      /* smooth hover + entrance + idle glow */
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+      animation: taiEntrance 0.7s ease-out 1, taiIdleGlow 4.5s ease-in-out infinite;
     }
 
     .rbx-chat-launcher span {
       font-size: 13px;
       opacity: 0.9;
+    }
+
+    /* Desktop hover – tiny lift + stronger shadow */
+    @media (hover: hover) and (pointer: fine) {
+      .rbx-chat-launcher:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(0,0,0,0.5);
+      }
+    }
+
+    /* Idle glow – subtle heartbeat effect */
+    @keyframes taiIdleGlow {
+      0%, 100% {
+        box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      }
+      50% {
+        box-shadow: 0 14px 40px rgba(215,38,45,0.55);
+      }
+    }
+
+    /* Entrance – slides up and settles once on load */
+    @keyframes taiEntrance {
+      0%   { transform: translateY(20px); opacity: 0; }
+      60%  { transform: translateY(-3px); opacity: 1; }
+      100% { transform: translateY(0); }
     }
 
     .rbx-chat-panel {
@@ -516,6 +544,7 @@
       justify-content: space-between;
       font-size: 13px;
     }
+
     .rbx-chat-close {
       background: rgba(0, 0, 0, 0.2);
       border: none;
@@ -527,18 +556,22 @@
       height: 24px;
       line-height: 1;
     }
+
     .rbx-chat-messages {
       padding: 12px;
       max-height: 320px;
       overflow-y: auto;
       background: radial-gradient(circle at top left, #262626 0, #181818 48%, #141414 100%);
     }
+
     .rbx-msg {
       margin-bottom: 12px;
       display: flex;
     }
+
     .rbx-msg.user { justify-content: flex-end; }
     .rbx-msg.ai { justify-content: flex-start; }
+
     .rbx-bubble {
       padding: 10px 12px;
       border-radius: 14px;
@@ -548,16 +581,19 @@
       white-space: pre-wrap;
       word-wrap: break-word;
     }
+
     .rbx-msg.user .rbx-bubble {
       background: #0283FF;
       color: #fff;
       border-bottom-right-radius: 4px;
     }
+
     .rbx-msg.ai .rbx-bubble {
       background: #1f1f1f;
       color: #fff;
       border-bottom-left-radius: 4px;
     }
+
     .rbx-chat-form {
       padding: 10px;
       background: #101010;
@@ -565,6 +601,7 @@
       display: flex;
       gap: 6px;
     }
+
     .rbx-input {
       flex: 1;
       padding: 8px 12px;
@@ -575,6 +612,7 @@
       font-size: 13px;
       outline: none;
     }
+
     .rbx-send {
       background: #d7262d;
       border: none;
@@ -585,7 +623,9 @@
       font-size: 13px;
       font-weight: 600;
     }
+
     .typing { opacity: 0.7; font-size: 12px; }
+
     .rbx-photo-btn {
       background: #222;
       color: #fff;
@@ -595,6 +635,26 @@
       border: none;
       cursor: pointer;
       margin-bottom: 8px;
+    }
+
+    /* animated typing dots */
+    .rbx-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      margin-left: 2px;
+      border-radius: 50%;
+      background: #ffffff;
+      opacity: 0.4;
+      animation: taiDots 1.2s infinite;
+    }
+
+    .rbx-dot:nth-child(2) { animation-delay: 0.2s; }
+    .rbx-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes taiDots {
+      0%, 100% { transform: translateY(0); opacity: 0.3; }
+      50%      { transform: translateY(-2px); opacity: 1; }
     }
   </style>
 
@@ -677,7 +737,10 @@ You:
       function typing() {
         const el = document.createElement("div");
         el.className = "rbx-msg ai typing";
-        el.innerHTML = `<div class="rbx-bubble">Tai is typing...</div>`;
+        el.innerHTML = `
+          <div class="rbx-bubble">
+            Tai is typing<span class="rbx-dot"></span><span class="rbx-dot"></span><span class="rbx-dot"></span>
+          </div>`;
         messages.appendChild(el);
         messages.scrollTop = messages.scrollHeight;
         return el;
@@ -726,8 +789,7 @@ You:
     });
   </script>
   <!-- ================= END WIDGET ================= -->
-</body>
-</html>
+
 
 
 
