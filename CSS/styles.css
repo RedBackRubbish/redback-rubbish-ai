@@ -36,7 +36,9 @@ a {
 
 p {
   margin: 0 0 0.75rem;
+  color: #333333;
 }
+
 
 h1,
 h2,
@@ -78,7 +80,24 @@ h3 {
 
 .section-dark {
   background-color: #191919;
-  color: #ffffff;
+  color: #f5eee4;
+}
+
+/* Make sure ALL text in dark sections is high contrast */
+.section-dark h1,
+.section-dark h2,
+.section-dark h3,
+.section-dark p,
+.section-dark li,
+.section-dark .review-name {
+  color: #f5eee4;
+}
+
+.section-dark .small,
+.section-dark .contact-note {
+  color: #e0d6c6;
+}
+
 }
 
 /* HEADER ------------------------------------------------------- */
@@ -867,14 +886,14 @@ h3 {
     filter: brightness(1.06);
   }
 
-  .hero-family::after {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.9) 0%,
-      rgba(0, 0, 0, 0.5) 45%,
-      rgba(0, 0, 0, 0.15) 100%
-    );
-  }
+.hero-family::after {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 45%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+}
 
   .hero-media {
     display: none; /* mobile already shows full family background */
