@@ -402,510 +402,110 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- =============== TAI / LIL REDBACK CHAT WIDGET =============== -->
+<style>
+border-top: 1px solid #ddd;
+}
 
-  <style>
-    /* Basic layout for widget */
-    .tai-chat-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
 
-    .tai-chat-launcher {
-      border: none;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      background: #e50914;
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    }
+.tai-chat-input {
+flex: 1;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 8px;
+outline: none;
+}
 
-    .tai-chat-panel {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 320px;
-      max-width: calc(100% - 32px);
-      background: #111111;
-      color: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-    }
 
-    @media (max-width: 640px) {
-      .tai-chat-panel {
-        right: 10px;
-        left: 10px;
-        width: auto;
-      }
-    }
+.tai-chat-send-btn {
+background: #4f46e5;
+color: white;
+margin-left: 8px;
+padding: 10px 16px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+}
+</style>
+</head>
 
-    .tai-chat-header {
-      padding: 12px 14px;
-      background: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
 
-    .tai-chat-close {
-      border: none;
-      background: transparent;
-      color: #ffffff;
-      font-size: 16px;
-      cursor: pointer;
-    }
+<body>
+<!-- Your website content remains untouched -->
 
-    .tai-chat-messages {
-      padding: 10px 12px;
-      max-height: 320px;
-      overflow-y: auto;
-      background: #121212;
-    }
 
-    .chat-message {
-      margin-bottom: 8px;
-      display: flex;
-    }
+<!-- ==============================
+TAI CHAT WIDGET HTML STRUCTURE
+============================== -->
+<div id="tai-chat-launcher" class="tai-chat-launcher">💬</div>
 
-    .chat-message-user {
-      justify-content: flex-end;
-    }
 
-    .chat-message-ai {
-      justify-content: flex-start;
-    }
+<div id="tai-chat-panel" class="tai-chat-panel">
+<div class="tai-chat-header">Chat with Tai</div>
+<div id="tai-chat-messages" class="tai-chat-messages"></div>
+<div class="tai-chat-input-area">
+<input id="tai-chat-input" class="tai-chat-input" placeholder="Type a message..." />
+<button id="tai-chat-send" class="tai-chat-send-btn">Send</button>
+</div>
+</div>
 
-    .chat-message-bubble {
-      padding: 8px 10px;
-      border-radius: 14px;
-      font-size: 13px;
-      line-height: 1.4;
-      max-width: 80%;
-      white-space: pre-wrap;
-    }
 
-    /* USER BUBBLES – REDBACK BLUE */
-    .chat-message-user .chat-message-bubble {
-      background: #0283FF;
-      color: #ffffff;
-      border-bottom-right-radius: 4px;
-    }
 
-    .chat-message-ai .chat-message-bubble {
-      background: #1f1f1f;
-      color: #ffffff;
-      border-bottom-left-radius: 4px;
-    }
 
-    .tai-chat-form {
-      padding: 8px 10px 10px;
-      background: #101010;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .tai-chat-quick-row {
-      display: flex;
-      gap: 6px;
-    }
-
-    .tai-chat-quick-btn {
-      flex: 1;
-      border-radius: 999px;
-      border: none;
-      font-size: 11px;
-      padding: 6px 10px;
-      cursor: pointer;
-      background: #222222;
-      color: #f5f5f5;
-    }
-
-    .tai-chat-quick-btn:hover {
-      background: #2b2b2b;
-    }
-
-    .tai-chat-input-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .tai-chat-input {
-      flex: 1;
-      border-radius: 999px;
-      border: 1px solid #333333;
-      background: #181818;
-      color: #ffffff;
-      font-size: 13px;
-      padding: 7px 10px;
-      outline: none;
-      min-width: 0;
-    }
-
-    .tai-chat-input::placeholder {
-      color: #777777;
-    }
-
-    .tai-chat-voice-btn {
-      border-radius: 999px;
-      border: none;
-      padding: 7px 9px;
-      background: #222222;
-      color: #ffffff;
-      font-size: 14px;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .tai-chat-voice-btn.listening {
-      background: #e50914;
-    }
-
-    /* SEND BUTTON – REDBACK BLUE */
-    .tai-chat-send-btn {
-      background: #0283FF;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: 0.2s ease;
-    }
-
-    .tai-chat-send-btn:hover {
-      filter: brightness(1.08);
-    }
-
-    /* typing dots */
-    .typing-dots {
-      display: inline-flex;
-      gap: 3px;
-      margin-left: 4px;
-      vertical-align: middle;
-    }
-    .typing-dots span {
-      display: block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #bbbbbb;
-      animation: taiTyping 1s infinite ease-in-out;
-    }
-    .typing-dots span:nth-child(2) {
-      animation-delay: 0.15s;
-    }
-    .typing-dots span:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-
-    @keyframes taiTyping {
-      0%, 80%, 100% {
-        transform: translateY(0);
-        opacity: 0.4;
-      }
-      40% {
-        transform: translateY(-3px);
-        opacity: 1;
-      }
-    }
-
-    /* Push chat above mobile sticky bar */
-    @media (max-width: 768px) {
-      .tai-chat-widget,
-      .tai-chat-panel {
-        bottom: calc(60px + 20px); /* sticky bar height + extra space */
-      }
-    }
-  </style>
-
-  <!-- CHAT WIDGET UI -->
-  <div class="tai-chat-widget">
-    <!-- Floating Button -->
-    <button id="tai-chat-launcher" class="tai-chat-launcher">
-      💬 Chat with Tai
-    </button>
-
-    <!-- Chat Panel -->
-    <div id="tai-chat-panel" class="tai-chat-panel" aria-hidden="true">
-      <div class="tai-chat-header">
-        <span>Chat with Tai from RedBack</span>
-        <button id="tai-chat-close" class="tai-chat-close" type="button">×</button>
-      </div>
-
-      <div id="tai-chat-messages" class="tai-chat-messages"></div>
-
-      <form id="tai-chat-form" class="tai-chat-form">
-        <div class="tai-chat-quick-row">
-          <button id="tai-photos-btn" class="tai-chat-quick-btn" type="button">
-            📸 Send photos for a quote
-          </button>
-        </div>
-
-        <div class="tai-chat-input-row">
-          <button
-            id="tai-voice-btn"
-            class="tai-chat-voice-btn"
-            type="button"
-            title="Talk to Tai"
-          >
-            🎤
-          </button>
-          <input
-            id="tai-chat-input"
-            class="tai-chat-input"
-            type="text"
-            autocomplete="off"
-            placeholder="Tell me what you’re tossing & which suburb you're in..."
-          />
-          <!-- NEW SEND BUTTON -->
-          <button id="tai-send-btn" class="tai-chat-send-btn" type="button">
-  Send
-</button>
-
-        </div>
-      </form>
-    </div>
-  </div>
-
-<!-- UPDATED CHAT WIDGET - FRONTEND ONLY -->
-<!-- Includes: fixed quick-suggestions behaviour, bubble wrapping, working photo upload, removed voice button, bug fixes -->
+<!-- ==============================
+CLEAN TAI CHAT JS ONLY
+============================== -->
 <script>
-// ==========================
-// INITIAL STATE & UTILITIES
-// ==========================
-let chatOpen = false;
-let userHasTyped = false;
-let messageHistory = [];
-let awaitingReply = false;
+const launcher = document.getElementById('tai-chat-launcher');
+const panel = document.getElementById('tai-chat-panel');
+const messages = document.getElementById('tai-chat-messages');
+const input = document.getElementById('tai-chat-input');
+const sendBtn = document.getElementById('tai-chat-send');
 
-// --------------------------
-// DOM ELEMENTS
-// --------------------------
-const chatPanel = document.getElementById('chatbot-panel');
-const chatButton = document.getElementById('chatbot-button');
-const chatMessagesContainer = document.getElementById('chatbot-messages');
-const chatUserInput = document.getElementById('chatbot-user-input');
-const chatSendBtn = document.getElementById('chatbot-send-btn');
-const suggestionButtonsContainer = document.getElementById('chatbot-suggestion-buttons');
-const fileInput = document.getElementById('chatbot-photo-input'); // hidden file input
 
-// ==========================
-// OPEN/CLOSE PANEL
-// ==========================
-chatButton.addEventListener('click', () => {
-  chatOpen = !chatOpen;
-  chatPanel.style.display = chatOpen ? 'flex' : 'none';
-  chatPanel.classList.toggle('open', chatOpen);
-
-  if (chatOpen && chatMessagesContainer.children.length === 0) {
-    greetingResponse();
-  }
+launcher.addEventListener('click', () => {
+panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
 });
 
-// ==========================
-// GREETING
-// ==========================
-function greetingResponse() {
-  addBotMessage("Hi there 👋 How can I help you today?");
-  renderSuggestionButtons();
+
+function addMessage(text, isUser = false) {
+const bubble = document.createElement('div');
+bubble.className = `tai-chat-bubble ${isUser ? 'user-msg' : 'bot-msg'}`;
+bubble.textContent = text;
+messages.appendChild(bubble);
+messages.scrollTop = messages.scrollHeight;
 }
 
-// ==========================
-// SUGGESTION BUTTONS
-// ==========================
-function renderSuggestionButtons() {
-  if (userHasTyped) return; // hide once user types
 
-  const options = [
-    "Get a quick quote 💬",
-    "See what services you offer 📋",
-    "Send photos for a price 📸"
-  ];
+async function sendMessage() {
+const text = input.value.trim();
+if (!text) return;
 
-  suggestionButtonsContainer.innerHTML = '';
 
-  options.forEach(option => {
-    const btn = document.createElement('button');
-    btn.className = 'suggestion-btn';
-    btn.textContent = option;
-    btn.onclick = () => handleSuggestion(option);
-    suggestionButtonsContainer.appendChild(btn);
-  });
+addMessage(text, true);
+input.value = '';
 
-  suggestionButtonsContainer.style.display = 'flex';
-}
 
-function handleSuggestion(option) {
-  suggestionButtonsContainer.style.display = 'none';
-  userHasTyped = true;
-  sendUserMessage(option);
-}
-
-// ==========================
-// PHOTO UPLOAD FLOW
-// ==========================
-// Trigger file select
-function triggerPhotoUpload() {
-  fileInput.click();
-}
-
-// Handle selected files
-fileInput.addEventListener('change', () => {
-  if (fileInput.files.length > 0) {
-    addUserMessage("📸 I uploaded some photos");
-    sendFilesToBackend(fileInput.files);
-  }
+// Replace YOUR_ENDPOINT with your actual Cloudflare Worker URL
+try {
+const res = await fetch('YOUR_CLOUDFLARE_WORKER_URL', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ message: text })
 });
 
-function sendFilesToBackend(files) {
-  // For now: simply tell backend user has photos
-  sendUserMessage("I've uploaded photos for a quote");
+
+const data = await res.json();
+addMessage(data.reply || "I'm here to help!");
+} catch (err) {
+addMessage("Error: Unable to reach server.");
+}
 }
 
-// ==========================
-// SEND MESSAGE LOGIC
-// ==========================
-chatSendBtn.addEventListener('click', () => {
-  const text = chatUserInput.value.trim();
-  if (text) sendUserMessage(text);
+
+sendBtn.addEventListener('click', sendMessage);
+input.addEventListener('keypress', e => {
+if (e.key === 'Enter') sendMessage();
 });
-
-chatUserInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    const text = chatUserInput.value.trim();
-    if (text) sendUserMessage(text);
-  }
-});
-
-function sendUserMessage(text) {
-  userHasTyped = true;
-  suggestionButtonsContainer.style.display = 'none';
-
-  addUserMessage(text);
-  chatUserInput.value = '';
-  requestBotReply(text);
-}
-
-// ==========================
-// BOT REPLY HANDLER
-// ==========================
-async function requestBotReply(userMessage) {
-  if (awaitingReply) return;
-  awaitingReply = true;
-
-  const loader = addLoadingBubble();
-
-  try {
-    const res = await fetch('https://your-cloudflare-worker-url/workers-ai', {  // replace with your URL
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userMessage, history: messageHistory })
-    });
-
-    const data = await res.json();
-
-    if (data.reply) addBotMessage(data.reply);
-    if (data.suggestions && data.suggestions.length > 0) renderDynamicSuggestions(data.suggestions);
-
-  } catch (err) {
-    addBotMessage("Sorry — I'm having trouble responding right now. Please try again.");
-  }
-
-  removeLoadingBubble(loader);
-  awaitingReply = false;
-}
-
-// ==========================
-// MESSAGE RENDERING
-// ==========================
-function addUserMessage(text) {
-  const wrap = document.createElement('div');
-  wrap.className = 'chat-message user';
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-message-bubble user-bubble';
-  bubble.textContent = text;
-  wrap.appendChild(bubble);
-  chatMessagesContainer.appendChild(wrap);
-  scrollChatToBottom();
-}
-
-function addBotMessage(text) {
-  const wrap = document.createElement('div');
-  wrap.className = 'chat-message bot';
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-message-bubble bot-bubble';
-  bubble.textContent = text;
-  wrap.appendChild(bubble);
-  chatMessagesContainer.appendChild(wrap);
-  scrollChatToBottom();
-}
-
-// Typing bubble
-function addLoadingBubble() {
-  const wrap = document.createElement('div');
-  wrap.className = 'chat-message bot';
-
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-message-bubble bot-bubble typing';
-  bubble.innerHTML = `<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>`;
-
-  wrap.appendChild(bubble);
-  chatMessagesContainer.appendChild(wrap);
-  scrollChatToBottom();
-  return wrap;
-}
-
-function removeLoadingBubble(loader) {
-  if (loader && loader.parentNode) loader.remove();
-}
-
-// ==========================
-// DYNAMIC SUGGESTIONS (AI)
-// ==========================
-function renderDynamicSuggestions(list) {
-  suggestionButtonsContainer.innerHTML = '';
-  list.forEach(item => {
-    const btn = document.createElement('button');
-    btn.className = 'suggestion-btn';
-    btn.textContent = item;
-    btn.onclick = () => {
-      suggestionButtonsContainer.style.display = 'none';
-      sendUserMessage(item);
-    };
-    suggestionButtonsContainer.appendChild(btn);
-  });
-  suggestionButtonsContainer.style.display = 'flex';
-}
-
-// ==========================
-// SCROLL
-// ==========================
-function scrollChatToBottom() {
-  setTimeout(() => {
-    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-  }, 50);
-}
 </script>
-
-<!-- HIDDEN FILE INPUT FOR PHOTOS -->
-<input id="chatbot-photo-input" type="file" accept="image/*" multiple style="display:none">
+</body>
+</html>play:none">
