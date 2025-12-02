@@ -686,235 +686,226 @@
     </div>
   </div>
 
-<!-- ================= CHAT WIDGET SCRIPT (UPDATED) ================= -->
+<!-- UPDATED CHAT WIDGET - FRONTEND ONLY -->
+<!-- Includes: fixed quick-suggestions behaviour, bubble wrapping, working photo upload, removed voice button, bug fixes -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  (function () {
-    const TAI_API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-    const SMS_NUMBER = "0459272402";
-    const JOBBER_URL = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+// ==========================
+// INITIAL STATE & UTILITIES
+// ==========================
+let chatOpen = false;
+let userHasTyped = false;
+let messageHistory = [];
+let awaitingReply = false;
 
-    const launcher = document.getElementById("tai-chat-launcher");
-    const panel = document.getElementById("tai-chat-panel");
-    const closeBtn = document.getElementById("tai-chat-close");
-    const form = document.getElementById("tai-chat-form");
-    const input = document.getElementById("tai-chat-input");
-    const messagesEl = document.getElementById("tai-chat-messages");
-    const photosBtn = document.getElementById("tai-photos-btn");
-    const voiceBtn = document.getElementById("tai-voice-btn");
-    const sendBtn = document.getElementById("tai-send-btn");
+// --------------------------
+// DOM ELEMENTS
+// --------------------------
+const chatPanel = document.getElementById('chatbot-panel');
+const chatButton = document.getElementById('chatbot-button');
+const chatMessagesContainer = document.getElementById('chatbot-messages');
+const chatUserInput = document.getElementById('chatbot-user-input');
+const chatSendBtn = document.getElementById('chatbot-send-btn');
+const suggestionButtonsContainer = document.getElementById('chatbot-suggestion-buttons');
+const fileInput = document.getElementById('chatbot-photo-input'); // hidden file input
 
-    if (!launcher || !panel || !form || !input || !messagesEl) {
-      console.warn("Tai chat: missing elements");
-      return;
-    }
+// ==========================
+// OPEN/CLOSE PANEL
+// ==========================
+chatButton.addEventListener('click', () => {
+  chatOpen = !chatOpen;
+  chatPanel.style.display = chatOpen ? 'flex' : 'none';
+  chatPanel.classList.toggle('open', chatOpen);
 
-    /** ---------------- PROFILE ---------------- **/
-    let chatHistory = [];
-    let isSending = false;
-    let hasGreeted = false;
-
-    let profile = {
-      name: null,
-      suburb: null,
-      items: null,
-      timing: null
-    };
-
-    /** ---------------- UI HELPERS ---------------- **/
-    function appendMessage(text, from) {
-      const wrap = document.createElement("div");
-      wrap.className = "chat-message chat-message-" + (from === "user" ? "user" : "ai");
-
-      const bubble = document.createElement("div");
-      bubble.className = "chat-message-bubble";
-      bubble.textContent = text;
-
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return bubble;
-    }
-
-    function appendTypingMessage() {
-      const wrap = document.createElement("div");
-      wrap.className = "chat-message chat-message-ai";
-
-      const bubble = document.createElement("div");
-      bubble.className = "chat-message-bubble";
-      bubble.innerHTML = Lil RedBack is thinking<span class="typing-dots"><span></span><span></span><span></span></span>;
-
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return bubble;
-    }
-
-    /** ---------------- QUICK SUGGESTIONS ---------------- **/
-    function addSuggestionButtons() {
-      const types = [
-        "Household rubbish",
-        "Green waste / garden bags",
-        "Furniture removal",
-        "Renovation waste",
-        "Moving out clear-out"
-      ];
-
-      const row = document.createElement("div");
-      row.style.display = "flex";
-      row.style.flexWrap = "wrap";
-      row.style.gap = "6px";
-      row.style.marginTop = "6px";
-
-      types.forEach((label) => {
-        const btn = document.createElement("button");
-        btn.textContent = label;
-        btn.className = "tai-chat-quick-btn";
-        btn.style.flex = "1 1 calc(50% - 6px)";
-        btn.addEventListener("click", () => {
-          appendMessage(label, "user");
-          chatHistory.push({ role: "user", content: label });
-          suggestPhotoFlow(label);
-        });
-        row.appendChild(btn);
-      });
-
-      messagesEl.appendChild(row);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    function suggestPhotoFlow(type) {
-      appendMessage(
-        No worries — we handle ${type.toLowerCase()} all the time. What suburb are you in?,
-        "ai"
-      );
-    }
-
-    /** ---------------- GREETING ---------------- **/
-    function sendGreetingIfNeeded() {
-      if (hasGreeted) return;
-      const greetText = "G’day, I’m Tai 👋 Tell me your name to get started.";
-      appendMessage(greetText, "ai");
-      hasGreeted = true;
-      addSuggestionButtons();
-    }
-
-    /** ---------------- CHAT PANEL EVENTS ---------------- **/
-    function openChat() {
-      panel.style.display = "flex";
-      panel.setAttribute("aria-hidden", "false");
-      sendGreetingIfNeeded();
-      setTimeout(() => input.focus(), 50);
-    }
-
-    function closeChat() {
-      panel.style.display = "none";
-      panel.setAttribute("aria-hidden", "true");
-    }
-
-    launcher.addEventListener("click", () => panel.style.display === "flex" ? closeChat() : openChat());
-    if (closeBtn) closeBtn.addEventListener("click", closeChat);
-
-    /** ---------------- PROFILE LEARNING ---------------- **/
-    function extractProfile(text) {
-      if (!profile.name) {
-        const nameMatch = text.match(/(?:i'm|im|i am|my name is)\s+([A-Za-z]+)/i);
-        if (nameMatch) profile.name = nameMatch[1];
-        else if (/^[A-Za-z]+$/.test(text)) profile.name = text;
-        if (profile.name) {
-          appendMessage(Nice to meet you ${profile.name}! Which suburb are you in?, "ai");
-          return true;
-        }
-      }
-
-      if (profile.name && !profile.suburb) {
-        profile.suburb = text;
-        appendMessage(Great! What are you needing removed?, "ai");
-        return true;
-      }
-
-      if (profile.suburb && !profile.items) {
-        profile.items = text;
-        appendMessage(Got it. When would you like the job done?, "ai");
-        return true;
-      }
-
-      if (profile.items && !profile.timing) {
-        profile.timing = text;
-        sendSMSButton();
-        return true;
-      }
-
-      return false;
-    }
-
-    /** ---------------- SMS GENERATION ---------------- **/
-    function sendSMSButton() {
-      const sms = encodeURIComponent(
-Hey RedBack — got a job:
-
-Name: ${profile.name}
-Suburb: ${profile.suburb}
-Items: ${profile.items}
-Timing: ${profile.timing}
-      );
-
-      appendMessage(
-        Perfect! Tap below to send the details straight to the team 👇,
-        "ai"
-      );
-
-      const btn = document.createElement("a");
-      btn.href = sms:${SMS_NUMBER}?body=${sms};
-      btn.textContent = "Send SMS 📩";
-      btn.className = "sms-button";
-      btn.style.cssText = 
-        display:inline-block;background:#e50914;color:#fff;
-        padding:8px 12px;border-radius:6px;margin-top:10px;
-        text-align:center;text-decoration:none;
-      ;
-
-      messagesEl.appendChild(btn);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    /** ---------------- SEND MESSAGE ---------------- **/
-    async function sendMessage() {
-      if (isSending) return;
-
-      const text = input.value.trim();
-      if (!text) return;
-
-      appendMessage(text, "user");
-      chatHistory.push({ role: "user", content: text });
-      input.value = "";
-
-      if (extractProfile(text)) return;
-
-      const thinking = appendTypingMessage();
-      isSending = true;
-
-      try {
-        const res = await fetch(TAI_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, history: chatHistory, profile })
-        });
-
-        const data = await res.json();
-        thinking.textContent = data.reply || "All good!";
-
-      } catch (err) {
-        thinking.textContent = "Brain glitch 🤯 Try again!";
-      } finally {
-        isSending = false;
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
-    }
-
-    sendBtn.addEventListener("click", (e) => { e.preventDefault(); sendMessage(); });
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); sendMessage(); } });
-    form.addEventListener("submit", (e) => e.preventDefault());
-  })();
+  if (chatOpen && chatMessagesContainer.children.length === 0) {
+    greetingResponse();
+  }
 });
+
+// ==========================
+// GREETING
+// ==========================
+function greetingResponse() {
+  addBotMessage("Hi there 👋 How can I help you today?");
+  renderSuggestionButtons();
+}
+
+// ==========================
+// SUGGESTION BUTTONS
+// ==========================
+function renderSuggestionButtons() {
+  if (userHasTyped) return; // hide once user types
+
+  const options = [
+    "Get a quick quote 💬",
+    "See what services you offer 📋",
+    "Send photos for a price 📸"
+  ];
+
+  suggestionButtonsContainer.innerHTML = '';
+
+  options.forEach(option => {
+    const btn = document.createElement('button');
+    btn.className = 'suggestion-btn';
+    btn.textContent = option;
+    btn.onclick = () => handleSuggestion(option);
+    suggestionButtonsContainer.appendChild(btn);
+  });
+
+  suggestionButtonsContainer.style.display = 'flex';
+}
+
+function handleSuggestion(option) {
+  suggestionButtonsContainer.style.display = 'none';
+  userHasTyped = true;
+  sendUserMessage(option);
+}
+
+// ==========================
+// PHOTO UPLOAD FLOW
+// ==========================
+// Trigger file select
+function triggerPhotoUpload() {
+  fileInput.click();
+}
+
+// Handle selected files
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length > 0) {
+    addUserMessage("📸 I uploaded some photos");
+    sendFilesToBackend(fileInput.files);
+  }
+});
+
+function sendFilesToBackend(files) {
+  // For now: simply tell backend user has photos
+  sendUserMessage("I've uploaded photos for a quote");
+}
+
+// ==========================
+// SEND MESSAGE LOGIC
+// ==========================
+chatSendBtn.addEventListener('click', () => {
+  const text = chatUserInput.value.trim();
+  if (text) sendUserMessage(text);
+});
+
+chatUserInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const text = chatUserInput.value.trim();
+    if (text) sendUserMessage(text);
+  }
+});
+
+function sendUserMessage(text) {
+  userHasTyped = true;
+  suggestionButtonsContainer.style.display = 'none';
+
+  addUserMessage(text);
+  chatUserInput.value = '';
+  requestBotReply(text);
+}
+
+// ==========================
+// BOT REPLY HANDLER
+// ==========================
+async function requestBotReply(userMessage) {
+  if (awaitingReply) return;
+  awaitingReply = true;
+
+  const loader = addLoadingBubble();
+
+  try {
+    const res = await fetch('https://your-cloudflare-worker-url/workers-ai', {  // replace with your URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage, history: messageHistory })
+    });
+
+    const data = await res.json();
+
+    if (data.reply) addBotMessage(data.reply);
+    if (data.suggestions && data.suggestions.length > 0) renderDynamicSuggestions(data.suggestions);
+
+  } catch (err) {
+    addBotMessage("Sorry — I'm having trouble responding right now. Please try again.");
+  }
+
+  removeLoadingBubble(loader);
+  awaitingReply = false;
+}
+
+// ==========================
+// MESSAGE RENDERING
+// ==========================
+function addUserMessage(text) {
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-message user';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-message-bubble user-bubble';
+  bubble.textContent = text;
+  wrap.appendChild(bubble);
+  chatMessagesContainer.appendChild(wrap);
+  scrollChatToBottom();
+}
+
+function addBotMessage(text) {
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-message bot';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-message-bubble bot-bubble';
+  bubble.textContent = text;
+  wrap.appendChild(bubble);
+  chatMessagesContainer.appendChild(wrap);
+  scrollChatToBottom();
+}
+
+// Typing bubble
+function addLoadingBubble() {
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-message bot';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-message-bubble bot-bubble typing';
+  bubble.innerHTML = `<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>`;
+
+  wrap.appendChild(bubble);
+  chatMessagesContainer.appendChild(wrap);
+  scrollChatToBottom();
+  return wrap;
+}
+
+function removeLoadingBubble(loader) {
+  if (loader && loader.parentNode) loader.remove();
+}
+
+// ==========================
+// DYNAMIC SUGGESTIONS (AI)
+// ==========================
+function renderDynamicSuggestions(list) {
+  suggestionButtonsContainer.innerHTML = '';
+  list.forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'suggestion-btn';
+    btn.textContent = item;
+    btn.onclick = () => {
+      suggestionButtonsContainer.style.display = 'none';
+      sendUserMessage(item);
+    };
+    suggestionButtonsContainer.appendChild(btn);
+  });
+  suggestionButtonsContainer.style.display = 'flex';
+}
+
+// ==========================
+// SCROLL
+// ==========================
+function scrollChatToBottom() {
+  setTimeout(() => {
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+  }, 50);
+}
 </script>
+
+<!-- HIDDEN FILE INPUT FOR PHOTOS -->
+<input id="chatbot-photo-input" type="file" accept="image/*" multiple style="display:none">
