@@ -411,7 +411,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v3.0 ================= -->
+<!-- ================= REDBACK CHAT WIDGET v4.0 ================= -->
 <style>
 .rbx-chat-launcher {
   position: fixed;
@@ -496,6 +496,7 @@
   border-top: 1px solid rgba(255,255,255,0.08);
   display: flex;
   gap: 6px;
+  align-items: center;
 }
 
 .rbx-input {
@@ -534,12 +535,11 @@
   cursor: pointer;
   margin-bottom: 8px;
 }
-
 </style>
 
 <button id="rbx-launcher" class="rbx-chat-launcher">💬 Chat with Tai</button>
 
-<div id="rbx-panel" class="rbx-chat-panel">
+<div id="rbx-panel" class="rbx-chat-panel" role="dialog" aria-label="Chat with Tai">
   <div class="rbx-chat-header">
     <span>Chat with Tai</span>
     <button id="rbx-close" class="rbx-chat-close">&times;</button>
@@ -549,6 +549,7 @@
 
   <div style="padding: 8px 12px;">
     <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Send photos for a quote</button>
+    <input id="rbx-photo-input" type="file" accept="image/*" style="display:none;">
   </div>
 
   <form id="rbx-form" class="rbx-chat-form">
@@ -561,8 +562,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const API_URL = "https://tai-ai.crimson-meadow-d5c5.workers.dev";
-  const phone = "0459272402";
-
   const launcher = document.getElementById("rbx-launcher");
   const panel = document.getElementById("rbx-panel");
   const closeBtn = document.getElementById("rbx-close");
@@ -570,6 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("rbx-input");
   const form = document.getElementById("rbx-form");
   const photoBtn = document.getElementById("rbx-photo-btn");
+  const photoInput = document.getElementById("rbx-photo-input");
 
   let history = [];
 
@@ -602,41 +602,60 @@ document.addEventListener("DOMContentLoaded", () => {
     messages.scrollTop = messages.scrollHeight;
   }
 
-  function typing() {
+  function typing(message="Tai is typing...") {
     const el = document.createElement("div");
     el.className = "rbx-msg ai typing";
-    el.innerHTML = `<div class="rbx-bubble">Tai is typing...</div>`;
+    el.innerHTML = `<div class="rbx-bubble">${message}</div>`;
     messages.appendChild(el);
     messages.scrollTop = messages.scrollHeight;
     return el;
   }
 
-  photoBtn.onclick = () => {
-    window.location.href = `sms:${phone}?body=Hey RedBack, here are some photos for a quote:`;
-  };
-
-  async function sendMessage(txt) {
+  async function sendMessage(txt, base64Image=null) {
     addUser(txt);
     history.push({ role: "user", content: txt });
 
-    const loader = typing();
+    const loader = typing(base64Image ? "Tai is checking your photo..." : "Tai is typing...");
 
     try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: txt, history })
+        body: JSON.stringify({ message: txt, history, image: base64Image })
       });
 
       const data = await res.json();
       loader.remove();
-      addAI(data.reply);
-      history.push({ role: "assistant", content: data.reply });
+
+      let ai;
+      try { ai = JSON.parse(data.choices?.[0]?.message?.content || '{}'); } 
+      catch { ai = { reply: "Quick glitch 🤯 Send your suburb + photos for a quote." }; }
+
+      addAI(ai.reply);
+      history.push({ role: "assistant", content: ai.reply });
+
+      // Cap history at last 10 messages
+      if (history.length > 10) history = history.slice(-10);
 
     } catch (err) {
       loader.remove();
-      addAI("Network hiccup 🤯 Try again.");
+      addRetry();
     }
+  }
+
+  function addRetry() {
+    const wrap = document.createElement("div");
+    wrap.className = "rbx-msg ai";
+    wrap.innerHTML = `<div class="rbx-bubble">
+      Oops! Something went wrong. <button onclick="retryLast()">Try again</button>
+    </div>`;
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  window.retryLast = () => {
+    const last = history[history.length - 1];
+    if (last) sendMessage(last.content);
   }
 
   form.onsubmit = (e) => {
@@ -647,6 +666,20 @@ document.addEventListener("DOMContentLoaded", () => {
     sendMessage(txt);
   };
 
+  photoBtn.onclick = () => photoInput.click();
+
+  photoInput.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = reader.result.split(',')[1];
+      await sendMessage("📷 Photo uploaded", base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
 });
 </script>
-<!-- ================= END WIDGET ================= -->
+
