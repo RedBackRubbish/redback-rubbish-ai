@@ -475,7 +475,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v4.1 (VISION + MODERN SOUNDS) ================= -->
+<!-- ================= REDBACK CHAT WIDGET v4.2 (VISION + STRUCTURED BRAIN) ================= -->
 <style>
   .rbx-chat-launcher {
     position: fixed;
@@ -863,6 +863,7 @@
     const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
     const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
     const STORAGE_KEY_WIDE = "rbx_tai_panel_wide";
+    const STORAGE_KEY_LEAD = "rbx_tai_lead_v1";
 
     const launcher = document.getElementById("rbx-launcher");
     const panel = document.getElementById("rbx-panel");
@@ -883,6 +884,27 @@
     document.body.appendChild(fileInput);
 
     let history = [];
+
+    // ----- SIMPLE LEAD MEMORY (name, suburb, etc.) -----
+    function loadLead() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_LEAD);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveLead(partial) {
+      try {
+        const current = loadLead();
+        const next = { ...current, ...partial };
+        localStorage.setItem(STORAGE_KEY_LEAD, JSON.stringify(next));
+        return next;
+      } catch (e) {
+        return partial;
+      }
+    }
 
     // ----- MODERN UI SOUNDS (two-tone chimes) -----
     let audioCtx = null;
@@ -1000,9 +1022,14 @@
       };
     }
 
+    function buildSmsHref(body) {
+      const encoded = encodeURIComponent(body || "");
+      return `sms:${phone}?body=${encoded}`;
+    }
+
     function formatAiText(text) {
       // Basic escape so Tai can't accidentally inject HTML
-      let safe = text
+      let safe = (text || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
@@ -1027,10 +1054,35 @@
       return safe;
     }
 
-    function addAI(text) {
+    function addAI(text, meta) {
       const wrap = document.createElement("div");
       wrap.className = "rbx-msg ai";
-      wrap.innerHTML = `<div class="rbx-bubble">${formatAiText(text)}</div>`;
+
+      let bubbleHtml = formatAiText(text);
+
+      // Extra smart buttons based on structured actions (avoid double-up if already in text)
+      const extraBtns = [];
+      if (meta && meta.actions) {
+        if (meta.actions.suggest_sms && meta.sms_body && !String(text || "").includes("sms:")) {
+          const smsHref = buildSmsHref(meta.sms_body);
+          extraBtns.push(
+            `<button class="rbx-link-btn" data-href="${smsHref}">📲 Text details to TJ &amp; Marika</button>`
+          );
+        }
+
+        if (meta.actions.suggest_booking_link && !String(text || "").includes("clienthub.getjobber.com")) {
+          const jobberHref = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+          extraBtns.push(
+            `<button class="rbx-link-btn secondary" data-href="${jobberHref}">📝 Book online</button>`
+          );
+        }
+      }
+
+      if (extraBtns.length) {
+        bubbleHtml = `${bubbleHtml}<br>${extraBtns.join(" ")}`;
+      }
+
+      wrap.innerHTML = `<div class="rbx-bubble">${bubbleHtml}</div>`;
       messages.appendChild(wrap);
       messages.scrollTop = messages.scrollHeight;
       saveChat();
@@ -1144,10 +1196,20 @@
         });
         const data = await res.json();
         loader.remove();
-        addAI(data.reply);
+
+        // data should follow the new schema:
+        // { reply, intent, stage, lead, actions, sms_body }
+        const replyText = data.reply || "Sorry, I got a bit tangled there. Try that again for me?";
+        addAI(replyText, data);
+
         history.push({ role: "user", content: txt || "[photos uploaded]" });
-        history.push({ role: "assistant", content: data.reply });
+        history.push({ role: "assistant", content: replyText });
         saveChat();
+
+        // Save lead info if present
+        if (data.lead && typeof data.lead === "object") {
+          saveLead(data.lead);
+        }
       } catch (err) {
         console.error(err);
         loader.remove();
@@ -1204,3 +1266,4 @@
   });
 </script>
 <!-- ================= END WIDGET ================= -->
+
