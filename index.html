@@ -475,7 +475,7 @@
     <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
 
-<!-- ================= REDBACK CHAT WIDGET v4.2 (VISION + STRUCTURED BRAIN) ================= -->
+<!-- ================= REDBACK CHAT WIDGET v4.3 (VISION + PREMIUM QUICK ACTIONS) ================= -->
 <style>
   .rbx-chat-launcher {
     position: fixed;
@@ -565,7 +565,6 @@
     transition: width 0.22s ease-out;
   }
 
-  /* Wide mode (desktop only – we'll override on mobile) */
   .rbx-chat-panel.rbx-wide {
     width: 420px;
     max-width: calc(100% - 32px);
@@ -573,7 +572,7 @@
 
   @media (max-width: 720px) {
     .rbx-chat-launcher {
-      bottom: 76px; /* sits nicely above mobile sticky bar */
+      bottom: 76px;
       right: 14px;
     }
 
@@ -582,7 +581,7 @@
       right: 10px;
       left: 10px;
       width: auto;
-      bottom: 72px; /* above sticky footer */
+      bottom: 72px;
     }
   }
 
@@ -684,35 +683,115 @@
     border-bottom-left-radius: 4px;
   }
 
-  /* quick replies */
+  /* ================= PREMIUM QUICK ACTION BAR ================= */
+
   .rbx-quick-wrapper {
-    padding: 0 10px 4px;
+    padding: 8px 10px 10px;
     background: #101010;
     border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Hero upload card */
+  .rbx-photo-btn {
+    border: none;
+    cursor: pointer;
+    border-radius: 14px;
+    padding: 10px 12px;
+    width: 100%;
+    background: radial-gradient(circle at top left, #ff5a5f 0, #d7262d 40%, #8e171b 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+  }
+
+  .rbx-photo-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rbx-photo-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+
+  .rbx-photo-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .rbx-photo-text strong {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  .rbx-photo-text span {
+    font-size: 11px;
+    opacity: 0.9;
+  }
+
+  .rbx-photo-tag {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.28);
+    white-space: nowrap;
+  }
+
+  .rbx-quick-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.55;
+    padding: 0 2px;
   }
 
   .rbx-quick-replies {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 6px;
-    margin: 8px 0 4px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .rbx-quick-replies::-webkit-scrollbar {
+    display: none;
   }
 
   .rbx-quick-replies button {
     border: none;
     border-radius: 999px;
-    padding: 4px 10px;
+    padding: 5px 11px;
     font-size: 11px;
-    background: #1f1f1f;
+    background: rgba(255,255,255,0.04);
     color: #f5eee4;
     cursor: pointer;
     white-space: nowrap;
     border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(6px);
   }
 
   .rbx-quick-replies button:hover {
-    background: #292929;
+    background: rgba(255,255,255,0.08);
   }
+
+  /* ================= FOOTER INPUT ================= */
 
   .rbx-chat-form {
     padding: 8px 10px 10px;
@@ -745,17 +824,6 @@
   }
 
   .typing { opacity: 0.7; font-size: 12px; }
-
-  .rbx-photo-btn {
-    background: #222;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 6px;
-  }
 
   .rbx-link-btn {
     display: inline-flex;
@@ -833,9 +901,21 @@
   <div id="rbx-messages" class="rbx-chat-messages"></div>
 
   <div class="rbx-quick-wrapper">
-    <button id="rbx-photo-btn" class="rbx-photo-btn">📸 Upload photos for a quote</button>
+    <!-- HERO: VISION UPLOAD CTA -->
+    <button id="rbx-photo-btn" class="rbx-photo-btn">
+      <div class="rbx-photo-main">
+        <div class="rbx-photo-icon">📸</div>
+        <div class="rbx-photo-text">
+          <strong>Upload photos for a quote</strong>
+          <span>Fastest way to get a rough price</span>
+        </div>
+      </div>
+      <div class="rbx-photo-tag">~1–4 pics • 30 sec</div>
+    </button>
+
+    <div class="rbx-quick-label">Quick questions</div>
     <div id="rbx-quick" class="rbx-quick-replies">
-      <button type="button" data-text="Can I get your price list and how your load sizes work?">Price & load sizes</button>
+      <button type="button" data-text="Can I get your price list and how your load sizes work?">Price &amp; load sizes</button>
       <button type="button" data-text="Which suburbs do you service?">Service areas</button>
       <button type="button"
         data-text="Can you please give me a full list of the main types of rubbish you can usually take, and anything you usually can’t take?">
@@ -875,7 +955,6 @@
     const photoBtn = document.getElementById("rbx-photo-btn");
     const quick = document.getElementById("rbx-quick");
 
-    // hidden file input for Vision uploads
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
@@ -885,7 +964,6 @@
 
     let history = [];
 
-    // ----- SIMPLE LEAD MEMORY (name, suburb, etc.) -----
     function loadLead() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY_LEAD);
@@ -906,7 +984,6 @@
       }
     }
 
-    // ----- MODERN UI SOUNDS (two-tone chimes) -----
     let audioCtx = null;
 
     function ensureAudio() {
@@ -940,20 +1017,16 @@
       }
 
       if (type === "tap") {
-        // subtle tap
         tone(260, 0, 0.08, 0.12);
       } else if (type === "send") {
-        // crisp two-tone pop
         tone(360, 0, 0.09, 0.15);
         tone(520, 0.05, 0.09, 0.12);
       } else if (type === "open") {
-        // warm soft whoom
         tone(180, 0, 0.12, 0.13);
         tone(260, 0.04, 0.12, 0.11);
       }
     }
 
-    // ----- load saved chat -----
     try {
       const savedH = localStorage.getItem(STORAGE_KEY_HISTORY);
       const savedM = localStorage.getItem(STORAGE_KEY_MESSAGES);
@@ -980,7 +1053,7 @@
       try {
         localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
         localStorage.setItem(STORAGE_KEY_MESSAGES, messages.innerHTML);
-      } catch (e) { /* ignore */ }
+      } catch (e) { }
     }
 
     function showPanel() {
@@ -1018,7 +1091,7 @@
             STORAGE_KEY_WIDE,
             panel.classList.contains("rbx-wide") ? "1" : "0"
           );
-        } catch (e) { /* ignore */ }
+        } catch (e) { }
       };
     }
 
@@ -1028,23 +1101,19 @@
     }
 
     function formatAiText(text) {
-      // Basic escape so Tai can't accidentally inject HTML
       let safe = (text || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 
-      // Turn bare line-breaks into <br> for nicer formatting
       safe = safe.replace(/\n/g, "<br>");
 
-      // 1) SMS link → "Text details to TJ & Marika" button
       safe = safe.replace(
         /(sms:[^\s<]+)/g,
         (_, href) =>
           `<button class="rbx-link-btn" data-href="${href}">📲 Text details to TJ &amp; Marika</button>`
       );
 
-      // 2) Jobber booking link → "Book online" button
       safe = safe.replace(
         /(https:\/\/clienthub\.getjobber\.com[^\s<]+)/g,
         (_, href) =>
@@ -1060,7 +1129,6 @@
 
       let bubbleHtml = formatAiText(text);
 
-      // Extra smart buttons based on structured actions (avoid double-up if already in text)
       const extraBtns = [];
       if (meta && meta.actions) {
         if (meta.actions.suggest_sms && meta.sms_body && !String(text || "").includes("sms:")) {
@@ -1097,7 +1165,6 @@
       saveChat();
     }
 
-    // show thumbnails of uploaded photos as a user bubble
     function addUserImages(imageDataUrls) {
       if (!imageDataUrls || !imageDataUrls.length) return;
       const wrap = document.createElement("div");
@@ -1126,7 +1193,6 @@
       return el;
     }
 
-    // Photo button → open file picker, send to Tai with Vision
     photoBtn.onclick = () => {
       playSound("tap");
       fileInput.click();
@@ -1137,7 +1203,7 @@
       if (!files.length) return;
 
       try {
-        const selected = files.slice(0, 4); // safety cap
+        const selected = files.slice(0, 4);
         const dataUrls = await Promise.all(
           selected.map(
             (file) =>
@@ -1150,11 +1216,9 @@
           )
         );
 
-        // show user bubble + thumbnails
         addUser("I've uploaded some photos for a rubbish removal quote.");
         addUserImages(dataUrls);
 
-        // send prompt + images to Worker
         playSound("send");
         await sendMessage(
           "These are photos of the rubbish I want a quote for. Please look at the images and help with load size, rough ballpark, and any questions you need to ask.",
@@ -1170,11 +1234,9 @@
       }
     });
 
-    // main send function now supports optional images (for Vision)
     async function sendMessage(txt, imageDataUrls) {
       if (!txt && (!imageDataUrls || !imageDataUrls.length)) return;
 
-      // For normal text messages, show a user bubble here
       if (!imageDataUrls) {
         addUser(txt);
       }
@@ -1197,8 +1259,6 @@
         const data = await res.json();
         loader.remove();
 
-        // data should follow the new schema:
-        // { reply, intent, stage, lead, actions, sms_body }
         const replyText = data.reply || "Sorry, I got a bit tangled there. Try that again for me?";
         addAI(replyText, data);
 
@@ -1206,7 +1266,6 @@
         history.push({ role: "assistant", content: replyText });
         saveChat();
 
-        // Save lead info if present
         if (data.lead && typeof data.lead === "object") {
           saveLead(data.lead);
         }
@@ -1226,10 +1285,9 @@
       if (!txt) return;
       input.value = "";
       playSound("send");
-      sendMessage(txt); // normal text path (no images)
+      sendMessage(txt);
     };
 
-    // handle link buttons inside AI messages
     messages.addEventListener("click", (e) => {
       const btn = e.target.closest(".rbx-link-btn");
       if (!btn) return;
@@ -1239,7 +1297,6 @@
       window.location.href = href;
     });
 
-    // quick-reply chips
     if (quick) {
       quick.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-text]");
@@ -1251,7 +1308,6 @@
       });
     }
 
-    // one-time wiggle when user scrolls (if chat not opened yet)
     let wiggleDone = false;
     window.addEventListener("scroll", () => {
       if (wiggleDone || panel.style.display === "flex") return;
@@ -1266,4 +1322,5 @@
   });
 </script>
 <!-- ================= END WIDGET ================= -->
+
 
