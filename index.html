@@ -937,13 +937,16 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // 🔧 Tai v6 Worker URL (update if needed)
     const API_URL = "https://tai-os.crimson-meadow-d5c5.workers.dev";
     const phone = "0459272402";
 
+    // LocalStorage keys
     const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
     const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
     const STORAGE_KEY_WIDE = "rbx_tai_panel_wide";
     const STORAGE_KEY_LEAD = "rbx_tai_lead_v1";
+    const STORAGE_KEY_CONVO = "rbx_tai_conversation_v6";
 
     const launcher = document.getElementById("rbx-launcher");
     const panel = document.getElementById("rbx-panel");
@@ -963,6 +966,9 @@
     document.body.appendChild(fileInput);
 
     let history = [];
+    let conversationId = null;
+
+    // ---- Lead helpers -------------------------------------------------
 
     function loadLead() {
       try {
@@ -983,6 +989,26 @@
         return partial;
       }
     }
+
+    function loadConversationId() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_CONVO);
+        return raw || null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveConversationId(id) {
+      conversationId = id;
+      try {
+        localStorage.setItem(STORAGE_KEY_CONVO, id);
+      } catch (e) {}
+    }
+
+    conversationId = loadConversationId();
+
+    // ---- Audio (click / send / open) ---------------------------------
 
     let audioCtx = null;
 
@@ -1027,10 +1053,13 @@
       }
     }
 
+    // ---- Restore chat from localStorage ------------------------------
+
     try {
       const savedH = localStorage.getItem(STORAGE_KEY_HISTORY);
       const savedM = localStorage.getItem(STORAGE_KEY_MESSAGES);
       const wide = localStorage.getItem(STORAGE_KEY_WIDE);
+
       if (wide === "1") {
         panel.classList.add("rbx-wide");
       }
@@ -1053,16 +1082,18 @@
       try {
         localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
         localStorage.setItem(STORAGE_KEY_MESSAGES, messages.innerHTML);
-      } catch (e) { }
+      } catch (e) {}
     }
+
+    // ---- Panel open/close --------------------------------------------
 
     function showPanel() {
       panel.style.display = "flex";
       if (!messages.dataset.loaded) {
         const intro =
-"Hey, I’m Tai 👋\n" +
-"Ask me about quotes – I’ll get you sorted quicker than it takes TJ to load the trailer 😂\n" +
-"Tell me what you’re getting rid of + your suburb, you can send photos too.";
+          "Hey, I’m Tai 👋\n" +
+          "Ask me about quotes – I’ll get you sorted quicker than it takes TJ to load the trailer 😂\n" +
+          "Tell me what you’re getting rid of + your suburb, you can send photos too.";
 
         addAI(intro);
         history.push({ role: "assistant", content: intro });
@@ -1071,7 +1102,9 @@
       }
     }
 
-    function hidePanel() { panel.style.display = "none"; }
+    function hidePanel() {
+      panel.style.display = "none";
+    }
 
     launcher.onclick = () => {
       playSound("open");
@@ -1091,9 +1124,11 @@
             STORAGE_KEY_WIDE,
             panel.classList.contains("rbx-wide") ? "1" : "0"
           );
-        } catch (e) { }
+        } catch (e) {}
       };
     }
+
+    // ---- Formatting + buttons ----------------------------------------
 
     function buildSmsHref(body) {
       const encoded = encodeURIComponent(body || "");
@@ -1123,26 +1158,101 @@
       return safe;
     }
 
+    // Build an SMS body from v6 lead shape if the worker doesn't send sms_body
+    function buildSmsBodyFromLead(lead) {
+      if (!lead || typeof lead !== "object") return "";
+
+      const f = lead.fields || {};
+      const bits = [];
+
+      if (f.serviceType || f.notes) {
+        bits.push(
+          `Getting rid of: ${f.serviceType || f.notes}`.trim()
+        );
+      }
+      if (f.suburb) {
+        bits.push(`Suburb: ${f.suburb}`);
+      }
+      if (f.timing) {
+        bits.push(`Timing: ${f.timing}`);
+      }
+      if (f.phone) {
+        bits.push(`Phone: ${f.phone}`);
+      }
+
+      if (!bits.length) {
+        return "";
+      }
+
+      return `Hey TJ & Marika, here are my details:\n- ${bits.join(
+        "\n- "
+      )}\n\nSend me a quote when you can 😊`;
+    }
+
     function addAI(text, meta) {
       const wrap = document.createElement("div");
       wrap.className = "rbx-msg ai";
 
       let bubbleHtml = formatAiText(text);
-
       const extraBtns = [];
-      if (meta && meta.actions) {
-        if (meta.actions.suggest_sms && meta.sms_body && !String(text || "").includes("sms:")) {
+
+      // v6-style: infer from lead.status if no actions provided
+      let leadStatus = null;
+      let smsBodyFromLead = "";
+      if (meta && meta.lead) {
+        leadStatus = meta.lead.status || null;
+        smsBodyFromLead = buildSmsBodyFromLead(meta.lead);
+      }
+
+      const hasActionsObject = meta && meta.actions;
+
+      // Prefer worker-provided actions if they exist (old worker compatible)
+      if (hasActionsObject) {
+        if (
+          meta.actions.suggest_sms &&
+          meta.sms_body &&
+          !String(text || "").includes("sms:")
+        ) {
           const smsHref = buildSmsHref(meta.sms_body);
           extraBtns.push(
             `<button class="rbx-link-btn" data-href="${smsHref}">📲 Text details to TJ &amp; Marika</button>`
           );
         }
 
-        if (meta.actions.suggest_booking_link && !String(text || "").includes("clienthub.getjobber.com")) {
-          const jobberHref = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+        if (
+          meta.actions.suggest_booking_link &&
+          !String(text || "").includes("clienthub.getjobber.com")
+        ) {
+          const jobberHref =
+            "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
           extraBtns.push(
             `<button class="rbx-link-btn secondary" data-href="${jobberHref}">📝 Book online</button>`
           );
+        }
+      } else {
+        // v6 heuristic: when lead is readyToBook/lockedIn, show both buttons
+        if (
+          (leadStatus === "readyToBook" || leadStatus === "lockedIn") &&
+          !String(text || "").includes("sms:") &&
+          smsBodyFromLead
+        ) {
+          const smsHref = buildSmsHref(smsBodyFromLead);
+          extraBtns.push(
+            `<button class="rbx-link-btn" data-href="${smsHref}">📲 Text details to TJ &amp; Marika</button>`
+          );
+        }
+
+        if (
+          leadStatus === "readyToBook" ||
+          leadStatus === "lockedIn"
+        ) {
+          const jobberHref =
+            "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+          if (!String(text || "").includes("clienthub.getjobber.com")) {
+            extraBtns.push(
+              `<button class="rbx-link-btn secondary" data-href="${jobberHref}">📝 Book online</button>`
+            );
+          }
         }
       }
 
@@ -1193,6 +1303,8 @@
       return el;
     }
 
+    // ---- Photos -> Vision worker (ignored by v6 but safe to send) ----
+
     photoBtn.onclick = () => {
       playSound("tap");
       fileInput.click();
@@ -1234,6 +1346,8 @@
       }
     });
 
+    // ---- Core send to Tai v6 ----------------------------------------
+
     async function sendMessage(txt, imageDataUrls) {
       if (!txt && (!imageDataUrls || !imageDataUrls.length)) return;
 
@@ -1246,8 +1360,13 @@
 
       try {
         const payload = {
+          businessId: "redback",
+          channel: "web_chat",
           message: txt,
           history: previous,
+          leadState: loadLead(),
+          conversationId: conversationId || undefined,
+          // images are ignored by v6 but safe to keep for future vision upgrades
           images: imageDataUrls || []
         };
 
@@ -1256,28 +1375,37 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
+
         const data = await res.json();
         loader.remove();
 
-        const replyText = data.reply || "Sorry, I got a bit tangled there. Try that again for me?";
+        const replyText =
+          data.reply ||
+          "Sorry, I got a bit tangled there. Try that again for me?";
         addAI(replyText, data);
+
+        // Persist convo + lead
+        if (data.conversationId) {
+          saveConversationId(data.conversationId);
+        }
+        if (data.lead && typeof data.lead === "object") {
+          saveLead(data.lead);
+        }
 
         history.push({ role: "user", content: txt || "[photos uploaded]" });
         history.push({ role: "assistant", content: replyText });
         saveChat();
-
-        if (data.lead && typeof data.lead === "object") {
-          saveLead(data.lead);
-        }
       } catch (err) {
         console.error(err);
         loader.remove();
         addAI(
           "Ah sorry, Tai got tangled in a web 🕷️😂\n" +
-          "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote."
+            "Give it another try in a moment, or text photos + your suburb to 0459 272 402 and TJ or Marika will sort a quote."
         );
       }
     }
+
+    // ---- Form + quick replies ---------------------------------------
 
     form.onsubmit = (e) => {
       e.preventDefault();
@@ -1298,29 +1426,39 @@
     });
 
     if (quick) {
-      quick.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-text]");
-        if (!btn) return;
-        const txt = btn.getAttribute("data-text") || "";
-        if (!txt) return;
-        playSound("send");
-        sendMessage(txt);
-      });
+      quick.addEventListener(
+        "click",
+        (e) => {
+          const btn = e.target.closest("button[data-text]");
+          if (!btn) return;
+          const txt = btn.getAttribute("data-text") || "";
+          if (!txt) return;
+          playSound("send");
+          sendMessage(txt);
+        }
+      );
     }
 
+    // ---- Launcher wiggle on scroll ----------------------------------
+
     let wiggleDone = false;
-    window.addEventListener("scroll", () => {
-      if (wiggleDone || panel.style.display === "flex") return;
-      wiggleDone = true;
-      launcher.classList.remove("rbx-enter");
-      launcher.classList.add("rbx-wiggle");
-      setTimeout(() => {
-        launcher.classList.remove("rbx-wiggle");
-        launcher.classList.add("rbx-enter");
-      }, 900);
-    }, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (wiggleDone || panel.style.display === "flex") return;
+        wiggleDone = true;
+        launcher.classList.remove("rbx-enter");
+        launcher.classList.add("rbx-wiggle");
+        setTimeout(() => {
+          launcher.classList.remove("rbx-wiggle");
+          launcher.classList.add("rbx-enter");
+        }, 900);
+      },
+      { passive: true }
+    );
   });
 </script>
 <!-- ================= END WIDGET ================= -->
+
 
 
