@@ -701,4 +701,136 @@ h1,h2,h3{
   .card{ box-shadow: 0 6px 14px rgba(0,0,0,0.05); }
 }
 
+/* ================= GLASS BOOKING (HERO) ================= */
+
+.rb-glass-book{
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(17, 17, 17, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.45);
+}
+
+.rb-glass-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.rb-glass-head h3{
+  margin:0;
+  font-size: 16px;
+  letter-spacing: .02em;
+}
+
+.rb-glass-head p{
+  margin: 4px 0 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 13px;
+}
+
+.rb-glass-badge{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.25);
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+}
+
+.rb-glass-form .rb-glass-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 720px){
+  .rb-glass-form .rb-glass-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.rb-glass-form .rb-field label{
+  display:block;
+  font-size: 12px;
+  font-weight: 650;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 6px;
+}
+
+.rb-glass-form input,
+.rb-glass-form select,
+.rb-glass-form textarea{
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.rb-glass-form textarea{
+  min-height: 110px;
+  resize: vertical;
+}
+
+.rb-glass-form input::placeholder,
+.rb-glass-form textarea::placeholder{
+  color: rgba(255,255,255,0.50);
+}
+
+.rb-glass-form input:focus,
+.rb-glass-form select:focus,
+.rb-glass-form textarea:focus{
+  border-color: rgba(215,38,45,0.70);
+  box-shadow: 0 0 0 4px rgba(215,38,45,0.18);
+}
+
+.rb-glass-submit{
+  width:100%;
+  margin-top: 10px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  color:#fff;
+  font-weight: 800;
+  font-size: 15px;
+  background: linear-gradient(135deg, #d7262d, #8e171b);
+  box-shadow: 0 14px 30px rgba(215,38,45,0.28);
+}
+
+.rb-glass-submit:hover{ filter: brightness(1.05); }
+
+.rb-glass-status{
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.78);
+}
+
+.rb-glass-status.ok{ color: #b7ffcc; }
+.rb-glass-status.err{ color: #ffb7b7; }
+
+.rb-glass-foot{
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.60);
+  text-align: center;
+}
+.rb-glass-foot a{
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255,255,255,0.35);
+}
+.rb-glass-foot a:hover{ border-bottom-color: rgba(255,255,255,0.85); }
 
