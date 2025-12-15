@@ -4,75 +4,415 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Book Rubbish Removal | RedBack</title>
+
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#050507; color:#f6f6f6;}
-    .wrap{max-width:860px;margin:0 auto;padding:24px;}
-    .card{background:#0a0b11;border:1px solid #1b1d26;border-radius:16px;padding:18px;}
-    h1{margin:0 0 10px;font-size:24px;}
-    p{margin:0 0 16px;color:#9da0ac;}
-    label{display:block;font-size:13px;color:#9da0ac;margin:12px 0 6px;}
-    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #222533;background:#050507;color:#f6f6f6;}
-    textarea{min-height:110px;resize:vertical;}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .btn{margin-top:14px;width:100%;padding:12px 14px;border-radius:14px;border:0;background:#ffffff;color:#050507;font-weight:800;cursor:pointer;}
-    .muted{color:#9da0ac;font-size:13px;margin-top:10px;}
-    .ok{padding:12px;border-radius:12px;background:#0f1a12;border:1px solid #1f3a28;margin-bottom:12px;}
-    .err{padding:12px;border-radius:12px;background:#1a0f10;border:1px solid #3a1f22;margin-bottom:12px;}
-    .hp{display:none;}
+    :root{
+      --bg:#050507;
+      --bg2:#0a0b11;
+      --card:#0b0d14;
+      --text:#f6f6f6;
+      --muted:#9da0ac;
+      --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.14);
+
+      --red:#d7262d;
+      --red2:#8e171b;
+
+      --glass: rgba(15,16,22,0.55);
+      --glass2: rgba(255,255,255,0.06);
+
+      --shadow: 0 18px 55px rgba(0,0,0,0.55);
+      --shadow2: 0 10px 28px rgba(0,0,0,0.35);
+
+      --r: 18px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:
+        radial-gradient(1200px 700px at 18% 10%, rgba(215,38,45,0.18), transparent 55%),
+        radial-gradient(900px 500px at 80% 0%, rgba(255,255,255,0.06), transparent 60%),
+        radial-gradient(700px 400px at 50% 100%, rgba(215,38,45,0.10), transparent 60%),
+        linear-gradient(180deg, #07070a 0%, #050507 60%, #040406 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    p{ margin:0 0 14px; color:var(--muted); line-height:1.5; }
+    h1{ margin:0 0 10px; font-size:26px; letter-spacing:-0.02em; }
+    h2,h3{ margin:0; }
+    img{ max-width:100%; display:block; }
+
+    /* Shell */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
+      margin-bottom: 16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .logo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: radial-gradient(circle at top left, #ff5a5f 0, var(--red) 42%, var(--red2) 100%);
+      box-shadow: 0 12px 28px rgba(215,38,45,0.28);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+    }
+    .brandtext{ display:flex; flex-direction:column; min-width:0; }
+    .brandtext strong{
+      font-size: 13px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brandtext span{ font-size: 12px; color: rgba(245,238,228,0.72); }
+
+    .top-actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.22);
+      color: rgba(255,255,255,0.86);
+      white-space:nowrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 220ms var(--ease), filter 220ms var(--ease), background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .btn.primary{
+      border: 0;
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      box-shadow: 0 14px 30px rgba(215,38,45,0.28);
+    }
+    .btn.primary:hover{ filter: brightness(1.06); }
+
+    /* Main card */
+    .card{
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(900px 350px at 30% 0%, rgba(255,255,255,0.08), transparent 55%),
+                  radial-gradient(900px 350px at 80% 10%, rgba(215,38,45,0.10), transparent 60%);
+      pointer-events:none;
+    }
+
+    .card-inner{
+      position:relative;
+      padding: 18px;
+    }
+
+    .hero{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 14px;
+    }
+
+    .hero-left{ max-width: 640px; }
+    .hero-left p{ margin-bottom: 0; }
+
+    .meta{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      align-items:flex-start;
+    }
+
+    /* Status */
+    #state{
+      margin: 12px 0 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.80);
+      font-size: 13px;
+    }
+
+    .ok{
+      background: rgba(25, 60, 34, 0.35) !important;
+      border-color: rgba(90, 210, 120, 0.30) !important;
+      color: #b7ffcc !important;
+    }
+
+    .err{
+      background: rgba(70, 20, 22, 0.35) !important;
+      border-color: rgba(255, 120, 120, 0.28) !important;
+      color: #ffb7b7 !important;
+    }
+
+    /* Form */
+    form{ margin:0; }
+    label{
+      display:block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,0.78);
+      margin: 12px 0 7px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      transition: box-shadow 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,0.45); }
+    textarea{ min-height: 118px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(215,38,45,0.70);
+      box-shadow: 0 0 0 4px rgba(215,38,45,0.18);
+      background: rgba(0,0,0,0.34);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .fineprint{
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.60);
+      text-align:center;
+    }
+    .fineprint a{
+      border-bottom: 1px dashed rgba(255,255,255,0.35);
+      padding-bottom: 1px;
+    }
+    .fineprint a:hover{ border-bottom-color: rgba(255,255,255,0.80); }
+
+    /* Submit */
+    .submit{
+      margin-top: 14px;
+      width:100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 0;
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+      cursor:pointer;
+      box-shadow: 0 14px 30px rgba(215,38,45,0.28);
+      transition: transform 220ms var(--ease), filter 220ms var(--ease);
+    }
+    .submit:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+    .submit:active{ transform: translateY(0px); }
+
+    .hp{ display:none; }
+
+    /* Footer strip */
+    .footer-strip{
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.62);
+      font-size: 12px;
+    }
+
+    .trust{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .stars{ letter-spacing: 2px; opacity: .9; }
+
+    /* Mobile */
+    @media (max-width: 720px){
+      .wrap{ padding: 14px; }
+      .topbar{ padding: 12px; }
+      .row{ grid-template-columns: 1fr; }
+      h1{ font-size: 24px; }
+      .meta{ justify-content:flex-start; }
+      .footer-strip{ justify-content:center; text-align:center; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition: none !important; }
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="card">
-      <h1>Lock in a pickup</h1>
-      <p>Fill this out and we’ll confirm the best time. (You can also text photos after.)</p>
 
-      <div id="state" class="muted">Loading form…</div>
-
-      <form id="f" style="display:none;">
-        <!-- honeypot -->
-        <input class="hp" name="website" autocomplete="off" />
-
-        <label>Name *</label>
-        <input name="name" required />
-
-        <div class="row">
-          <div>
-            <label>Phone</label>
-            <input name="phone" placeholder="0459…" />
-          </div>
-          <div>
-            <label>Email</label>
-            <input name="email" type="email" placeholder="you@email.com" />
-          </div>
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">RB</div>
+        <div class="brandtext">
+          <strong>RedBack Rubbish Removal</strong>
+          <span>No Mess — No Stress</span>
         </div>
+      </div>
 
-        <label>Service *</label>
-        <select name="service" required id="service"></select>
-
-        <label>What are we picking up? *</label>
-        <textarea name="details" required placeholder="Eg. couch + boxes, green waste, garage cleanout…"></textarea>
-
-        <div id="addressBlock" style="display:none;">
-          <label>Address *</label>
-          <input name="address" />
-        </div>
-
-        <div class="row" id="scheduleBlock" style="display:none;">
-          <div>
-            <label>Preferred date</label>
-            <input name="preferred_date" type="date" />
-          </div>
-          <div>
-            <label>Preferred time</label>
-            <input name="preferred_time" placeholder="Morning / Afternoon" />
-          </div>
-        </div>
-
-        <button class="btn" type="submit">Submit Booking</button>
-        <div class="muted">Powered by TaiHub • We’ll follow up to confirm.</div>
-      </form>
+      <div class="top-actions">
+        <a class="btn" href="tel:0459272402">📞 Call</a>
+        <a class="btn primary" href="sms:0459272402?body=Hi%20RedBack%2C%20I%E2%80%99d%20like%20to%20text%20photos%20for%20a%20quote.%20My%20suburb%20is%3A%20(suburb).">📷 Text photos</a>
+      </div>
     </div>
+
+    <!-- Main card -->
+    <div class="card">
+      <div class="card-inner">
+
+        <div class="hero">
+          <div class="hero-left">
+            <h1>Lock in a pickup</h1>
+            <p>Fill this out and we’ll confirm the best time. You can text photos after for a faster quote.</p>
+          </div>
+          <div class="meta">
+            <span class="pill">Family-run • Brisbane Southside & Logan</span>
+            <span class="pill">Fully insured</span>
+          </div>
+        </div>
+
+        <div id="state">Loading form…</div>
+
+        <form id="f" style="display:none;">
+          <!-- honeypot -->
+          <input class="hp" name="website" autocomplete="off" />
+
+          <label>Name *</label>
+          <input name="name" required placeholder="Your full name" />
+
+          <div class="row">
+            <div>
+              <label>Phone</label>
+              <input name="phone" placeholder="0459…" inputmode="tel" />
+            </div>
+            <div>
+              <label>Email</label>
+              <input name="email" type="email" placeholder="you@email.com" />
+            </div>
+          </div>
+
+          <label>Service *</label>
+          <select name="service" required id="service"></select>
+
+          <label>What are we picking up? *</label>
+          <textarea name="details" required placeholder="Eg. couch + boxes, green waste, garage cleanout…"></textarea>
+
+          <div id="addressBlock" style="display:none;">
+            <label>Address *</label>
+            <input name="address" placeholder="Street, suburb" />
+          </div>
+
+          <div class="row" id="scheduleBlock" style="display:none;">
+            <div>
+              <label>Preferred date</label>
+              <input name="preferred_date" type="date" />
+            </div>
+            <div>
+              <label>Preferred time</label>
+              <input name="preferred_time" placeholder="Morning / Afternoon" />
+            </div>
+          </div>
+
+          <button class="submit" type="submit">Submit booking request</button>
+
+          <div class="fineprint">
+            Powered by TaiHub • We’ll follow up to confirm. <a href="tel:0459272402">Prefer to call?</a>
+          </div>
+
+          <div class="footer-strip">
+            <div class="trust">
+              <span class="stars">⭐⭐⭐⭐⭐</span>
+              <span>Fast replies • Clear pricing • Tidy finish</span>
+            </div>
+            <div>RedBack • QLD</div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
   </div>
 
 <script>
@@ -96,8 +436,8 @@
       if (!data.ok) throw new Error(data.error || "Failed to load form");
       const cfg = data.form;
 
-      state.className = "muted";
-      state.textContent = cfg.name || "Booking Form";
+      state.className = "";
+      state.textContent = (cfg.name ? `${cfg.name} ready` : "Form ready");
       formEl.style.display = "";
 
       const options = (cfg.serviceOptions && cfg.serviceOptions.length)
@@ -116,7 +456,7 @@
 
   formEl.addEventListener("submit", async (e) => {
     e.preventDefault();
-    state.className = "muted";
+    state.className = "";
     state.textContent = "Submitting…";
 
     const fd = new FormData(formEl);
@@ -147,7 +487,7 @@
       if (!data.ok) throw new Error(data.error || "Booking failed");
 
       state.className = "ok";
-      state.textContent = data.message || "Booked — we’ll be in touch shortly.";
+      state.textContent = data.message || "✅ Request received — we’ll confirm shortly.";
       formEl.reset();
     } catch (err) {
       state.className = "err";
@@ -162,3 +502,4 @@
 </script>
 </body>
 </html>
+
