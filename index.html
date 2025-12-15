@@ -67,9 +67,16 @@
             Text photos for quote
           </a>
 
-          <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
-             class="btn btn-primary" target="_blank" rel="noopener">
-            Book online
+         <a href="/booking/" class="btn btn-primary">
+  Book online
+</a>
+
+<a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
+   class="btn btn-ghost" target="_blank" rel="noopener"
+   style="margin-left:8px;">
+  Use Jobber
+</a>
+
           </a>
         </div>
       </div>
@@ -84,6 +91,95 @@
           <span class="pill pill-light">Family-run • Fully insured • Local</span>
 
           <h1>Rubbish removal Brisbane Southside &amp; Logan — fast, friendly &amp; affordable.</h1>
+
+          <!-- ================= TaiHub Booking Request (RedBack) ================= -->
+<section class="section section-cream" id="book">
+  <div class="container">
+    <div class="section-header">
+      <h2>Book a pickup (request)</h2>
+      <p>Send your details and we’ll confirm the next available time.</p>
+    </div>
+
+    <form id="tai-booking" class="card" style="padding:16px; max-width:720px; margin:0 auto;">
+      <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr;">
+        <input name="name" placeholder="Full name" required />
+        <input name="phone" placeholder="Mobile number" required />
+      </div>
+
+      <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr; margin-top:10px;">
+        <input name="suburb" placeholder="Suburb" required />
+        <select name="serviceType" required>
+          <option value="">What are you getting rid of?</option>
+          <option>Household cleanout</option>
+          <option>Green waste</option>
+          <option>Real estate / rental</option>
+          <option>Office / commercial</option>
+          <option>Single bulky item</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr; margin-top:10px;">
+        <select name="loadSize">
+          <option value="">Approx load size (optional)</option>
+          <option>Small / a few items</option>
+          <option>Quarter load</option>
+          <option>Half load</option>
+          <option>Full load</option>
+          <option>Not sure</option>
+        </select>
+        <select name="timing" required>
+          <option value="">Preferred timing</option>
+          <option>ASAP (next available)</option>
+          <option>This week</option>
+          <option>Next week</option>
+          <option>Specific date (I’ll write it below)</option>
+        </select>
+      </div>
+
+      <textarea name="notes" placeholder="Anything we should know? (access, stairs, item list, preferred date/time)" style="width:100%; margin-top:10px; min-height:110px;"></textarea>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:12px; width:100%;">
+        Submit booking request
+      </button>
+
+      <p id="tai-booking-msg" class="small" style="margin-top:10px;"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+(function(){
+  const ENDPOINT = "https://tai-os.crimson-meadow-d5c5.workers.dev/public/booking/request";
+  const BUSINESS_ID = "redback";
+
+  const form = document.getElementById("tai-booking");
+  const msg = document.getElementById("tai-booking-msg");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.textContent = "Submitting…";
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type":"application/json" },
+        body: JSON.stringify({ businessId: BUSINESS_ID, ...data })
+      });
+      const out = await res.json().catch(()=>({}));
+      if (!res.ok || !out.ok) throw new Error(out.error || "Failed");
+
+      msg.textContent = "✅ Done! We’ve got your request — TJ & Marika will confirm shortly.";
+      form.reset();
+    } catch (err) {
+      msg.textContent = "❌ Couldn’t submit. Please call/text 0459 272 402.";
+    }
+  });
+})();
+</script>
+<!-- ================= END Booking Request ================= -->
 
           <p class="hero-sub">
             We load it, we sweep up, and we dispose of it properly.<br>
@@ -496,7 +592,8 @@
   <div class="mobile-bar" role="navigation" aria-label="Quick actions">
     <a href="tel:0459272402">Call</a>
     <a href="#" class="sms-link" data-body="Hi RedBack, I’d like a rubbish removal quote. My suburb is: (suburb). Here are photos.">Text photos</a>
-    <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
+    <a href="/booking/">Book online</a>
+
   </div>
 
   <script>
@@ -778,7 +875,9 @@
   (function(){
     const API_URL = "https://tai-os.crimson-meadow-d5c5.workers.dev"; // update if needed
     const phone = "0459272402";
-    const jobberHref = "https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c";
+    const jobberHref = "/booking/";
+
+
 
     const STORAGE_KEY_HISTORY = "rbx_tai_history_v2";
     const STORAGE_KEY_MESSAGES = "rbx_tai_messages_v2";
