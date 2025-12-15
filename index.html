@@ -6,26 +6,48 @@
   <title>RedBack Rubbish Removal | Brisbane Southside & Logan</title>
 
   <meta name="description"
-        content="Family-run rubbish removal in Brisbane Southside & Logan. We load it, we sweep up, and we dispose of it for you. No Mess — No Stress." />
+        content="Family-run rubbish removal in Brisbane Southside & Logan. We load it, we sweep up, and we dispose of it properly. No Mess — No Stress." />
 
-  <!-- Favicon / Logo -->
+  <!-- Preload hero image for faster LCP -->
+  <link rel="preload" as="image" href="images/family-cab.jpg" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="RedBack Rubbish Removal" />
   <meta property="og:description" content="No Mess — No Stress. Rubbish removal done for you in Brisbane Southside & Logan." />
-  <meta property="og:image" content="images/logo.png" />
+  <meta property="og:image" content="https://redbackrubbishremoval.com/images/logo.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://redbackrubbishremoval.com/" />
 
+  <!-- LocalBusiness Schema (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"RedBack Rubbish Removal",
+    "image":"https://redbackrubbishremoval.com/images/logo.png",
+    "url":"https://redbackrubbishremoval.com/",
+    "telephone":"+61459272402",
+    "areaServed":["Brisbane Southside","Logan"],
+    "address":{
+      "@type":"PostalAddress",
+      "addressRegion":"QLD",
+      "addressCountry":"AU"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="CSS/styles.css" />
 </head>
+
 <body class="dark-frame">
-  <!-- HEADER ---------------------------------------------------->
+  <!-- HEADER -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#top" class="brand">
-        <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo">
+      <a href="#top" class="brand" aria-label="Go to top">
+        <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="brand-logo" width="44" height="44" decoding="async">
         <div class="brand-text">
           <span class="brand-name">RedBack Rubbish Removal</span>
           <span class="brand-sub">Brisbane Southside &amp; Logan</span>
@@ -37,11 +59,14 @@
           <span class="header-label">Call us</span>
           <a href="tel:0459272402" class="header-phone">0459 272 402</a>
         </div>
+
         <div class="header-buttons">
-          <a href="sms:0459272402?&body=Hi%20RedBack,%20I'd%20like%20to%20text%20photos%20for%20a%20quote."
-             class="btn btn-ghost">
+          <a href="#"
+             class="btn btn-ghost sms-link"
+             data-body="Hi RedBack, I’d like to text photos for a quote. My suburb is: (suburb). What’s the rough load size?">
             Text photos for quote
           </a>
+
           <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c"
              class="btn btn-primary" target="_blank" rel="noopener">
             Book online
@@ -52,58 +77,64 @@
   </header>
 
   <main id="top">
-    <!-- HERO --------------------------------------------------->
-    <section class="hero hero-family">
+    <!-- HERO -->
+    <section class="hero hero-family" aria-label="Hero">
       <div class="container hero-inner">
         <div class="hero-copy">
           <span class="pill pill-light">Family-run • Fully insured • Local</span>
 
-          <h1>Rubbish removal done for you – fast, friendly &amp; affordable.</h1>
+          <h1>Rubbish removal Brisbane Southside &amp; Logan — fast, friendly &amp; affordable.</h1>
 
           <p class="hero-sub">
             We load it, we sweep up, and we dispose of it properly.<br>
-            You get your space back – with <strong>No Mess — No Stress.</strong>
+            You get your space back — <strong>No Mess — No Stress.</strong>
+          </p>
+
+          <p class="hero-micro">
+            Text <strong>1–4 photos + your suburb</strong> for a quick ballpark quote. Tip fees included.
           </p>
 
           <div class="hero-cta">
             <a href="tel:0459272402" class="btn btn-primary">📞 Call now</a>
-            <a href="sms:0459272402?&body=Hi%20RedBack,%20I'd%20like%20to%20text%20photos%20for%20a%20quote."
-               class="btn btn-outline">
+
+            <a href="#"
+               class="btn btn-outline sms-link"
+               data-body="Hi RedBack, I’d like a rubbish removal quote. My suburb is: (suburb). Here are photos.">
               📷 Text photos for a quote
             </a>
           </div>
 
           <div class="hero-trust">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="stars" aria-hidden="true">⭐⭐⭐⭐⭐</div>
             <div class="trust-copy">
-              <p>Trusted by Brisbane Southside &amp; Logan locals.</p>
+              <p><strong>Trusted by Brisbane Southside &amp; Logan locals.</strong></p>
               <p class="small">On-time, uniformed &amp; respectful in your home or workplace.</p>
             </div>
           </div>
         </div>
 
-        <!-- New premium hero media block (desktop) -->
-        <div class="hero-media circle-hero">
-  <div class="circle-photo-wrap">
-    <img src="images/family-cab.jpg" alt="RedBack family" />
-  </div>
-  <div class="hero-badge">Real family business • Real people • Real results</div>
-</div>
- </div>
+        <!-- Desktop hero media -->
+        <div class="hero-media circle-hero" aria-hidden="true">
+          <div class="circle-photo-wrap">
+            <img src="images/family-cab.jpg" alt="RedBack family" width="640" height="640" decoding="async" />
+          </div>
+          <div class="hero-badge">Real family business • Real people • Real results</div>
+        </div>
+      </div>
     </section>
 
-    <!-- WHY / TRUST -------------------------------------------->
+    <!-- WHY / TRUST -->
     <section class="section section-light">
       <div class="container">
         <div class="section-header">
           <h2>Why locals choose RedBack</h2>
-          <p>We treat every job like it’s our own place – fast, tidy, and respectful.</p>
+          <p>We treat every job like it’s our own place — fast, tidy, and respectful.</p>
         </div>
 
         <div class="grid-4">
           <article class="card">
             <h3>Family-run &amp; local</h3>
-            <p>You’re dealing directly with a Brisbane Southside &amp; Logan family business – not a big franchise.</p>
+            <p>You’re dealing directly with a Brisbane Southside &amp; Logan family business — not a franchise.</p>
           </article>
           <article class="card">
             <h3>We do the heavy lifting</h3>
@@ -121,12 +152,12 @@
       </div>
     </section>
 
-    <!-- SERVICES ----------------------------------------------->
+    <!-- SERVICES -->
     <section class="section">
       <div class="container">
         <div class="section-header">
           <h2>Rubbish removal services</h2>
-          <p>From single items to full cleanouts – if it fits in our trailer, we’ll handle it.</p>
+          <p>From single items to full cleanouts — if it fits in our trailer, we’ll handle it.</p>
         </div>
 
         <div class="grid-3">
@@ -181,7 +212,7 @@
       </div>
     </section>
 
-    <!-- PRICING ------------------------------------------------->
+    <!-- PRICING -->
     <section class="section section-cream" id="pricing">
       <div class="container">
         <div class="section-header">
@@ -234,7 +265,7 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS ------------------------------------------->
+    <!-- HOW IT WORKS -->
     <section class="section">
       <div class="container">
         <div class="section-header">
@@ -245,8 +276,8 @@
         <div class="grid-3 steps-grid">
           <article class="card step-card">
             <div class="step-number">1</div>
-            <h3>Send us photos</h3>
-            <p>Text or email photos of what you want gone – or book a visit.</p>
+            <h3>Send photos + suburb</h3>
+            <p>Text photos of what you want gone plus your suburb — fastest way to quote.</p>
           </article>
 
           <article class="card step-card">
@@ -264,7 +295,32 @@
       </div>
     </section>
 
-    <!-- GALLERY ------------------------------------------------->
+    <!-- WHAT WE CAN’T TAKE (Trust + reduces time-wasters) -->
+    <section class="section section-light" id="restrictions">
+      <div class="container">
+        <div class="section-header">
+          <h2>What we usually can’t take</h2>
+          <p>If you’re unsure, text a photo — we’ll confirm fast.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Hazardous materials</h3>
+            <p>Paint, chemicals, fuel, gas bottles, oils, solvents.</p>
+          </article>
+          <article class="card">
+            <h3>Asbestos / biohazard</h3>
+            <p>Asbestos, medical waste, sharps, contaminated materials.</p>
+          </article>
+          <article class="card">
+            <h3>Anything restricted by tip rules</h3>
+            <p>Some items may require special disposal — we’ll advise the best option.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
     <section class="section section-light" id="gallery">
       <div class="container">
         <div class="section-header">
@@ -274,28 +330,35 @@
 
         <div class="gallery-grid">
           <figure class="gallery-item">
-            <img src="images/green-waste.jpg" alt="Green waste cleanup after storm" />
+            <img src="images/green-waste.jpg" alt="Green waste cleanup after storm"
+                 loading="lazy" decoding="async" width="640" height="480" />
             <figcaption>Green waste cleared and taken away.</figcaption>
           </figure>
+
           <figure class="gallery-item">
-            <img src="images/storage-unit.jpg" alt="Storage unit rubbish removal job" />
+            <img src="images/storage-unit.jpg" alt="Storage unit rubbish removal job"
+                 loading="lazy" decoding="async" width="640" height="480" />
             <figcaption>Storage unit completely emptied and swept.</figcaption>
           </figure>
+
           <figure class="gallery-item">
-            <img src="images/gym-equipment.jpg" alt="Old gym equipment removal job" />
+            <img src="images/gym-equipment.jpg" alt="Old gym equipment removal job"
+                 loading="lazy" decoding="async" width="640" height="480" />
             <figcaption>Heavy gym equipment safely removed.</figcaption>
           </figure>
+
           <figure class="gallery-item">
-            <img src="images/boxes-delivery.jpg" alt="Boxes and furniture loaded for delivery" />
+            <img src="images/boxes-delivery.jpg" alt="Boxes and furniture loaded for delivery"
+                 loading="lazy" decoding="async" width="640" height="480" />
             <figcaption>Boxes &amp; furniture picked up and delivered.</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- AREAS WE COVER ----------------------------------------->
-   <section class="section section-dark">
-       <div class="container">
+    <!-- AREAS WE COVER -->
+    <section class="section section-dark" id="areas">
+      <div class="container">
         <div class="section-header">
           <h2>Areas we cover</h2>
           <p>Based on Brisbane Southside &amp; Logan, with flexible coverage nearby.</p>
@@ -303,52 +366,25 @@
 
         <div class="areas-grid">
           <ul class="areas-list">
-  <li>Rochedale South</li>
-  <li>Rochedale</li>
-  <li>Underwood</li>
-  <li>Springwood</li>
-  <li>Slacks Creek</li>
-  <li>Daisy Hill</li>
-  <li>Logan Central</li>
-  <li>Woodridge</li>
-  <li>Kingston</li>
-  <li>Loganlea</li>
-  <li>Marsden</li>
-  <li>Crestmead</li>
-  <li>Meadowbrook</li>
-  <li>Heritage Park</li>
-  <li>Hillcrest</li>
-  <li>Regents Park</li>
-  <li>Browns Plains</li>
-  <li>Berrinba</li>
-  <li>Shailer Park</li>
-  <li>Tanah Merah</li>
-  <li>Eight Mile Plains</li>
-  <li>Kuraby</li>
-  <li>Runcorn</li>
-  <li>Sunnybank Hills</li>
-  <li>Upper Mount Gravatt</li>
-  <li>Wishart</li>
-  <li>Carindale</li>
-  <li>Carina Heights</li>
-  <li>Holland Park</li>
-  <li>Holland Park West</li>
-  <li>Calamvale</li>
-  <li>Parkinson</li>
-  <li>Drewvale</li>
-  <li>Algester</li>
-  <li>Priestdale</li>
-  <li>Burbank</li>
-  <li>Capalaba</li>
-  <li>Chandler</li>
-  <li>And surrounding suburbs within ~20 km of Rochedale South</li>
-</ul>
+            <li>Rochedale South</li><li>Rochedale</li><li>Underwood</li><li>Springwood</li>
+            <li>Slacks Creek</li><li>Daisy Hill</li><li>Logan Central</li><li>Woodridge</li>
+            <li>Kingston</li><li>Loganlea</li><li>Marsden</li><li>Crestmead</li>
+            <li>Meadowbrook</li><li>Heritage Park</li><li>Hillcrest</li><li>Regents Park</li>
+            <li>Browns Plains</li><li>Berrinba</li><li>Shailer Park</li><li>Tanah Merah</li>
+            <li>Eight Mile Plains</li><li>Kuraby</li><li>Runcorn</li><li>Sunnybank Hills</li>
+            <li>Upper Mount Gravatt</li><li>Wishart</li><li>Carindale</li><li>Carina Heights</li>
+            <li>Holland Park</li><li>Holland Park West</li><li>Calamvale</li><li>Parkinson</li>
+            <li>Drewvale</li><li>Algester</li><li>Priestdale</li><li>Burbank</li>
+            <li>Capalaba</li><li>Chandler</li><li>And surrounding suburbs within ~20 km of Rochedale South</li>
+          </ul>
 
           <div class="areas-card card">
             <h3>Not sure if you’re in range?</h3>
             <p>Send us your address and a quick photo of what needs to go. We’ll confirm if we can help and what it will cost.</p>
-            <a href="sms:0459272402?&body=Hi%20RedBack,%20checking%20if%20I%27m%20in%20your%20service%20area."
-               class="btn btn-outline">
+
+            <a href="#"
+               class="btn btn-outline sms-link"
+               data-body="Hi RedBack, can you confirm if you service my suburb? My suburb is: (suburb).">
               Text us your suburb
             </a>
           </div>
@@ -356,7 +392,7 @@
       </div>
     </section>
 
-    <!-- REVIEWS ------------------------------------------------->
+    <!-- REVIEWS -->
     <section class="section section-cream" id="reviews">
       <div class="container">
         <div class="section-header">
@@ -366,37 +402,38 @@
 
         <div class="grid-3 reviews-grid">
           <article class="card review-card">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="stars" aria-hidden="true">⭐⭐⭐⭐⭐</div>
             <p>“Turned up on time, cleared everything quickly and left the area spotless. Super friendly husband and wife and easy to deal with.”</p>
-            <p class="review-name">— Mark W. - Waterford</p>
+            <p class="review-name">— Mark W. · Waterford</p>
           </article>
 
           <article class="card review-card">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="stars" aria-hidden="true">⭐⭐⭐⭐⭐</div>
             <p>“Used TJ for a rental cleanout. Great communication, fair price and the place looked 100x better afterwards.”</p>
-            <p class="review-name">— Karen A. - Forest Lake</p>
+            <p class="review-name">— Karen A. · Forest Lake</p>
           </article>
 
           <article class="card review-card">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p>“Made a big job feel easy. They loaded everything and swept up – worth every dollar.”</p>
-            <p class="review-name">— Andy S. - Kingston</p>
+            <div class="stars" aria-hidden="true">⭐⭐⭐⭐⭐</div>
+            <p>“Made a big job feel easy. They loaded everything and swept up — worth every dollar.”</p>
+            <p class="review-name">— Andy S. · Kingston</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT / FINAL CTA ------------------------------------>
+    <!-- CONTACT / FINAL CTA -->
     <section class="section section-dark" id="contact">
       <div class="container contact-grid">
         <div>
           <h2>Ready to clear the clutter?</h2>
-          <p>Send us photos of your rubbish or give us a quick call. We’ll come back with a clear, upfront quote.</p>
+          <p>Send photos of your rubbish or give us a quick call. We’ll come back with a clear, upfront quote.</p>
 
           <div class="contact-cta">
             <a href="tel:0459272402" class="btn btn-primary">📞 Call 0459 272 402</a>
-            <a href="sms:0459272402?&body=Hi%20RedBack,%20I%27d%20like%20to%20text%20photos%20for%20a%20rubbish%20quote."
-               class="btn btn-ghost-light">
+            <a href="#"
+               class="btn btn-ghost-light sms-link"
+               data-body="Hi RedBack, I’d like a rubbish removal quote. My suburb is: (suburb). Here are photos.">
               📷 Text photos for a quote
             </a>
           </div>
@@ -414,7 +451,7 @@
           <ul class="contact-list">
             <li><strong>Service area:</strong> Brisbane Southside &amp; Logan</li>
             <li><strong>Hours:</strong> Monday–Saturday (flexible by appointment)</li>
-            <li><strong>ABN:</strong> 54532714102</li>
+            <li><strong>ABN:</strong> 54 532 714 102</li>
             <li><strong>Email:</strong> <a href="mailto:info@redbackrubbishremoval.com">info@redbackrubbishremoval.com</a></li>
           </ul>
         </div>
@@ -422,58 +459,69 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
-  <div class="footer-inner">
+    <div class="footer-inner">
+      <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="footer-logo" width="95" height="95" loading="lazy" decoding="async" />
+      <p class="footer-tagline">No Mess — No Stress.</p>
 
-    <img src="images/logo.png" alt="RedBack Rubbish Removal logo" class="footer-logo" />
-    <p class="footer-tagline">No Mess — No Stress.</p>
+      <div class="footer-info">
+        <p>Family-run rubbish removal servicing Brisbane Southside &amp; Logan.</p>
+        <p>ABN: 54 532 714 102</p>
 
-    <div class="footer-info">
-      <p>Family-run rubbish removal servicing Brisbane Southside & Logan.</p>
-      <p>ABN: 5453 2714 102</p> <!-- replace with your real ABN -->
+        <div class="footer-cultural">
+          <span>Proudly Indigenous-owned &amp; family-operated.</span>
 
-      <div class="footer-cultural">
-        <span>Proudly Indigenous-owned & family-operated.</span>
+          <span class="flag-icons" aria-label="Aboriginal and Torres Strait Islander flags">
+            <!-- Aboriginal Flag -->
+            <svg width="20" height="14" viewBox="0 0 20 14" role="img" aria-label="Aboriginal flag">
+              <rect width="20" height="14" fill="#000"/>
+              <rect y="7" width="20" height="7" fill="#E30613"/>
+              <circle cx="10" cy="7" r="4" fill="#FFD600"/>
+            </svg>
 
-      <span class="flag-icons">
-  <!-- Aboriginal Flag -->
-  <svg width="20" height="14" viewBox="0 0 20 14">
-    <rect width="20" height="14" fill="#000"/>
-    <rect y="7" width="20" height="7" fill="#E30613"/>
-    <circle cx="10" cy="7" r="4" fill="#FFD600"/>
-  </svg>
+            <!-- Torres Strait Islander Flag -->
+            <img src="images/ts-flag.jpg" alt="Torres Strait Islander flag" class="flag-img" width="20" height="14" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
 
-  <!-- Torres Strait Islander Flag (image) -->
-  <img src="images/ts-flag.jpg" alt="Torres Strait Islander Flag" class="flag-img">
-</span>
-
+      <div class="footer-copy">
+        © <span id="year"></span> RedBack Rubbish Removal. All rights reserved.
       </div>
     </div>
+  </footer>
 
-    <div class="footer-copy">
-      © 2025 RedBack Rubbish Removal. All rights reserved.
-    </div>
-
+  <!-- MOBILE STICKY BAR -->
+  <div class="mobile-bar" role="navigation" aria-label="Quick actions">
+    <a href="tel:0459272402">Call</a>
+    <a href="#" class="sms-link" data-body="Hi RedBack, I’d like a rubbish removal quote. My suburb is: (suburb). Here are photos.">Text photos</a>
+    <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
   </div>
-</footer>
-
-
 
   <script>
-    // Simple year fill
     document.addEventListener('DOMContentLoaded', function () {
+      // Year fill
       var y = new Date().getFullYear();
       var el = document.getElementById('year');
       if (el) el.textContent = y;
+
+      // Cross-device SMS body handling
+      var phone = "0459272402";
+      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      document.querySelectorAll('.sms-link').forEach(function(a){
+        var body = a.getAttribute('data-body') || '';
+        var encoded = encodeURIComponent(body);
+        // iOS commonly wants &body= when number is present
+        var joiner = isIOS ? '&body=' : '?body=';
+        a.setAttribute('href', 'sms:' + phone + joiner + encoded);
+      });
     });
   </script>
 
-  <!-- MOBILE STICKY BAR --------------------------------------->
-  <div class="mobile-bar">
-    <a href="tel:0459272402">Call</a>
-    <a href="sms:0459272402?&body=Hi%20RedBack,%20I%27d%20like%20a%20rubbish%20removal%20quote.">Text photos</a>
-    <a href="https://clienthub.getjobber.com/booking/5f0fd976-744c-4acf-a6a6-15a7427f134c" target="_blank" rel="noopener">Book online</a>
-  </div>
+  <!-- ================= REDBACK CHAT WIDGET (kept as-is, optional) ================= -->
+  <!-- If you want the widget included here too, tell me and I’ll drop your full widget block in cleanly. -->
+
 
 <!-- ================= REDBACK CHAT WIDGET v4.3 (VISION + PREMIUM QUICK ACTIONS) ================= -->
 <style>
@@ -880,6 +928,16 @@
     object-fit: cover;
     display: inline-block;
   }
+
+
+  :root { --mobilebar-h: 56px; } /* adjust if your bar is taller */
+
+  @media (max-width: 720px){
+    .rbx-chat-launcher { bottom: calc(var(--mobilebar-h) + 14px) !important; }
+    .rbx-chat-panel { bottom: calc(var(--mobilebar-h) + 72px) !important; }
+  }
+
+
 </style>
 
 <button id="rbx-launcher" class="rbx-chat-launcher rbx-enter">
@@ -1159,8 +1217,13 @@
     }
 
     // Build an SMS body from v6 lead shape if the worker doesn't send sms_body
-    function buildSmsBodyFromLead(lead) {
-      if (!lead || typeof lead !== "object") return "";
+    function buildSmsHref(body) {
+  const encoded = encodeURIComponent(body || "");
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const joiner = isIOS ? "&body=" : "?body=";
+  return `sms:${phone}${joiner}${encoded}`;
+}
+
 
       const f = lead.fields || {};
       const bits = [];
@@ -1459,6 +1522,7 @@
   });
 </script>
 <!-- ================= END WIDGET ================= -->
-
+</body>
+</html>
 
 
