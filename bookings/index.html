@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book Rubbish Removal | RedBack</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#050507; color:#f6f6f6;}
+    .wrap{max-width:860px;margin:0 auto;padding:24px;}
+    .card{background:#0a0b11;border:1px solid #1b1d26;border-radius:16px;padding:18px;}
+    h1{margin:0 0 10px;font-size:24px;}
+    p{margin:0 0 16px;color:#9da0ac;}
+    label{display:block;font-size:13px;color:#9da0ac;margin:12px 0 6px;}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #222533;background:#050507;color:#f6f6f6;}
+    textarea{min-height:110px;resize:vertical;}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .btn{margin-top:14px;width:100%;padding:12px 14px;border-radius:14px;border:0;background:#ffffff;color:#050507;font-weight:800;cursor:pointer;}
+    .muted{color:#9da0ac;font-size:13px;margin-top:10px;}
+    .ok{padding:12px;border-radius:12px;background:#0f1a12;border:1px solid #1f3a28;margin-bottom:12px;}
+    .err{padding:12px;border-radius:12px;background:#1a0f10;border:1px solid #3a1f22;margin-bottom:12px;}
+    .hp{display:none;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Lock in a pickup</h1>
+      <p>Fill this out and we’ll confirm the best time. (You can also text photos after.)</p>
+
+      <div id="state" class="muted">Loading form…</div>
+
+      <form id="f" style="display:none;">
+        <!-- honeypot -->
+        <input class="hp" name="website" autocomplete="off" />
+
+        <label>Name *</label>
+        <input name="name" required />
+
+        <div class="row">
+          <div>
+            <label>Phone</label>
+            <input name="phone" placeholder="0459…" />
+          </div>
+          <div>
+            <label>Email</label>
+            <input name="email" type="email" placeholder="you@email.com" />
+          </div>
+        </div>
+
+        <label>Service *</label>
+        <select name="service" required id="service"></select>
+
+        <label>What are we picking up? *</label>
+        <textarea name="details" required placeholder="Eg. couch + boxes, green waste, garage cleanout…"></textarea>
+
+        <div id="addressBlock" style="display:none;">
+          <label>Address *</label>
+          <input name="address" />
+        </div>
+
+        <div class="row" id="scheduleBlock" style="display:none;">
+          <div>
+            <label>Preferred date</label>
+            <input name="preferred_date" type="date" />
+          </div>
+          <div>
+            <label>Preferred time</label>
+            <input name="preferred_time" placeholder="Morning / Afternoon" />
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Submit Booking</button>
+        <div class="muted">Powered by TaiHub • We’ll follow up to confirm.</div>
+      </form>
+    </div>
+  </div>
+
+<script>
+(() => {
+  // ✅ Your LIVE Worker base URL
+  const API_BASE = "https://tai-os.crimson-meadow-d5c5.workers.dev";
+
+  // ✅ booking form identity
+  const BUSINESS = "redback";
+  const FORM = "website";
+
+  const state = document.getElementById("state");
+  const formEl = document.getElementById("f");
+  const serviceEl = document.getElementById("service");
+  const addressBlock = document.getElementById("addressBlock");
+  const scheduleBlock = document.getElementById("scheduleBlock");
+
+  fetch(`${API_BASE}/public/form?business=${encodeURIComponent(BUSINESS)}&form=${encodeURIComponent(FORM)}`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok) throw new Error(data.error || "Failed to load form");
+      const cfg = data.form;
+
+      state.className = "muted";
+      state.textContent = cfg.name || "Booking Form";
+      formEl.style.display = "";
+
+      const options = (cfg.serviceOptions && cfg.serviceOptions.length)
+        ? cfg.serviceOptions
+        : ["Rubbish Removal"];
+
+      serviceEl.innerHTML = options.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+
+      if (cfg.requireAddress) addressBlock.style.display = "";
+      if (cfg.requirePreferredTime) scheduleBlock.style.display = "";
+    })
+    .catch(err => {
+      state.className = "err";
+      state.textContent = err.message || "Error loading form";
+    });
+
+  formEl.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    state.className = "muted";
+    state.textContent = "Submitting…";
+
+    const fd = new FormData(formEl);
+    const payload = Object.fromEntries(fd.entries());
+
+    const body = {
+      business: BUSINESS,
+      form: FORM,
+      name: payload.name || "",
+      phone: payload.phone || "",
+      email: payload.email || "",
+      service: payload.service || "",
+      details: payload.details || "",
+      address: payload.address || "",
+      preferred_date: payload.preferred_date || "",
+      preferred_time: payload.preferred_time || "",
+      website: payload.website || "", // honeypot
+      source: "redback_site"
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/booking/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Booking failed");
+
+      state.className = "ok";
+      state.textContent = data.message || "Booked — we’ll be in touch shortly.";
+      formEl.reset();
+    } catch (err) {
+      state.className = "err";
+      state.textContent = err.message || "Error submitting booking";
+    }
+  });
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+  }
+})();
+</script>
+</body>
+</html>
